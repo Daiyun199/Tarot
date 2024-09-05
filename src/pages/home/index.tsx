@@ -4,7 +4,9 @@ function Home() {
   return (
     <div className="home">
       <div className="home__section1">
-        <div className="home__section1__top">MEOWGIC</div>
+        <div className="home__section1__top">
+          <img src="https://i.imgur.com/Kx2IQRt.png" alt="" />
+        </div>
         <div className="home__section1__middle">
           <div className="home__section1__middle__left">
             <img
