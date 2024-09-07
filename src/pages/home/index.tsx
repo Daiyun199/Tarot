@@ -1,5 +1,7 @@
 import React from "react";
 import "./index.scss";
+import ChatPopup from "../chat/chatPopup";
+
 function Home() {
   return (
     <div className="home">
@@ -128,6 +130,8 @@ function Home() {
         </div>
         <div className="home__section4__bottom">About us</div>
       </div>
+
+      <ChatPopup />
     </div>
   );
 }
