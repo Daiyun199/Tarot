@@ -1,0 +1,54 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-button {
+  background-color: white;
+  color: bllck;
+  border: none;
+  padding: 10px;
+  margin-top: 2px;
+  font-size: 24px; /* Kích thước biểu tượng menu */
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%; /* Đẩy xuống ngay dưới nút */
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-item {
+  padding: 12px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: black;
+  font-size: 16px;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+.icon {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.menu-icon::before {
+  content: '☰'; /* Biểu tượng ba dấu gạch ngang */
+}
+
+.home-icon::before { content: url('/path-to-home-icon.svg'); }
+.user-icon::before { content: url('/path-to-user-icon.svg'); }
+.search-icon::before { content: url('/path-to-search-icon.svg'); }
+.bell-icon::before { content: url('/path-to-bell-icon.svg'); }
+.setting-icon::before { content: url('/path-to-setting-icon.svg'); }

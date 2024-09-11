@@ -1,0 +1,133 @@
+.container{
+    width:100%;
+    background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
+    background-size: cover;
+    background-repeat: none;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 100vh; 
+    &__box{
+        display: flex;
+        width: 100%;
+        max-width: 1500px; 
+        padding-top: 30px;
+        height: 80vh;
+        &__right{
+            flex: 1; 
+            flex-basis: 80%; 
+            padding: 20px;
+            background-color: #ffffff; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+            border-radius: 50px;
+            max-width: 600px;
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+                text-align: center;
+                font-weight: bold;
+            }
+            
+            p {
+                font-size: 1.2rem;
+                margin: 0 auto 1.5rem auto; 
+                text-align: center;
+                max-width: 80%; 
+            }
+            &__form{
+                &__facebook-button {
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center;
+                    background-color: #1877f2; 
+                    color: #ffffff; 
+                    padding: 20px 30px; 
+                    border-radius: 15px; 
+                    cursor: pointer;
+                    width: 90%;
+                    margin: 0 auto; 
+                    gap:20px;
+                    &__icon{
+                        font-size: 25px;
+                        // background-color: white;
+                        // border-radius: 50%;
+                        // color:#000;
+                    }
+                    &__text{
+                        font-size: 18px;
+                    }
+                }
+                &__google-button {
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center;
+                    background-color: white; /* Màu nền đỏ của Google */
+                    color: black; /* Màu chữ trắng */
+                    padding: 20px 30px; 
+                    border-radius: 15px; 
+                    cursor: pointer;
+                    width: 90%;
+                    margin: 0 auto; 
+                    margin-top: 30px;
+                    gap:20px;
+                    border: solid 1px rgb(168, 163, 163,0.4);
+                    &__icon{
+                        font-size: 25px;
+                        // background-color: white;
+                        // border-radius: 50%;
+                        // color:#000;
+                    }
+                    &__text{
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+        &__left{
+            flex:1;
+            &__bottom{
+                margin-left: 120px;
+                margin-top:-100px;
+            }
+        }
+    }
+}
+.ant-input, .ant-input-password {
+    width: 100%; 
+    padding: 12px; 
+    border: 2px solid #d9d9d9; 
+    border-radius: 4px; 
+    background-color: #d3cccc; 
+    color: black;
+    // display: inline-block;
+    margin: 0 auto;
+}
+  
+.ant-input::placeholder, .ant-input-password::placeholder {
+    color: rgb(144, 142, 142); /* Màu của placeholder */
+}
+.forgot-password {
+    text-align: right !important;
+    margin: 0; 
+    cursor: pointer;
+    color: black; 
+    font-size: 15px !important;
+}
+.space {
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-top: 5px !important;
+    text-align: center; 
+    font-family: 'iCiel Pony';
+    font-size: 30px !important;
+}
+  
+.space::before,
+.space::after {
+    content: ""; 
+    flex: 1; 
+    border-bottom: 1px solid #000; 
+    margin: 0 10px; 
+}
