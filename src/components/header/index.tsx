@@ -1,5 +1,6 @@
 import React from "react";
 import "./index.scss";
+import Dropdown from "../dropdown";
 function Header() {
   return (
     <div className="header">
@@ -16,10 +17,11 @@ function Header() {
           <li>Trang chủ</li>
           <li>Dịch vụ</li>
           <li>Tra cứu</li>
-          <li>Tarot</li>
-          <li>Liên hệ</li>
+          <li>Zodiac</li>
+          <li>Tài Khoản</li>
           <li>
-            <img src="https://i.imgur.com/OxJk46A.png" alt="icon" width={50} />
+            {/* <img src="https://i.imgur.com/OxJk46A.png" alt="icon" width={50} /> */}
+            <Dropdown />
           </li>
         </ul>
       </div>
