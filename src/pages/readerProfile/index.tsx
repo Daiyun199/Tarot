@@ -71,7 +71,6 @@ function ReaderProfile({
                   alt={pkg.title}
                   className="package-image"
                 />{" "}
-                {/* Hình ảnh gói trải bài */}
                 <div className="package-info">
                   <h3 className="package-title">{pkg.title}</h3>
                   <p className="package-price">Giá: {pkg.price}</p>
