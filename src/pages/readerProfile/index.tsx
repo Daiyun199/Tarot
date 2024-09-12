@@ -1,4 +1,3 @@
-// ReaderProfile.tsx
 import React from "react";
 import "./index.scss";
 
@@ -6,7 +5,7 @@ interface ReadingPackage {
   title: string;
   price: string;
   description: string;
-  image: string; // Thêm trường image
+  image: string; 
 }
 
 interface ReaderProfileProps {
