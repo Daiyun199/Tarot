@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import Header from "./components/header";
 import LayoutSpecial from "./components/layout_no_footer";
 import TarotReader from "./pages/tarotReader/tarotReader";
+import ReaderProfile from "./pages/readerProfile";
 
 function App() {
   const router = createBrowserRouter([
@@ -20,6 +21,10 @@ function App() {
         {
           path: "/reader",
           element: <TarotReader />,
+        },
+        {
+          path: "/dichvu",
+          element: <ReaderProfile />,
         },
       ],
     },

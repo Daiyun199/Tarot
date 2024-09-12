@@ -1,6 +1,8 @@
 import React from "react";
 import "./index.scss";
 import Dropdown from "../dropdown";
+import { Link } from 'react-router-dom';
+
 function Header() {
   return (
     <div className="header">
@@ -14,8 +16,8 @@ function Header() {
       </div>
       <div className="header__right">
         <ul className="header__right__navigation">
-          <li>Trang chủ</li>
-          <li>Dịch vụ</li>
+          <li><Link to="/">Trang chủ</Link></li>
+          <li><Link to="/dichvu">Dịch vụ</Link></li>
           <li>Tra cứu</li>
           <li>Zodiac</li>
           <li>Tài Khoản</li>
