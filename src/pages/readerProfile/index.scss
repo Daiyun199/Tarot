@@ -1,0 +1,159 @@
+body {
+  font-family: "Raleway", sans-serif;
+}
+.reader-profile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  justify-content: center;
+  padding: 80px;
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 40px; 
+    h1 {
+      font-family: "iCiel Pony", sans-serif; 
+      font-size: 2.5rem; 
+      color: #000000; 
+    }
+  }
+
+  .profile-details {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    max-height: 400px;
+    padding: 20px;
+    overflow: auto;
+
+    .profile-image {
+      width: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-family: "Le Tarot Bold", sans-serif;
+      font-size: 2rem;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    .profile-likes {
+      font-family: "Raleway", sans-serif;
+      font-weight: bold;
+    }
+
+    .profile-ratings {
+      .ratings-text {
+        font-family: "Raleway", sans-serif;
+        font-weight: bold;
+        color: #000000;
+        margin-right: 8px; 
+      }
+      color: #ffd700;
+    }
+    .profile-expertise {
+      font-family: "Raleway", sans-serif;
+      margin: 5px 0;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+
+  .profile-information {
+    width: 50%;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    margin-top: -190px;
+    margin-left: 600px;
+
+    .introduction,
+    .experience,
+    .packages {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: "Raleway", sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .section-content {
+      font-family: "Raleway", sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .experience-list {
+      font-family: "Raleway", sans-serif;
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .experience-item {
+      font-family: "Raleway", sans-serif;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .packages {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .package-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .package-image {
+          width: 180px;
+          height: 180px;
+          border-radius: 5px;
+          object-fit: cover;
+        }
+
+        .package-info {
+          display: flex;
+          flex-direction: column;
+          padding: 20px;
+        }
+      }
+
+      .package-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
+
+      .package-price {
+        font-size: 1rem;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      .book-button {
+        font-family: "Raleway", sans-serif;
+        background-color: #000000;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        width: 160px;
+        align-self: flex-end;
+      }
+    }
+  }
+}
