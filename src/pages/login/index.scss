@@ -85,6 +85,13 @@
         }
         &__left{
             flex:1;
+            &__top{
+                img {
+                    animation: bounce 2s infinite; 
+                    max-width: 100%; 
+                    height: auto; 
+                }
+            }
             &__bottom{
                 margin-left: 120px;
                 margin-top:-100px;
@@ -130,4 +137,13 @@
     flex: 1; 
     border-bottom: 1px solid #000; 
     margin: 0 10px; 
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0); 
+    }
+    50% {
+        transform: translateY(-20px); 
+    }
 }

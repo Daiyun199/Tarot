@@ -7,7 +7,7 @@ function Home() {
     <div className="home">
       <div className="home__section1">
         <div className="home__section1__top">
-          <img src="https://i.imgur.com/Kx2IQRt.png" alt="" />
+          <img src="https://i.imgur.com/Kx2IQRt.png" alt="" width={300} />
         </div>
         <div className="home__section1__middle">
           <div className="home__section1__middle__left">
