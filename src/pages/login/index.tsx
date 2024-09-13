@@ -2,9 +2,68 @@ import { Button, Col, Form, Image, Input, Row } from "antd";
 import { FacebookOutlined, GoogleOutlined } from "@ant-design/icons";
 import React from "react";
 import "./index.scss";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "antd/es/form/Form";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth, facebookProvider, googleProvider } from "../../config/firebase";
 
 function Login() {
-  const handleLogin = async (values) => {};
+  const navigate = useNavigate();
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const user = result.user;
+        console.log(user);
+        toast.success("Đăng nhập bằng Google thành công!");
+        navigate("/"); // Điều hướng về trang chủ sau khi đăng nhập thành công
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Đăng nhập bằng Google thất bại.");
+      });
+  };
+
+  const handleFaceBookLogin = () => {
+    signInWithPopup(auth, facebookProvider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        toast.success("Đăng nhập bằng Facebook thành công");
+        console.log(user);
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Đăng nhập bằng Facebook thất bại.");
+      });
+  };
+
+  const form = useForm();
+  const handleLogin = async (values) => {
+    try {
+      const { email, password } = values;
+      if (email === "admin" && password === "admin") {
+        toast.success("Login successful");
+
+        navigate("/");
+      } else {
+        toast.error("Login failed");
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   return (
     <div className="container">
       <div className="container__box">
@@ -65,20 +124,26 @@ function Login() {
             </Button>
           </Form>
           <p className="space">Or</p>
-          <div className="container__box__right__form__facebook-button">
+          <button
+            className="container__box__right__form__facebook-button"
+            onClick={handleFaceBookLogin}
+          >
             <FacebookOutlined className="container__box__right__form__facebook-button__icon" />
 
             <span className="container__box__right__form__facebook-button__text">
               Sign in with Facebook
             </span>
-          </div>
-          <div className="container__box__right__form__google-button">
+          </button>
+          <button
+            className="container__box__right__form__google-button"
+            onClick={handleGoogleLogin}
+          >
             <GoogleOutlined className="container__box__right__form__google-button__icon" />{" "}
             <span className="container__box__right__form__google-button__text">
               Sign up with Google
             </span>
             {/* Text */}
-          </div>
+          </button>
         </div>
       </div>
     </div>

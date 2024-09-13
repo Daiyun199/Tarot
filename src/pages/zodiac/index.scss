@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+    width: 100%;
+    height:auto;
+    padding:100px;
+    flex-direction: column;
+    gap:20px;
+    &__top{
+        h1{
+            font-family: "iCiel Pony";
+            font-size: 50px;
+        }
+    }
+    &__bottom{
+        p{
+            font-size: 30px;
+        }
+    }
+}

@@ -1,0 +1,86 @@
+.zodiac-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    position: relative;
+  
+    img {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s ease, z-index 0.3s ease;
+      z-index: 1;
+      
+      &:hover {
+        transform: scale(1.1);
+        z-index: 10; /* Đảm bảo ảnh hover nằm trên các ảnh khác */
+      }
+    }
+  
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, minmax(100px, 1fr));
+    }
+  
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    animation: fadeIn 0.5s ease;
+    z-index: 10;
+    overflow: hidden; 
+  }
+  
+  .modal__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 90vw; 
+    max-height: 90vh; 
+  }
+  
+  .modal__image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center; 
+  }
+  .modal__select {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #fdfdfd;
+    color: black;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #D8A8B8;
+    }
+}
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
