@@ -4,9 +4,6 @@ import Dropdown from "../dropdown";
 
 import { Link, useLocation } from "react-router-dom";
 
-import { Link } from 'react-router-dom';
-
-
 function Header() {
   const location = useLocation(); // Get the current location
   const isLoginPage = location.pathname === "/login"; // Check if the current path is '/login'
@@ -23,8 +20,12 @@ function Header() {
       </div>
       <div className="header__right">
         <ul className="header__right__navigation">
-          <li><Link to="/">Trang chủ</Link></li>
-          <li><Link to="/dichvu">Dịch vụ</Link></li>
+          <li>
+            <Link to="/">Trang chủ</Link>
+          </li>
+          <li>
+            <Link to="/dichvu">Dịch vụ</Link>
+          </li>
           <li>Tra cứu</li>
 
           <li>
