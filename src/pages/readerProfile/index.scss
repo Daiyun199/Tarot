@@ -25,15 +25,21 @@ body {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 25%;
-    max-height: 400px;
-    padding: 20px;
-    overflow: auto;
+    width: 300px;
+    height: 600px;
+    margin-left: 200px;
 
     .profile-image {
-      width: 100%;
-      border-radius: 50%;
+      width: 300px;
+      height: 300px;
       object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); 
+      }
     }
 
     .profile-name {
@@ -41,11 +47,13 @@ body {
       font-size: 2rem;
       margin: 10px 0;
       font-weight: bold;
+      padding-left: 20px;
     }
 
     .profile-likes {
       font-family: "Raleway", sans-serif;
       font-weight: bold;
+      padding-left: 20px;
     }
 
     .profile-ratings {
@@ -54,6 +62,7 @@ body {
         font-weight: bold;
         color: #000000;
         margin-right: 8px; 
+        padding-left: 20px;
       }
       color: #ffd700;
     }
@@ -62,6 +71,7 @@ body {
       margin: 5px 0;
       font-size: 1rem;
       font-weight: bold;
+      padding-left: 20px;
     }
   }
 
@@ -72,7 +82,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
-    margin-top: -190px;
+    margin-top: -600px;
     margin-left: 600px;
 
     .introduction,
@@ -121,6 +131,11 @@ body {
           height: 180px;
           border-radius: 5px;
           object-fit: cover;
+          transition: transform 0.3s, box-shadow 0.3s;
+          &:hover {
+            transform: scale(1.1); 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+          }
         }
 
         .package-info {
@@ -150,10 +165,22 @@ body {
         font-size: 1rem;
         cursor: pointer;
         border-radius: 5px;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         width: 160px;
         align-self: flex-end;
+        margin-top: 20px;
+      
+        &:hover {
+          transform: translateY(-3px); 
+          box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+      
+        &:active {
+          transform: translateY(0); 
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
+        }
       }
+      
     }
   }
 }

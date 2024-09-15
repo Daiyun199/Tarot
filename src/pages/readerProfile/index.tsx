@@ -102,21 +102,21 @@ const sampleData: ReaderProfileProps = {
       price: "20.000 VND",
       description:
         "Reader sẽ nhận câu hỏi, đưa ra câu trả lời chi tiết và cụ thể về vấn đề mà bạn đang quan tâm. Số lượng câu trả lời tương ứng với số lượng câu hỏi lẻ mà bạn đăng kí. Gói trải bài sẽ giúp bạn giải quyết những thắc mắc mà bạn đang gặp phải và đưa ra lời khuyên nhanh nhất cho vấn đề đó.",
-      image: "https://i.imgur.com/IheDtoa.png",
+      image: "https://i.imgur.com/U0LKj2Q.png",
     },
     {
       title: "Gói trải bài 3 câu hỏi",
       price: "50.000 VND",
       description:
         "Khác với câu hỏi đơn, gói trải bài theo chủ đề sẽ giúp bạn giải đáp theo chủ đề (tình cảm, sức khỏe, học tập,...). Gói bài này sẽ giúp người coi đi sâu vào 1 vấn đề cụ thể, Reader sẽ đưa ra những dự đoán, những gợi ý, những lời khuyên cho chủ đề mà bạn chọn. Từ đó, giúp bạn có hướng suy nghĩ và giải quyết chính xác hơn.",
-      image: "https://i.imgur.com/IheDtoa.png",
+      image: "https://i.imgur.com/U0LKj2Q.png",
     },
     {
       title: "Gói trải bài 6 câu hỏi",
       price: "100.000 VND",
       description:
         "Gói bài sẽ cung cấp cái nhìn tổng quan, những thuận lợi và khó khăn cho tuần mới của bạn. Reader sẽ dự đoán và đưa ra lời khuyên cho những sự kiện có thể xảy ra với bạn, giúp bạn chuẩn bị trước các tình huống hay định hướng cho những cơ hội mới cho mà bản thân chưa nhận ra.",
-      image: "https://i.imgur.com/IheDtoa.png",
+      image: "https://i.imgur.com/CoQv8Ta.png",
     },
     {
       title: "Gói trải bài theo chủ đề",
@@ -126,8 +126,8 @@ const sampleData: ReaderProfileProps = {
       image: "https://i.imgur.com/IheDtoa.png",
     },
   ],
-  image: "https://example.com/image.jpg",
-  likes: 123,
+  image: "https://i.imgur.com/fGigSto.png",
+  likes: 5,
   ratings: 456,
   expertise: ["Tarot", "Tealeaf", "Oracle"],
 };
