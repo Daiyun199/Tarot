@@ -1,5 +1,6 @@
 export type Zodiac ={
-    id:number;
+    id:string;
     name:string;
     imglink:string;
+    description:string;
 }
