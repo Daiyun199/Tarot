@@ -27,7 +27,7 @@ body {
   .profile-details {
     background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     width: 300px;
     height: 600px;
     margin-left: 250px;
@@ -88,8 +88,8 @@ body {
     .profile-info {
       background-color: #ffffff;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-      padding: 50px;
-      width: 50%;
+      padding: 60px;
+      width: 60%;
       margin: 0 auto;
       margin-top: -600px;
       margin-left: 700px;
@@ -131,13 +131,12 @@ body {
       display: flex;
       flex-direction: column;
       gap: 15px;
-      width: 50%;
+      width: 60%;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
       margin: 0 auto;
       margin-top: 50px;
       margin-left: 700px;
-      padding-left: 30px;
-      padding-top: 50px;
+      padding: 60px;
 
       .package-content {
         display: flex;
@@ -150,12 +149,14 @@ body {
           border-radius: 5px;
           object-fit: cover;
           transition: transform 0.3s, box-shadow 0.3s;
-
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+        
           &:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9); 
           }
         }
+        
 
         .package-info {
           display: flex;

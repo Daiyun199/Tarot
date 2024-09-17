@@ -127,7 +127,7 @@ const sampleData: ReaderProfileProps = {
       price: "100.000 VND",
       description:
         "Gói bài sẽ cung cấp cái nhìn tổng quan, những thuận lợi và khó khăn cho tuần mới của bạn. Reader sẽ dự đoán và đưa ra lời khuyên cho những sự kiện có thể xảy ra với bạn, giúp bạn chuẩn bị trước các tình huống hay định hướng cho những cơ hội mới cho mà bản thân chưa nhận ra.",
-      image: "https://i.imgur.com/IheDtoa.png",
+      image: "https://i.imgur.com/fIbRrRv.png",
     },
   ],
   image: "https://i.imgur.com/fGigSto.png",
