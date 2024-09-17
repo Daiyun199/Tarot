@@ -5,8 +5,11 @@ import Dropdown from "../dropdown";
 import { Link, useLocation } from "react-router-dom";
 
 function Header() {
-  const location = useLocation(); // Get the current location
-  const isLoginPage = location.pathname === "/login"; // Check if the current path is '/login'
+  const location = useLocation(); 
+  const isLoginPage = location.pathname === "/login"; 
+  const isDichVuPage = location.pathname === "/dichvu"; 
+  const isHomePage = location.pathname === "/"; 
+  const isZodiacPage = location.pathname === "/zodiac";
 
   return (
     <div className="header">
@@ -21,22 +24,29 @@ function Header() {
       <div className="header__right">
         <ul className="header__right__navigation">
           <li>
-            <Link to="/">Trang chủ</Link>
+            <Link to="/" className={isHomePage ? "active-link" : ""}>
+              Trang chủ
+            </Link>
           </li>
           <li>
-            <Link to="/dichvu">Dịch vụ</Link>
+            <Link
+              to="/dichvu"
+              className={isDichVuPage ? "active-link" : ""}
+            >
+              Dịch vụ
+            </Link>
           </li>
           <li>Tra cứu</li>
 
           <li>
             <Link
               to="/zodiac"
+              className={isZodiacPage ? "active-link" : ""}
               style={{
                 textDecoration: "none",
                 listStyle: "none",
                 color: "inherit",
               }}
-              className="zodiac-link"
             >
               Zodiac
             </Link>
