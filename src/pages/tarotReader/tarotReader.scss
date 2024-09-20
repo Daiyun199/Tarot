@@ -4,15 +4,18 @@
   width: 100%;
   background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
   background-size: cover;
-  background-repeat: none;
+  background-repeat: no-repeat;
   text-align: center;
-  padding: 150px;
+  padding: 100px; 
+  padding-bottom: 150px; 
 
   .title {
     font-family: "iCiel Pony", sans-serif;
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
+    margin-top: 0; 
+    padding-bottom: 20px;
   }
 
   .images-container {
@@ -23,29 +26,78 @@
 
     .image-card {
       position: relative;
-      width: 200px;
-      height: 300px;
+      width: 300px; 
+      height: 500px; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; 
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
 
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.3s ease, filter 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+ 
+        &:hover {
+          transform: scale(1.05); 
+          filter: brightness(105%); 
+        }
+      }
+
+      .label {
+        position: absolute;
+        bottom: 112px; 
+        left: 50%;
+        transform: translateX(-50%);
+        color: #FFF;
+        font-family: "iCiel Pony", sans-serif;
+        font-size: 1.5rem; 
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        transition: color 0.3s ease, transform 0.3s ease;
+
+        opacity: 1;
+        visibility: visible;
+        .image-card:hover .label {
+          color: #000; 
+          transform: scale(1.1); 
+        }
+      }
+
+      .label.candy {
+        color: #715300; 
+      }
+
+      .label.nonglin {
+        color: #FF7777; 
       }
 
       .schedule-button {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
+        position: relative;
+        margin-top: 20px;
         background-color: #000000;
         color: #FFF173;
         border: none;
-        width: 150px;
-        padding: 10px; 
+        width: 180px; 
+        padding: 12px; 
         border-radius: 5px;
         cursor: pointer;
-        font-size: 1rem;
+        font-size: 1.2rem; 
         text-align: center; 
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-3px); 
+        }
+        &:active {
+          transform: translateY(1px); 
+        }
       }
     }
   }
