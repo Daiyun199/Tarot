@@ -9,7 +9,7 @@ function Header() {
   const isLoginPage = location.pathname === "/login";
   const isDichVuPage = location.pathname === "/dichvu";
   const isHomePage = location.pathname === "/";
-  const isZodiacPage = location.pathname === "/zodiac";
+  const isZodiacPage = location.pathname === "/zodiacs";
 
   return (
     <div className="header">
