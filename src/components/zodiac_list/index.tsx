@@ -4,19 +4,21 @@ import { toast } from "react-toastify";
 import "./index.scss";
 
 import api from "../../config/axios";
+import { Link } from "react-router-dom";
 interface ZodiacListProps {
   zodiacs?: Zodiac[];
 }
 function ZodiacList(zodiacslist: ZodiacListProps) {
   const [zodiacs, setZodiacs] = useState<Zodiac[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [imageStyle, setImageStyle] = useState<{
     width: number;
     height: number;
   } | null>(null);
   const imgRefs = useRef<HTMLImageElement[]>([]);
 
-  const handleImageClick = (imgSrc: string, index: number) => {
+  const handleImageClick = (imgSrc: string, index: number, id: string) => {
     const imgElement = imgRefs.current[index];
 
     if (imgElement) {
@@ -26,11 +28,13 @@ function ZodiacList(zodiacslist: ZodiacListProps) {
         height: rect.height,
       });
       setSelectedImage(imgSrc);
+      setSelectedId(id);
     }
   };
   const handleCloseModal = () => {
     setSelectedImage(null);
     setImageStyle(null);
+    setSelectedId(null);
   };
 
   const fetchZodiacs = async () => {
@@ -61,7 +65,7 @@ function ZodiacList(zodiacslist: ZodiacListProps) {
             src={zodiac.imglink}
             alt={zodiac.name}
             ref={(el) => (imgRefs.current[index] = el as HTMLImageElement)}
-            onClick={() => handleImageClick(zodiac.imglink, index)}
+            onClick={() => handleImageClick(zodiac.imglink, index, zodiac.id)}
           />
         ))}
 
@@ -78,7 +82,18 @@ function ZodiacList(zodiacslist: ZodiacListProps) {
               }}
               onClick={(e) => e.stopPropagation()}
             />
-            <div className="modal__select">Select</div>
+            <div className="modal__select">
+              <Link
+                to={`${selectedId}`}
+                style={{
+                  textDecoration: "none",
+                  listStyle: "none",
+                  color: "inherit",
+                }}
+              >
+                Select
+              </Link>
+            </div>
           </div>
         </div>
       )}

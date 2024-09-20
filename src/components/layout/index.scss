@@ -1,0 +1,11 @@
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo container chiếm đủ chiều cao của viewport */
+  }
+  
+  .content-container {
+    flex: 1; /* Nội dung sẽ chiếm phần còn lại giữa Header và Footer */
+    overflow: auto; /* Đảm bảo nội dung có thể cuộn nếu quá nhiều */
+  }
+  

@@ -30,7 +30,7 @@ function Header() {
 
           <li>
             <Link
-              to="/zodiac"
+              to="/zodiacs"
               style={{
                 textDecoration: "none",
                 listStyle: "none",

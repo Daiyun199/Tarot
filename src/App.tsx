@@ -10,6 +10,7 @@ import ZodiacList from "./components/zodiac_list";
 import TarotReader from "./pages/tarotReader/tarotReader";
 import ReaderProfile from "./pages/readerProfile";
 import ResetPasswordPage from "./pages/reset_password";
+import ZodiacDetail from "./pages/zodiac-detail";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,8 +23,12 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/zodiac",
+          path: "/zodiacs",
           element: <ZodiacHome />,
+        },
+        {
+          path: "/zodiacs/:id",
+          element: <ZodiacDetail />,
         },
         {
           path: "/test",

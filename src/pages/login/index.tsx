@@ -3,7 +3,7 @@ import { FacebookOutlined, GoogleOutlined } from "@ant-design/icons";
 import React from "react";
 import "./index.scss";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "antd/es/form/Form";
 import {
   FacebookAuthProvider,
@@ -109,7 +109,9 @@ function Login() {
             >
               <Input.Password placeholder="Mật Khẩu" />
             </Form.Item>
-            <p className="forgot-password">Quên mật khẩu</p>
+            <p className="forgot-password">
+              <Link to="/reset-password">Quên mật khẩu</Link>
+            </p>
             <Button
               type="primary"
               htmlType="submit"
