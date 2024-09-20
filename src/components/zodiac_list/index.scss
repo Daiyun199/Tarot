@@ -15,9 +15,11 @@
       transition: transform 0.3s ease, z-index 0.3s ease;
       z-index: 1;
       
+      
       &:hover {
         transform: scale(1.1);
         z-index: 10; /* Đảm bảo ảnh hover nằm trên các ảnh khác */
+        filter:drop-shadow(5px 5px 10px black)
       }
     }
   

@@ -5,11 +5,11 @@ import Dropdown from "../dropdown";
 import { Link, useLocation } from "react-router-dom";
 
 function Header() {
-  const location = useLocation(); 
-  const isLoginPage = location.pathname === "/login"; 
-  const isDichVuPage = location.pathname === "/dichvu"; 
-  const isHomePage = location.pathname === "/"; 
-  const isZodiacPage = location.pathname === "/zodiac";
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+  const isDichVuPage = location.pathname === "/dichvu";
+  const isHomePage = location.pathname === "/";
+  const isZodiacPage = location.pathname === "/zodiacs";
 
   return (
     <div className="header">
@@ -29,10 +29,7 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link
-              to="/dichvu"
-              className={isDichVuPage ? "active-link" : ""}
-            >
+            <Link to="/dichvu" className={isDichVuPage ? "active-link" : ""}>
               Dịch vụ
             </Link>
           </li>
@@ -40,7 +37,7 @@ function Header() {
 
           <li>
             <Link
-              to="/zodiac"
+              to="/zodiacs"
               className={isZodiacPage ? "active-link" : ""}
               style={{
                 textDecoration: "none",
