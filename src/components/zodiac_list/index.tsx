@@ -17,7 +17,7 @@ function ZodiacList(zodiacslist: ZodiacListProps) {
     height: number;
   } | null>(null);
   const imgRefs = useRef<HTMLImageElement[]>([]);
-
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const handleImageClick = (imgSrc: string, index: number, id: string) => {
     const imgElement = imgRefs.current[index];
 
@@ -51,6 +51,8 @@ function ZodiacList(zodiacslist: ZodiacListProps) {
       setZodiacs(processedData);
     } catch (err) {
       toast.error(err.response?.data || "An error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {

@@ -2,13 +2,12 @@
     background-color: transparent;
     display: flex;
     justify-content: space-between;
-    position: sticky;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  
+    transition: transform 0.3s ease-in-out;
     &__right {
       display: flex;
       justify-content: center;
@@ -70,3 +69,11 @@
     }
   }
   
+
+  .header--hidden {
+    transform: translateY(-100%); /* Ẩn header bằng cách đẩy nó lên trên */
+}
+
+.header--visible {
+    transform: translateY(0); /* Hiện header */
+}
