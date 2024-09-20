@@ -10,6 +10,34 @@ function Header() {
   const isDichVuPage = location.pathname === "/dichvu";
   const isHomePage = location.pathname === "/";
   const isZodiacPage = location.pathname === "/zodiacs";
+  let lastScrollPosition = 0;
+  const header = document.querySelector(".header");
+  let isHeaderHidden = false;
+
+  window.addEventListener("scroll", () => {
+    const currentScrollPosition = window.pageYOffset;
+
+    if (currentScrollPosition > lastScrollPosition && !isHeaderHidden) {
+      // Cuộn xuống => Ẩn header
+      header.classList.add("header--hidden");
+      isHeaderHidden = true;
+    } else if (currentScrollPosition < lastScrollPosition && isHeaderHidden) {
+      // Cuộn lên => Hiện lại header
+      header.classList.remove("header--hidden");
+      isHeaderHidden = false;
+    }
+
+    lastScrollPosition = currentScrollPosition;
+  });
+
+  window.addEventListener("mousemove", (event) => {
+    // Kiểm tra nếu con trỏ chuột ở phần trên cùng (ví dụ: trong khoảng 50px đầu)
+    if (event.clientY < 50) {
+      header.classList.remove("header--hidden");
+    } else if (!isHeaderHidden) {
+      header.classList.add("header--hidden");
+    }
+  });
 
   return (
     <div className="header">
