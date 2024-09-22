@@ -24,7 +24,7 @@ const responses = [
   "Bạn cần dành thời gian để nghỉ ngơi và lấy lại năng lượng.",
 ];
 
-const ChatPopup: React.FC = () => {
+function ChatPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
@@ -88,7 +88,7 @@ const ChatPopup: React.FC = () => {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              onKeyPress={handleKeyPress} 
+              onKeyPress={handleKeyPress}
               placeholder="Type your message..."
             />
             <button onClick={handleSendMessage}>Send</button>
@@ -97,6 +97,6 @@ const ChatPopup: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default ChatPopup;
