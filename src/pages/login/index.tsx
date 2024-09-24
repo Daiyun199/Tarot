@@ -1,6 +1,6 @@
-import { Button, Col, Form, Image, Input, Row } from "antd";
+import { Button, Col, Form, Input } from "antd";
 import { FacebookOutlined, GoogleOutlined } from "@ant-design/icons";
-import React from "react";
+
 import "./index.scss";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
