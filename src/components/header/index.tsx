@@ -70,7 +70,7 @@ function Header() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []); // Xóa isHeaderHidden ra khỏi mảng phụ thuộc
+  }, [isHeaderHidden]); // Xóa isHeaderHidden ra khỏi mảng phụ thuộc
 
   return (
     <div
