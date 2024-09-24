@@ -13,7 +13,7 @@
         display: flex;
         width: 100%;
         max-width: 1500px; 
-        padding-top: 30px;
+        margin-top: 30px;
         min-height: 30vh;
         &__right{
             flex: 1; 
@@ -26,6 +26,7 @@
             height: auto; /* Điều chỉnh chiều cao tự động */
             max-height: 90vh; /* Giới hạn chiều cao tối đa */
             overflow-y: auto; /* Ẩn các phần tử thừa khi quá lớn */
+            margin-top: 50px;
             h2 {
                 margin-top: 10px;
                 font-size: 1.5rem;

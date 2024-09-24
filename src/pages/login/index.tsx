@@ -1,15 +1,11 @@
-import { Button, Col, Form, Image, Input, Row } from "antd";
+import { Button, Form, Input } from "antd";
 import { FacebookOutlined, GoogleOutlined } from "@ant-design/icons";
-import React from "react";
+
 import "./index.scss";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "antd/es/form/Form";
-import {
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+
+import { signInWithPopup } from "firebase/auth";
 import { auth, facebookProvider, googleProvider } from "../../config/firebase";
 
 function Login() {
@@ -17,7 +13,7 @@ function Login() {
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
         console.log(user);
         toast.success("Đăng nhập bằng Google thành công!");
@@ -35,8 +31,8 @@ function Login() {
         // The signed-in user info.
         const user = result.user;
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = FacebookAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
+        // const credential = FacebookAuthProvider.credentialFromResult(result);
+        // const accessToken = credential.accessToken;
         toast.success("Đăng nhập bằng Facebook thành công");
         console.log(user);
         // IdP data available using getAdditionalUserInfo(result)
@@ -48,8 +44,8 @@ function Login() {
       });
   };
 
-  const form = useForm();
-  const handleLogin = async (values) => {
+  // const form = useForm();
+  const handleLogin = async (values: any) => {
     try {
       const { email, password } = values;
       if (email === "admin" && password === "admin") {
@@ -59,7 +55,7 @@ function Login() {
       } else {
         toast.error("Login failed");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error);
     }
   };
