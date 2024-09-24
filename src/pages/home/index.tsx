@@ -1,4 +1,3 @@
-import React from "react";
 import "./index.scss";
 import ChatPopup from "../chat/chatPopup";
 
