@@ -65,17 +65,17 @@ function Login() {
   };
 
   return (
-    <div className="container">
-      <div className="container__box">
-        <div className="container__box__left">
-          <div className="container__box__left__top">
+    <div className="login-container">
+      <div className="login-container__box">
+        <div className="login-container__box__left">
+          <div className="login-container__box__left__top">
             <img src="https://i.imgur.com/6xuf2CN.png" alt="" width={700} />
           </div>
-          <div className="container__box__left__bottom">
+          <div className="login-container__box__left__bottom">
             <img src="https://i.imgur.com/anj8eux.png" alt="" width={500} />
           </div>
         </div>
-        <div className="container__box__right">
+        <div className="login-container__box__right">
           <h2>Đăng ký hoặc đăng nhập</h2>
           <p>
             Đăng nhập để nhận các trải bài Tarot từ MEOWGIC và lời khuyên từ các
@@ -85,7 +85,7 @@ function Login() {
           <Form
             labelCol={{ span: 24 }}
             onFinish={handleLogin}
-            className="container__box__right__form"
+            className="login-container__box__right__form"
           >
             <Form.Item
               name="email"
@@ -116,9 +116,12 @@ function Login() {
               type="primary"
               htmlType="submit"
               style={{
-                width: "20%",
+                width: "30%",
+                fontSize: "18px",
                 margin: "0 auto",
                 display: "block",
+                textAlign: "center",
+                lineHeight: "normal",
                 backgroundColor: "rgb(144, 142, 142)",
               }}
             >
@@ -127,21 +130,21 @@ function Login() {
           </Form>
           <p className="space">Or</p>
           <button
-            className="container__box__right__form__facebook-button"
+            className="login-container__box__right__form__facebook-button"
             onClick={handleFaceBookLogin}
           >
-            <FacebookOutlined className="container__box__right__form__facebook-button__icon" />
+            <FacebookOutlined className="login-container__box__right__form__facebook-button__icon" />
 
-            <span className="container__box__right__form__facebook-button__text">
+            <span className="login-container__box__right__form__facebook-button__text">
               Sign in with Facebook
             </span>
           </button>
           <button
-            className="container__box__right__form__google-button"
+            className="login-container__box__right__form__google-button"
             onClick={handleGoogleLogin}
           >
-            <GoogleOutlined className="container__box__right__form__google-button__icon" />{" "}
-            <span className="container__box__right__form__google-button__text">
+            <GoogleOutlined className="login-container__box__right__form__google-button__icon" />{" "}
+            <span className="login-container__box__right__form__google-button__text">
               Sign up with Google
             </span>
             {/* Text */}
