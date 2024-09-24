@@ -4,17 +4,22 @@
     "composite": true,
     "target": "esnext",                        // Chọn phiên bản ECMAScript mục tiêu
     "module": "commonjs",                      // Chọn kiểu module
-    "strict": true,                            // Bật kiểm tra nghiêm ngặt
+    "strict": true,           
+    "emitDeclarationOnly": false,                 // Bật kiểm tra nghiêm ngặt
     "noUnusedLocals": false,                   // Tắt cảnh báo biến không sử dụng
     "noUnusedParameters": false,                // Tắt cảnh báo tham số không sử dụng
     "noImplicitAny": false,                    // Tắt cảnh báo về kiểu any
     "esModuleInterop": true,                   // Cho phép import/export giữa các module
     "skipLibCheck": true,                      // Bỏ qua kiểm tra loại của thư viện
-    "forceConsistentCasingInFileNames": true   // Bắt buộc sử dụng chữ hoa/thường nhất quán
+    "forceConsistentCasingInFileNames": true ,
+    "outDir": "./dist",  // Thư mục xuất kết quả biên dịch
+    "declaration": true    // Tạo tệp định nghĩa .d.ts  // Bắt buộc sử dụng chữ hoa/thường nhất quán
   },
   "include": [
-    "src/**/*"                                  // Chỉ định các tệp nguồn cần biên dịch
+    "src/**/*" 
+                                     // Chỉ định các tệp nguồn cần biên dịch
   ],
+  "exclude": ["node_modules"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }

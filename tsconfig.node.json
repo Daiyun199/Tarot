@@ -1,22 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2023"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+    "composite": true,                        // Bật composite
+    "target": "ES2022",                      // Chọn phiên bản ECMAScript mục tiêu
+    // "lib": ["ES2023"],                       // Thư viện hỗ trợ
+    "module": "ESNext",                      // Chọn kiểu module
+    "skipLibCheck": true,                    // Bỏ qua kiểm tra loại của thư viện
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
+    "moduleResolution": "bundler",           // Phương pháp giải quyết module
+    // "allowImportingTsExtensions": true,      // Cho phép nhập tệp .ts
+    "isolatedModules": true,                  // Chạy từng mô-đun một
+    "moduleDetection": "force",               // Phát hiện module một cách cưỡng bức
+    "noEmit": false,                         // Cho phép phát sinh tệp biên dịch
 
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "strict": true,                          // Bật chế độ kiểm tra nghiêm ngặt
+    "noUnusedLocals": true,                  // Tắt cảnh báo biến không sử dụng
+    "noUnusedParameters": true,               // Tắt cảnh báo tham số không sử dụng
+    "noFallthroughCasesInSwitch": true       // Cảnh báo về trường hợp không thoát trong switch
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts"]              // Chỉ định tệp cần biên dịch
 }
