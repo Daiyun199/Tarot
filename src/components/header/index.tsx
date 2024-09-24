@@ -9,7 +9,9 @@ function Header() {
   const isLoginPage = location.pathname === "/login";
   const isDichVuPage = location.pathname === "/dichvu";
   const isHomePage = location.pathname === "/";
-  const isZodiacPage = location.pathname === "/zodiacs";
+  const isZodiacPage =
+    location.pathname === "/zodiacs" ||
+    location.pathname.startsWith("/zodiacs/");
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [isHeaderHidden, setIsHeaderHidden] = useState<boolean>(false);
   const lastScrollPosition = useRef<number>(0);
@@ -28,8 +30,8 @@ function Header() {
     const handleScroll = () => {
       const currentScrollPosition = window.pageYOffset;
 
-      console.log(`Current scroll position: ${currentScrollPosition}`);
-      console.log(`Last scroll position: ${lastScrollPosition.current}`);
+      // console.log(`Current scroll position: ${currentScrollPosition}`);
+      // console.log(`Last scroll position: ${lastScrollPosition.current}`);
 
       if (currentScrollPosition === 0) {
         header.classList.remove("header--hidden");
@@ -40,14 +42,14 @@ function Header() {
       ) {
         header.classList.add("header--hidden");
         setIsHeaderHidden(true);
-        console.log("Header hidden");
+        // console.log("Header hidden");
       } else if (
         currentScrollPosition < lastScrollPosition.current &&
         isHeaderHidden
       ) {
         header.classList.remove("header--hidden");
         setIsHeaderHidden(false);
-        console.log("Header shown");
+        // console.log("Header shown");
       }
 
       lastScrollPosition.current = currentScrollPosition;

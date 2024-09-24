@@ -1,4 +1,4 @@
-.container{
+.login-container{
     width:100%;
     background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
     background-size: cover;
@@ -7,13 +7,14 @@
     justify-content: center; 
     align-items: center;
     height: 100vh; 
-    
+    min-height: calc(100vh - 100px); /* Tính toán chiều cao để trừ đi chiều cao của header */
+    padding-top: 50px; /* Tùy chỉnh để có khoảng cách hợp lý */
     &__box{
         display: flex;
         width: 100%;
         max-width: 1500px; 
         padding-top: 30px;
-        height: 80vh;
+        min-height: 30vh;
         &__right{
             flex: 1; 
             flex-basis: 80%; 
@@ -21,8 +22,12 @@
             background-color: #ffffff; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
             border-radius: 50px;
-            max-width: 600px;
+            max-width: 600px; /* Đảm bảo có max-width để tránh tràn */
+            height: auto; /* Điều chỉnh chiều cao tự động */
+            max-height: 90vh; /* Giới hạn chiều cao tối đa */
+            overflow-y: auto; /* Ẩn các phần tử thừa khi quá lớn */
             h2 {
+                margin-top: 10px;
                 font-size: 1.5rem;
                 margin-bottom: 0.5rem;
                 text-align: center;
@@ -70,6 +75,7 @@
                     width: 90%;
                     margin: 0 auto; 
                     margin-top: 30px;
+                    margin-bottom: 10px;
                     gap:20px;
                     border: solid 1px rgb(168, 163, 163,0.4);
                     &__icon{
