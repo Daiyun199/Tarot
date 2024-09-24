@@ -52,7 +52,7 @@ function ZodiacList() {
     } catch (err: any) {
       toast.error(err.response?.data || "An error occurred");
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
   useEffect(() => {
