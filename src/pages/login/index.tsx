@@ -4,12 +4,8 @@ import { FacebookOutlined, GoogleOutlined } from "@ant-design/icons";
 import "./index.scss";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "antd/es/form/Form";
-import {
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+
+import { signInWithPopup } from "firebase/auth";
 import { auth, facebookProvider, googleProvider } from "../../config/firebase";
 
 function Login() {
