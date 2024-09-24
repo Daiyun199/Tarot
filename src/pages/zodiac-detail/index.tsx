@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.scss";
 import { Zodiac } from "../../model/zodiac";
 import api from "../../config/axios";
@@ -27,9 +27,9 @@ function ZodiacDetail() {
   interface ZodiacTranslation {
     [key: string]: string;
   }
-  function kebabToCamel(key: string): string {
-    return key.replace(/-./g, (match) => match[1].toUpperCase());
-  }
+  // function kebabToCamel(key: string): string {
+  //   return key.replace(/-./g, (match) => match[1].toUpperCase());
+  // }
 
   function convertKeysToCamelCase(obj: { [key: string]: any }): ZodiacColor {
     return {
@@ -74,7 +74,7 @@ function ZodiacDetail() {
       } else {
         toast.error("Zodiac not found");
       }
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.response.data || "An error occurred");
     }
   };
@@ -84,7 +84,7 @@ function ZodiacDetail() {
       const cardMeanings = response.data.map(convertCardMeaningKeys);
       setCardMeaning(cardMeanings);
       console.log(cardMeanings);
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.response.data);
     }
   };
@@ -94,7 +94,7 @@ function ZodiacDetail() {
       const zodiacColorData = response.data;
       const convertData = convertKeysToCamelCase(zodiacColorData);
       setZodiacColor(convertData);
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.response.data || "An error occurred");
     }
   };

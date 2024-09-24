@@ -2,7 +2,7 @@ import { Button, Form, Input } from "antd";
 import React from "react";
 import "./index.scss";
 function ResetPasswordPage() {
-  const handleLogin = async (values) => {};
+  const handleLogin = async () => {};
   return (
     <div className="reset-page-background">
       <div className="reset-page-container">

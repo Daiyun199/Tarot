@@ -1,4 +1,3 @@
-import React from "react";
 import ZodiacList from "../../components/zodiac_list";
 import "./index.scss";
 function ZodiacHome() {
