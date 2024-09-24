@@ -1,9 +1,7 @@
-import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
 import Home from "./pages/home";
 import Login from "./pages/login";
-import Header from "./components/header";
 import LayoutSpecial from "./components/layout_no_footer";
 import ZodiacHome from "./pages/zodiac";
 import ZodiacList from "./components/zodiac_list";
