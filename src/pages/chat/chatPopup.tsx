@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./ChatPopup.scss";
+import "./chatPopup.scss";
 
 interface Message {
   sender: "user" | "reader";
