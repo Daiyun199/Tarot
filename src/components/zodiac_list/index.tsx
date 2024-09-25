@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Zodiac } from "../../model/zodiac";
 import { toast } from "react-toastify";
 import "./index.scss";
 
 import api from "../../config/axios";
 import { Link } from "react-router-dom";
-interface ZodiacListProps {
-  zodiacs?: Zodiac[];
-}
-function ZodiacList(zodiacslist: ZodiacListProps) {
+
+function ZodiacList() {
   const [zodiacs, setZodiacs] = useState<Zodiac[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -17,7 +15,7 @@ function ZodiacList(zodiacslist: ZodiacListProps) {
     height: number;
   } | null>(null);
   const imgRefs = useRef<HTMLImageElement[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const handleImageClick = (imgSrc: string, index: number, id: string) => {
     const imgElement = imgRefs.current[index];
 
@@ -49,10 +47,9 @@ function ZodiacList(zodiacslist: ZodiacListProps) {
       }));
       console.log(processedData);
       setZodiacs(processedData);
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.response?.data || "An error occurred");
     } finally {
-      setIsLoading(false);
     }
   };
   useEffect(() => {
