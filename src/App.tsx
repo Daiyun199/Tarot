@@ -10,6 +10,7 @@ import TarotReader from "./pages/tarotReader/tarotReader";
 import ReaderProfile from "./pages/readerProfile";
 import ResetPasswordPage from "./pages/reset_password";
 import ZodiacDetail from "./pages/zodiac-detail";
+import BookingCalendar from "./pages/bookingCalendar/bookingCalendar";
 
 function App() {
   const router = createBrowserRouter([
@@ -40,6 +41,10 @@ function App() {
         {
           path: "/dichvu",
           element: <ReaderProfile />,
+        },
+        {
+          path: "/calendar",
+          element: <BookingCalendar />,
         },
       ],
     },
