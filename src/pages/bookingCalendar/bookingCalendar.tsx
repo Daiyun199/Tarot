@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./bookingCalendar.scss";
 
-const hours = [
+interface Slot {
+  day: string;
+  hour: string;
+}
+
+const hours: string[] = [
   "10:00",
   "11:00",
   "12:00",
@@ -18,7 +23,7 @@ const hours = [
   "23:00",
 ];
 
-const getCurrentWeekDates = (date) => {
+const getCurrentWeekDates = (date: Date): Date[] => {
   const startDate = new Date(date);
   startDate.setDate(startDate.getDate() - startDate.getDay() + 1); 
   return Array.from({ length: 7 }, (_, index) => {
@@ -28,26 +33,26 @@ const getCurrentWeekDates = (date) => {
   });
 };
 
-const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const daysOfWeek: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-function BookingCalendar() {
-  const [selectedSlot, setSelectedSlot] = useState(null);
-  const [bookedSlots, setBookedSlots] = useState([
+function BookingCalendar(): JSX.Element {
+  const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
+  const [bookedSlots, setBookedSlots] = useState<Slot[]>([
     { day: "Mon", hour: "10:00" },
     { day: "Tue", hour: "15:00" },
   ]);
-  const [upcomingSlots, setUpcomingSlots] = useState([{ day: "Wed", hour: "13:00" }]);
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [upcomingSlots] = useState<Slot[]>([{ day: "Wed", hour: "13:00" }]);
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
-  const weekDates = getCurrentWeekDates(currentDate).map((date) =>
+  const weekDates: string[] = getCurrentWeekDates(currentDate).map((date) =>
     date.toLocaleDateString()
   );
 
-  function handleSlotClick(day, hour) {
+  const handleSlotClick = (day: string, hour: string): void => {
     setSelectedSlot({ day, hour });
-  }
+  };
 
-  function getSlotClass(day, hour) {
+  const getSlotClass = (day: string, hour: string): string => {
     if (bookedSlots.some((slot) => slot.day === day && slot.hour === hour)) {
       return "booked"; 
     } else if (upcomingSlots.some((slot) => slot.day === day && slot.hour === hour)) {
@@ -56,21 +61,23 @@ function BookingCalendar() {
       return "selected"; 
     }
     return "";
-  }
+  };
 
-  const handleNextMonth = () => {
-    const nextDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
+  const handleNextMonth = (): void => {
+    const nextDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
     setCurrentDate(nextDate);
   };
 
-  const handlePreviousMonth = () => {
-    const prevDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1);
+  const handlePreviousMonth = (): void => {
+    const prevDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
     setCurrentDate(prevDate);
   };
 
-  const handleConfirmBooking = () => {
+  const handleConfirmBooking = (): void => {
     if (selectedSlot) {
       alert(`Đặt lịch thành công cho ${selectedSlot.day} vào lúc ${selectedSlot.hour}`);
+      setBookedSlots([...bookedSlots, selectedSlot]);
+      setSelectedSlot(null); 
     }
   };
 
@@ -119,9 +126,9 @@ function BookingCalendar() {
               {hours.map((hour) => (
                 <tr key={hour}>
                   <td className="hour-cell">{hour}</td>
-                  {daysOfWeek.map((day, index) => (
+                  {daysOfWeek.map((day) => (
                     <td
-                      key={day}
+                      key={`${day}-${hour}`}
                       className={`time-slot ${getSlotClass(day, hour)}`}
                       onClick={() => handleSlotClick(day, hour)}
                     ></td>
@@ -149,8 +156,8 @@ function BookingCalendar() {
             <div className="selection-info">
               <div className="booking-details">
                 <p>
-                  Đặt lịch của bạn: {selectedSlot.hour} - {selectedSlot.hour}{" "}
-                  <br /> Ngày: {selectedSlot.day}, {currentDate.toLocaleDateString()}
+                  Đặt lịch của bạn: {selectedSlot.hour} <br /> 
+                  Ngày: {selectedSlot.day}, {currentDate.toLocaleDateString()}
                 </p>
               </div>
               <button className="confirm-button" onClick={handleConfirmBooking}>
