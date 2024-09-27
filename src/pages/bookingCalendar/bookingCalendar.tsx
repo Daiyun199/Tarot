@@ -20,7 +20,7 @@ const hours = [
 
 const getCurrentWeekDates = (date) => {
   const startDate = new Date(date);
-  startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // Set to Monday
+  startDate.setDate(startDate.getDate() - startDate.getDay() + 1); 
   return Array.from({ length: 7 }, (_, index) => {
     const newDate = new Date(startDate);
     newDate.setDate(startDate.getDate() + index);
@@ -110,7 +110,7 @@ function BookingCalendar() {
                 {daysOfWeek.map((day, index) => (
                   <th key={day}>
                     {day} <br />
-                    {weekDates[index]} {/* Display date only below the day */}
+                    {weekDates[index]} 
                   </th>
                 ))}
               </tr>
