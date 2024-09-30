@@ -2,12 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import "./index.scss";
 import Dropdown from "../dropdown";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, NavLink } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
-  const isDichVuPage = location.pathname === "/dichvu";
+  const serviceRoutes = [
+    "/reader",
+    "/dichvu",
+    "/calendar",
+  ];
+  const isServicePage = serviceRoutes.some((route) =>
+    location.pathname === route || location.pathname.startsWith(`${route}/`)
+  );
   const isHomePage = location.pathname === "/";
   const isZodiacPage =
     location.pathname === "/zodiacs" ||
@@ -93,9 +100,14 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/dichvu" className={isDichVuPage ? "active-link" : ""}>
+            <NavLink
+              to="/reader"
+              className={() =>
+                isServicePage ? "active-link" : ""
+              }
+            >
               Dịch vụ
-            </Link>
+            </NavLink>
           </li>
           <li>Tra cứu</li>
 
