@@ -96,6 +96,11 @@ body {
       color: black;
       border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      &:hover {
+        background-color: #c0c0c0;
+        transform: scale(1.05);
+      }
     }
 
     .calendar-title {
@@ -109,7 +114,11 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-
+    animation: fadeIn 0.5s ease;
+  }
+  &.fade-enter {
+    animation: fadeIn 0.5s ease;
+  }
     .calendar-table {
       width: 100%;
       border-collapse: collapse;
@@ -130,6 +139,7 @@ body {
 
       .time-slot {
         cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
 
         &.booked {
           background-color: #b80000;
@@ -142,9 +152,13 @@ body {
         &.selected {
           background-color: #e9d0d9;
         }
+        &:hover {
+          background-color: #e9d0d9;
+          transform: scale(1.0);
+        }
       }
     }
-  }
+  
 
   .color-legend-and-booking {
     margin-top: 20px;
@@ -186,6 +200,7 @@ body {
     .selection-info {
       margin-top: 20px;
       text-align: center;
+      animation: fadeInUp 0.5s ease;
 
       .booking-details {
         padding: 10px;
@@ -201,12 +216,43 @@ body {
         color: white;
         cursor: pointer;
         border-radius: 4px;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, transform 0.3s;
 
         &:hover {
           background-color: #333;
+          transform: scale(1.05);
         }
       }
     }
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
