@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://localhost:7043/api/",
+  baseURL: "https://meowgic.azurewebsites.net/api/",
 });
 api.interceptors.request.use(
   function (config) {
