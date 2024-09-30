@@ -109,7 +109,7 @@ function BookingCalendar(): JSX.Element {
           </button>
         </div>
 
-        <div className="calendar-wrapper">
+        <div className="calendar-wrapper" key={currentDate.toISOString()}>
           <table className="calendar-table">
             <thead>
               <tr>
@@ -131,7 +131,9 @@ function BookingCalendar(): JSX.Element {
                       key={`${day}-${hour}`}
                       className={`time-slot ${getSlotClass(day, hour)}`}
                       onClick={() => handleSlotClick(day, hour)}
-                    ></td>
+                    >
+                      {/* Optional: Add markers or icons for better visual cues */}
+                    </td>
                   ))}
                 </tr>
               ))}
