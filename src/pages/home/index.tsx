@@ -13,7 +13,7 @@ function Home() {
             <img
               src="https://i.imgur.com/IheDtoa.png"
               title="icon"
-              width={230}
+              width={350}
             ></img>
           </div>
           <div className="home__section1__middle__right">

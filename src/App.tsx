@@ -11,8 +11,34 @@ import ReaderProfile from "./pages/readerProfile";
 import ResetPasswordPage from "./pages/reset_password";
 import ZodiacDetail from "./pages/zodiac-detail";
 import BookingCalendar from "./pages/bookingCalendar/bookingCalendar";
+import { logout } from "./redux/features/userSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./redux/store";
 
 function App() {
+  const dispatch = useDispatch();
+  const { user, loginTime } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (user && loginTime) {
+      const currentTime = Date.now();
+      const elapsed = currentTime - loginTime;
+      const remainingTime = 3600000 - elapsed; // 1 tiếng = 3600000 ms
+
+      if (remainingTime <= 0) {
+        dispatch(logout());
+      } else {
+        const timer = setTimeout(() => {
+          dispatch(logout());
+          alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+        }, remainingTime);
+
+        // Dọn dẹp timer khi component unmount
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [user, loginTime, dispatch]);
   const router = createBrowserRouter([
     {
       path: "/",

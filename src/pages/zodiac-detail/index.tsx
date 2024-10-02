@@ -15,13 +15,13 @@ function ZodiacDetail() {
   const convertCardMeaningKeys = (data: any): cardMeaning => {
     return {
       id: data["id"],
-      categoryId: data["category-id"],
-      cardId: data["card-id"],
+      categoryId: data["categoryId"],
+      cardId: data["ccardId"],
       meaning: data["meaning"],
-      reMeaning: data["re-meaning"],
-      cardName: data["card-name"],
-      urlLink: data["link-url"],
-      categoryName: data["category-name"],
+      reMeaning: data["reMeaning"],
+      cardName: data["cardName"],
+      urlLink: data["linkUrl"],
+      categoryName: data["categoryName"],
     };
   };
   interface ZodiacTranslation {
@@ -34,9 +34,9 @@ function ZodiacDetail() {
   function convertKeysToCamelCase(obj: { [key: string]: any }): ZodiacColor {
     return {
       id: obj["id"],
-      basicColor: obj["basic-color"],
-      signatureColor: obj["signature-color"],
-      avoidColor: obj["avoid-color"],
+      basicColor: obj["basicColor"],
+      signatureColor: obj["signatureColor"],
+      avoidColor: obj["avoidColor"],
     };
   }
 
@@ -62,13 +62,13 @@ function ZodiacDetail() {
   const fetchZodiacs = async () => {
     try {
       const zodiaclist = await api.get(`Zodiac/${id}`);
-
       const processedData = zodiaclist.data;
+      console.log(processedData);
       if (processedData) {
         setZodiac({
           id: processedData["id"],
           name: processedData["name"],
-          imglink: processedData["img-link"],
+          imglink: processedData["imgLink"],
           description: processedData["description"],
         });
       } else {
@@ -83,7 +83,6 @@ function ZodiacDetail() {
       const response = await api.get("CardMeaning/random");
       const cardMeanings = response.data.map(convertCardMeaningKeys);
       setCardMeaning(cardMeanings);
-      console.log(cardMeanings);
     } catch (err: any) {
       toast.error(err.response.data);
     }

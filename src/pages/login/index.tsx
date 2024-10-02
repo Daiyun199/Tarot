@@ -7,9 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { signInWithPopup } from "firebase/auth";
 import { auth, facebookProvider, googleProvider } from "../../config/firebase";
+import api from "../../config/axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/features/userSlice";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
@@ -47,14 +51,12 @@ function Login() {
   // const form = useForm();
   const handleLogin = async (values: any) => {
     try {
-      const { email, password } = values;
-      if (email === "admin" && password === "admin") {
-        toast.success("Login successful");
-
-        navigate("/");
-      } else {
-        toast.error("Login failed");
-      }
+      const response = await api.post("Auth/login", values);
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+      toast.success("Successfully logged in");
+      dispatch(login(response.data));
+      navigate("/");
     } catch (error: any) {
       toast.error(error);
     }

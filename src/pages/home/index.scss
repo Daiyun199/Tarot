@@ -30,10 +30,11 @@
                 padding: 20px; 
                 &__title{
                     font-family:"iCiel Pony" ;
-                    font-size: 30px;
+                    font-size: 35px;
                 }
                 &__info{
-                    width: 50%;
+                    width: 80%;
+                    font-size: 30px;
                 }
             }
             &__left{
@@ -81,7 +82,7 @@
                 flex-direction: column; 
                 align-items: center; 
                 justify-content: flex-start; 
-                width: 200px; 
+                width: 300px; 
                 height: 100%; 
               
                 &__img{
@@ -95,7 +96,8 @@
                     display: flex; 
                     flex-direction: column;
                     text-align: center; 
-                    font-family: 'iCiel Pony'
+                    font-family: 'iCiel Pony';
+                    font-size: 30px;
                 }
                 &__info{
                     width: 100%;
@@ -105,6 +107,7 @@
                     align-items: center; 
                     justify-content: center; 
                     padding: 10px; 
+                    font-size: 30px;
                 }
               
             }
@@ -159,7 +162,7 @@
           
                 &:nth-of-type(3) .home__section3__middle__box__info{
                     transform: rotate(10deg);
-                    margin-top: 40px; 
+                    margin-top: 50px; 
                     margin-left: -22px;
                 }
                 &__img{
@@ -175,8 +178,7 @@
                     align-items: center;
                     width:100%;
                     height:5vh;
-                  
-                    
+                    font-size: 25px;            
                 }
 
             }
@@ -187,8 +189,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
-            margin-top: 10px;
+            font-size: 30px;
+            margin-top: 20px;
         }
     }
     &__section4{
@@ -254,5 +256,132 @@
     }
     50% {
         transform: translateY(-20px); 
+    }
+}
+// Media query cho màn hình điện thoại
+@media (max-width: 768px) {
+    .home {
+        &__section1 {
+            &__top {
+                margin-top: 100px;
+                font-size: 24px; // Giảm kích thước chữ trên di động
+                padding: 80px; // Giảm padding
+            }
+
+            &__middle {
+                flex-direction: column; // Chuyển sang cột trên di động
+                padding: 10px;
+               
+                &__right {
+                    max-width: 100%; // Cho phép phần này chiếm toàn bộ chiều rộng
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                &__left {
+                    img {
+                        max-width: 90%; // Giảm kích thước ảnh
+                    }
+                }
+            }
+
+            &__bottom {
+                gap: 20px; // Giảm khoảng cách giữa các box
+            }
+        }
+
+          &__section2 {
+            &__bottom {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                &__box {
+                    &__img {
+                        width: 200px; // Giữ kích thước hình ảnh như ở section 2
+                        aspect-ratio: 1 / 1.40; // Tỉ lệ chiều cao
+                        background-color: gray;
+                        margin: 20px auto;
+                    }
+                }
+            }
+        }
+
+        &__section3 {
+            &__middle {
+                flex-direction: column; // Đổi thành cột trên di động
+                width: 100%; // Chiếm toàn bộ chiều rộng
+                gap: 20px; // Giảm khoảng cách giữa các box
+
+                &__box {
+                    width: 100%; // Cho phép box chiếm toàn bộ chiều rộng
+                    position: relative;
+                    &:nth-of-type(1) .home__section3__middle__box__img {
+                        transform: rotate(0deg);
+                        margin-top: 30px;
+                    }
+              
+                    &:nth-of-type(2) .home__section3__middle__box__img {
+                        transform: rotate(0deg);
+                        margin-top: 30px;
+                    }
+              
+                    &:nth-of-type(3) .home__section3__middle__box__img {
+                        transform: rotate(0deg);
+                        margin-top: 30px;
+                    }
+                    &:nth-of-type(1) .home__section3__middle__box__info {
+                        transform: rotate(0deg);
+                        // margin-top: -40px; 
+                        margin-top: 0px;
+                        margin-left: 0px;
+                    }
+              
+                    &:nth-of-type(2) .home__section3__middle__box__info {
+                        transform: rotate(0deg);
+                        margin-top: 0; 
+                    }
+              
+                    &:nth-of-type(3) .home__section3__middle__box__info{
+                        transform: rotate(0deg);
+                        margin-top: 0px; 
+                        margin-left: 0px;
+                    }
+                    &__img {
+                        width: 200px; // Sử dụng cùng kích thước với section 2
+                        aspect-ratio: 1 / 1.40; // Tỉ lệ chiều cao
+                        background-color: gray;
+                        margin: 20px auto;
+                    }
+
+                    &__info {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        height: 5vh;
+                        font-size: 25px;  
+                        transform: rotate(0deg); // Đặt lại không nghiêng
+                    }
+                }
+            }
+
+            &__bottom {
+                font-size: 24px; // Giảm kích thước chữ
+                transform: rotate(0deg); // Đặt lại không nghiêng
+                margin-top: 20px;
+            }
+        }
+
+
+        &__section4 {
+            &__middle {
+                &__content {
+                    width: 90%; // Giảm chiều rộng trên di động
+                }
+            }
+        }
     }
 }
