@@ -15,6 +15,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.7",
     "@rollup/plugin-url": "^8.0.2",
     "antd": "^5.20.4",
     "axios": "^1.7.7",
