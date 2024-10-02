@@ -20,18 +20,18 @@ export const userSlice = createSlice({
     name:"user",
     initialState:initialState,
     reducers:{
-        login: (state, action: PayloadAction<User>) => {
+        login: (state:any, action: PayloadAction<User>) => {
             state.user = action.payload;
             localStorage.setItem("userData", JSON.stringify(action.payload));
             state.loginTime = Date.now(); 
           },
-        logout: (state) => {
+        logout: (state:any) => {
             state.user = null;
             state.loginTime = null;
             // Xóa khỏi localStorage
             localStorage.removeItem("userData");
           },
-          updateLoginTime: (state, action: PayloadAction<number>) => {
+          updateLoginTime: (state:any, action: PayloadAction<number>) => {
             state.loginTime = action.payload;
             localStorage.setItem("userData", JSON.stringify(state));
           },

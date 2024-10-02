@@ -81,9 +81,9 @@ function Header() {
   }, []);
 
   // Toggle mobile menu visibility
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen((prev) => !prev);
-  };
+  // const toggleMobileMenu = () => {
+  //   setIsMobileMenuOpen((prev) => !prev);
+  // };
 
   // Close mobile menu when navigating to a new route
   useEffect(() => {
