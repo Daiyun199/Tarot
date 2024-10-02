@@ -9,7 +9,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, facebookProvider, googleProvider } from "../../config/firebase";
 import api from "../../config/axios";
 import { useDispatch } from "react-redux";
-import { login, logout } from "../../redux/features/userSlice";
+import { login } from "../../redux/features/userSlice";
 
 function Login() {
   const navigate = useNavigate();
