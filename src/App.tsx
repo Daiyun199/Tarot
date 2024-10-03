@@ -5,7 +5,7 @@ import Login from "./pages/login";
 
 import LayoutSpecial from "./components/layout_no_footer";
 import ZodiacHome from "./pages/zodiac";
-import ZodiacList from "./components/zodiac_list";
+
 import TarotReader from "./pages/tarotReader/tarotReader";
 import ReaderProfile from "./pages/readerProfile";
 import ResetPasswordPage from "./pages/reset_password";

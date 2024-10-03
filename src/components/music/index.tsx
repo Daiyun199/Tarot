@@ -5,7 +5,7 @@ import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { useAudio } from "../../context/AudioContext";
 
 const AudioPlayer: React.FC<{ isLoginPage?: boolean }> = ({ isLoginPage }) => {
-  const { isPlaying, togglePlay, toggleMute, isMuted } = useAudio();
+  const { toggleMute, isMuted } = useAudio();
 
   // Styles cho nút âm lượng
   const muteButtonStyle: React.CSSProperties = {
