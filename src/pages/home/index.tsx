@@ -1,9 +1,11 @@
 import "./index.scss";
 import ChatPopup from "../chat/chatPopup";
+import AudioPlayer from "../../components/music";
 
 function Home() {
   return (
     <div className="home">
+      <AudioPlayer isLoginPage={true} />
       <div className="home__section1">
         <div className="home__section1__top">
           <img src="https://i.imgur.com/Kx2IQRt.png" alt="" width={300} />

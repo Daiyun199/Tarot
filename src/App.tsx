@@ -15,6 +15,7 @@ import { logout } from "./redux/features/userSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
+import AudioPlayer from "./components/music";
 
 function App() {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ function App() {
         },
         {
           path: "/test",
-          element: <ZodiacList />,
+          element: <AudioPlayer />,
         },
         {
           path: "/reader",

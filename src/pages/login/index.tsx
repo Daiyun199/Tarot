@@ -10,6 +10,7 @@ import { auth, facebookProvider, googleProvider } from "../../config/firebase";
 import api from "../../config/axios";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/features/userSlice";
+import AudioPlayer from "../../components/music";
 
 function Login() {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ function Login() {
 
   return (
     <div className="login-container">
+      <AudioPlayer />
       <div className="login-container__box">
         <div className="login-container__box__left">
           <div className="login-container__box__left__top">

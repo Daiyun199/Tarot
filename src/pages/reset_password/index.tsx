@@ -1,10 +1,12 @@
 import { Button, Form, Input } from "antd";
 
 import "./index.scss";
+import AudioPlayer from "../../components/music";
 function ResetPasswordPage() {
   const handleLogin = async () => {};
   return (
     <div className="reset-page-background">
+      <AudioPlayer />
       <div className="reset-page-container">
         <h2>ĐẶT LẠI MẬT KHẨU</h2>
         <p>Vui lòng xác nhận lại mật khẩu cũ để tạo mật khẩu mới</p>

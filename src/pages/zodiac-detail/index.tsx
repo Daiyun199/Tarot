@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { ZodiacColor } from "../../model/zodiacColor";
 import ColorBox from "../../components/color_box";
 import { cardMeaning } from "../../model/cardMeaning";
+import AudioPlayer from "../../components/music";
 function ZodiacDetail() {
   const [zodiac, setZodiac] = useState<Zodiac>();
   const { id } = useParams<{ id: string }>();
@@ -105,6 +106,7 @@ function ZodiacDetail() {
   }, [id]);
   return (
     <div className="zodiac-detail-container">
+      <AudioPlayer />
       <div className="zodiac-detail-container__section1">
         <div className="zodiac-detail-container__section1__top">
           {zodiac?.name}
