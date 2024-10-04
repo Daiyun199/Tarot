@@ -256,3 +256,114 @@ body {
     transform: translateY(0);
   }
 }
+/* Media Queries cho Thiết Bị Di Động */
+@media (max-width: 768px) {
+  body {
+    background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .container {
+    flex-direction: column;
+    max-width: 100%;
+    margin: 50px auto;
+    padding: 10px;
+
+    .profile-details {
+      width: 100%;
+      max-width: none;
+      height: auto;
+      margin: 0 0 20px 0;
+      padding: 15px;
+
+      .profile-image {
+        width: 100%;
+        height: auto;
+      }
+
+      .profile-name {
+        font-size: 1.5rem;
+        padding-left: 0;
+        text-align: center;
+      }
+
+      .profile-likes,
+      .profile-ratings,
+      .profile-expertise {
+        padding-left: 0;
+        text-align: center;
+      }
+
+      .profile-ratings {
+        .ratings-text {
+          padding-left: 0;
+        }
+      }
+    }
+
+    .booking-calendar {
+      max-width: 100%;
+      margin-left: 0;
+      padding: 15px;
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+      }
+
+      .date-selector {
+        flex-direction: column;
+        align-items: center;
+
+        .nav-button {
+          margin: 5px 0;
+        }
+
+        .calendar-title {
+          margin-top: 10px;
+        }
+      }
+
+      .calendar-wrapper {
+        animation: none;
+      }
+
+      .calendar-table {
+        font-size: 14px;
+
+        th,
+        td {
+          padding: 8px;
+        }
+      }
+
+      .color-legend-and-booking {
+        flex-direction: column;
+        align-items: center;
+
+        .color-legend {
+          margin-bottom: 15px;
+
+          p {
+            justify-content: center;
+          }
+        }
+
+        .selection-info {
+          width: 100%;
+
+          .booking-details {
+            width: 100%;
+          }
+
+          .confirm-button {
+            width: 100%;
+            max-width: 200px;
+          }
+        }
+      }
+    }
+  }
+}
