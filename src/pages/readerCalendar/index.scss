@@ -110,4 +110,59 @@
       width: 90%;
     }
   }
+  /* index.scss */
+
+/* ... Các kiểu CSS hiện tại ... */
+
+/* Container cho nút Submit */
+.submit-button-container {
+  display: flex;
+  justify-content: flex-end; /* Đặt nút ở phía bên phải */
+  margin-top: 20px;
+  padding: 0 20px; /* Thêm khoảng cách hai bên nếu cần */
+}
+
+/* Kiểu dáng nút Submit */
+.submit-button {
+  // background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%); /* Màu nền gradient */
+  background: linear-gradient(90deg, rgba(246,200,241,1) 35%, rgba(148,210,233,1) 100%);
+  border: none;
+  color: black;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 25px; /* Bo tròn góc */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bóng đổ */
+}
+
+/* Hiệu ứng khi hover */
+.submit-button:hover {
+  // background: linear-gradient(45deg, #2575fc 0%, #6a11cb 100%); 
+  background: linear-gradient(90deg,rgba(148,210,233,1) 35%, rgba(246,200,241,1) 100%);/* Đảo ngược gradient */
+  transform: translateY(-2px); /* Di chuyển lên trên một chút */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Tăng bóng đổ */
+}
+
+/* Hiệu ứng khi nhấn nút */
+.submit-button:active {
+  transform: translateY(0); /* Trở lại vị trí ban đầu */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Giảm bóng đổ */
+}
+
+/* Responsive cho nút Submit (tuỳ chọn) */
+@media (max-width: 600px) {
+  .submit-button {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 18px;
+  }
+
+  .submit-button-container {
+    padding: 0 10px;
+  }
+}
+
   

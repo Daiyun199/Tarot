@@ -10,6 +10,7 @@ import {
 } from "date-fns";
 import "./index.scss";
 import { toast } from "react-toastify"; // Chỉ import toast
+import api from "../../config/axios";
 
 interface TimeSlot {
   hour: number;
@@ -85,6 +86,69 @@ const Scheduler: React.FC = () => {
           return day;
         })
       );
+    }
+  };
+  const handleSubmit = async () => {
+    if (selectedSlots.length === 0) {
+      toast.warn("Vui lòng chọn ít nhất một khung giờ trước khi submit.");
+      return;
+    }
+
+    // setIsSubmitting(true);
+
+    // Chuyển đổi selectedSlots thành định dạng yêu cầu của API
+    const payload = {
+      scheduleRequest: selectedSlots.map((slot) => ({
+        dayOfWeek: new Date(slot.date).toISOString(),
+        startTime: {
+          hour: slot.hour,
+          minute: 0,
+        },
+        endTime: {
+          hour: slot.hour,
+          minute: 59,
+        },
+        isBooked: true,
+      })),
+    };
+
+    try {
+      const response = await api.post("/ScheduleReader", payload); // Thay thế bằng endpoint thực tế của bạn
+
+      if (response.status === 200 || response.status === 201) {
+        toast.success("Lịch đã được gửi thành công!");
+        // Reset các khung giờ đã chọn
+        setSelectedSlots([]);
+        setWeek((prevWeek) =>
+          prevWeek.map((day) => ({
+            ...day,
+            slots: day.slots.map((slot) => ({ ...slot, selected: false })),
+          }))
+        );
+        // Xóa dữ liệu trong localStorage
+        localStorage.removeItem("selectedSlots");
+      } else {
+        // Xử lý các mã trạng thái không mong muốn
+        toast.error(
+          `Có lỗi xảy ra khi gửi lịch: ${response.data.message || "Vui lòng thử lại."}`
+        );
+      }
+    } catch (error: any) {
+      console.error("Error submitting schedule:", error);
+      // Kiểm tra nếu error.response tồn tại
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(
+          `Có lỗi xảy ra khi gửi lịch: ${error.response.data.message}`
+        );
+      } else {
+        toast.error("Có lỗi xảy ra khi gửi lịch. Vui lòng thử lại.");
+      }
+    } finally {
+      // setIsSubmitting(false);
     }
   };
 
@@ -217,7 +281,11 @@ const Scheduler: React.FC = () => {
           </ul>
         )}
       </div>
-      {/* Loại bỏ ToastContainer ở đây */}
+      <div className="submit-button-container">
+        <button className="submit-button" onClick={handleSubmit}>
+          Submit
+        </button>
+      </div>
     </div>
   );
 };
