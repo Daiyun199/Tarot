@@ -42,7 +42,6 @@
         transition: transform 0.3s ease, filter 0.3s ease;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
- 
         &:hover {
           transform: scale(1.05); 
           filter: brightness(105%); 
@@ -64,7 +63,8 @@
 
         opacity: 1;
         visibility: visible;
-        .image-card:hover .label {
+
+        &:hover {
           color: #000; 
           transform: scale(1.1); 
         }
@@ -97,6 +97,45 @@
         }
         &:active {
           transform: translateY(1px); 
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .tarot-reader {
+    padding: 50px 20px; 
+
+    .title {
+      font-size: 1.5rem; 
+      padding-bottom: 10px;
+    }
+
+    .images-container {
+      flex-direction: column;
+      gap: 15px;
+
+      .image-card {
+        width: 100%;
+        height: auto; 
+        max-width: 300px; 
+        padding: 10px;
+
+        img {
+          height: auto; 
+        }
+
+        .label {
+          bottom: 80px; 
+          font-size: 1.2rem; 
+        }
+
+        .schedule-button {
+          width: 100%; 
+          max-width: 200px; 
+          font-size: 1rem; 
+          padding: 10px; 
         }
       }
     }
