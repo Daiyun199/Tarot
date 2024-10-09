@@ -103,7 +103,7 @@ const Scheduler: React.FC = () => {
           dayOfWeek: new Date(slot.date).toISOString(), // Định dạng ISO 8601 cho dayOfWeek
           startTime: `${slot.hour.toString().padStart(2, "0")}:00`, // Định dạng giờ cho startTime
           endTime: `${slot.hour.toString().padStart(2, "0")}:59`, // Định dạng giờ cho endTime
-          isBooked: true,
+          isBooked: false,
         };
 
         const response = await api.post("/ScheduleReader", payload); // Thay thế bằng endpoint thực tế của bạn
