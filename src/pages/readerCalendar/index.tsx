@@ -96,43 +96,41 @@ const Scheduler: React.FC = () => {
 
     // setIsSubmitting(true);
 
-    // Chuyển đổi selectedSlots thành định dạng yêu cầu của API
-    const payload = {
-      scheduleRequest: selectedSlots.map((slot) => ({
-        dayOfWeek: new Date(slot.date).toISOString(),
-        startTime: {
-          hour: slot.hour,
-          minute: 0,
-        },
-        endTime: {
-          hour: slot.hour,
-          minute: 59,
-        },
-        isBooked: true,
-      })),
-    };
-
     try {
-      const response = await api.post("/ScheduleReader", payload); // Thay thế bằng endpoint thực tế của bạn
+      // Gửi từng yêu cầu cho từng slot
+      for (const slot of selectedSlots) {
+        const payload = {
+          dayOfWeek: new Date(slot.date).toISOString(), // Định dạng ISO 8601 cho dayOfWeek
+          startTime: `${slot.hour.toString().padStart(2, "0")}:00`, // Định dạng giờ cho startTime
+          endTime: `${slot.hour.toString().padStart(2, "0")}:59`, // Định dạng giờ cho endTime
+          isBooked: true,
+        };
 
-      if (response.status === 200 || response.status === 201) {
-        toast.success("Lịch đã được gửi thành công!");
-        // Reset các khung giờ đã chọn
-        setSelectedSlots([]);
-        setWeek((prevWeek) =>
-          prevWeek.map((day) => ({
-            ...day,
-            slots: day.slots.map((slot) => ({ ...slot, selected: false })),
-          }))
-        );
-        // Xóa dữ liệu trong localStorage
-        localStorage.removeItem("selectedSlots");
-      } else {
-        // Xử lý các mã trạng thái không mong muốn
-        toast.error(
-          `Có lỗi xảy ra khi gửi lịch: ${response.data.message || "Vui lòng thử lại."}`
-        );
+        const response = await api.post("/ScheduleReader", payload); // Thay thế bằng endpoint thực tế của bạn
+
+        if (response.status === 200 || response.status === 201) {
+          toast.success(
+            "Lịch đã được gửi thành công cho khung giờ " + slot.hour + "!"
+          );
+        } else {
+          // Xử lý các mã trạng thái không mong muốn
+          toast.error(
+            `Có lỗi xảy ra khi gửi lịch cho khung giờ ${slot.hour}: ${response.data.message || "Vui lòng thử lại."}`
+          );
+        }
       }
+
+      // Reset các khung giờ đã chọn sau khi gửi tất cả
+      setSelectedSlots([]);
+      setWeek((prevWeek) =>
+        prevWeek.map((day) => ({
+          ...day,
+          slots: day.slots.map((slot) => ({ ...slot, selected: false })),
+        }))
+      );
+
+      // Xóa dữ liệu trong localStorage
+      localStorage.removeItem("selectedSlots");
     } catch (error: any) {
       console.error("Error submitting schedule:", error);
       // Kiểm tra nếu error.response tồn tại
