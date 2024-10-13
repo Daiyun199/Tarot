@@ -1,116 +1,129 @@
 /* src/Scheduler.css */
 .scheduler-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    margin-top: 100px;
-  }
-  
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin-top: 100px;
+}
+
+.week {
+  display: flex;
+  justify-content: space-between;
+}
+
+.day {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 13%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.day-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.day-header.past-day {
+  color: #aaa;
+}
+
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.slot {
+  padding: 5px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.slot:hover {
+  background-color: #e0e0e0;
+}
+
+.slot.selected {
+  background-color: #a9a9a9; /* Màu xám */
+  color: white;
+}
+
+.slot.selected span {
+  margin-left: 5px;
+}
+
+.slot.unavailable {
+  background-color: #ccc; /* Màu xám cho khung giờ không khả dụng */
+  color: #666;
+  cursor: not-allowed;
+  pointer-events: none; /* Vô hiệu hóa sự kiện click */
+}
+
+.no-slots {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+.selected-slots {
+  margin-top: 20px;
+}
+
+.selected-slots ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.selected-slots li {
+  background-color: #f0f0f0;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.selected-slots li button {
+  margin-left: 10px;
+  padding: 2px 6px;
+  background-color: #ff4d4d;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.selected-slots li button:hover {
+  background-color: #ff1a1a;
+}
+
+.selected-slots li button:focus {
+  outline: 2px solid #ff1a1a; /* Thêm viền khi focus */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .week {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .day {
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 13%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .day-header {
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
-  .day-header.past-day {
-    color: #aaa;
-  }
-  
-  .slots {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 100%;
-  }
-  
-  .slot {
-    padding: 5px;
-    border: 1px solid #bbb;
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
-    background-color: #f9f9f9;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .slot:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .slot.selected {
-    background-color: #a9a9a9; /* Màu xám */
-    color: white;
-  }
-  
-  .slot.selected span {
-    margin-left: 5px;
-  }
-  
-  .no-slots {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-  }
-  
-  .selected-slots {
-    margin-top: 20px;
-  }
-  
-  .selected-slots ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .selected-slots li {
-    background-color: #f0f0f0;
-    margin: 5px 0;
-    padding: 8px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .selected-slots li button {
-    margin-left: 10px;
-    padding: 2px 6px;
-    background-color: #ff4d4d;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .selected-slots li button:hover {
-    background-color: #ff1a1a;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .week {
       flex-direction: column;
       align-items: center;
-    }
-  
-    .day {
-      width: 90%;
-    }
   }
-  /* index.scss */
+
+  .day {
+      width: 90%;
+  }
+}
+
+/* index.scss */
 
 /* ... Các kiểu CSS hiện tại ... */
 
@@ -124,7 +137,6 @@
 
 /* Kiểu dáng nút Submit */
 .submit-button {
-  // background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%); /* Màu nền gradient */
   background: linear-gradient(90deg, rgba(246,200,241,1) 35%, rgba(148,210,233,1) 100%);
   border: none;
   color: black;
@@ -140,8 +152,7 @@
 
 /* Hiệu ứng khi hover */
 .submit-button:hover {
-  // background: linear-gradient(45deg, #2575fc 0%, #6a11cb 100%); 
-  background: linear-gradient(90deg,rgba(148,210,233,1) 35%, rgba(246,200,241,1) 100%);/* Đảo ngược gradient */
+  background: linear-gradient(90deg, rgba(148,210,233,1) 35%, rgba(246,200,241,1) 100%);
   transform: translateY(-2px); /* Di chuyển lên trên một chút */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Tăng bóng đổ */
 }
@@ -155,14 +166,17 @@
 /* Responsive cho nút Submit (tuỳ chọn) */
 @media (max-width: 600px) {
   .submit-button {
-    width: 100%;
-    padding: 12px 0;
-    font-size: 18px;
+      width: 100%;
+      padding: 12px 0;
+      font-size: 18px;
   }
 
   .submit-button-container {
-    padding: 0 10px;
+      padding: 0 10px;
   }
 }
 
-  
+.slot.disabled {
+  background-color: #ccc; /* Màu xám cho các slot không thể chọn */
+  pointer-events: none; /* Ngăn chặn sự kiện click */
+}

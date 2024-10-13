@@ -1,5 +1,5 @@
 // src/Scheduler.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   startOfToday,
   startOfWeek,
@@ -15,6 +15,7 @@ import api from "../../config/axios";
 interface TimeSlot {
   hour: number;
   selected: boolean;
+  disabled: boolean;
 }
 
 interface Day {
@@ -27,16 +28,20 @@ interface SelectedSlot {
   date: string;
   hour: number;
 }
+interface DisabledSlot {
+  dayOfWeek: string; // Định dạng ngày (ví dụ: "Monday", "Tuesday", ...)
+  startTime: string; // Thời gian bắt đầu (ví dụ: "9:00")
+}
 
 const Scheduler: React.FC = () => {
   const [week, setWeek] = useState<Day[]>([]);
   const [selectedSlots, setSelectedSlots] = useState<SelectedSlot[]>([]);
-
-  const generateCurrentWeek = () => {
+  const [disabledSlots, setDisabledSlots] = useState<DisabledSlot[]>([]);
+  const generateCurrentWeek = useCallback(() => {
     const today = startOfToday();
-    const weekStart = startOfWeek(today, { weekStartsOn: 1 }); // Thứ Hai là ngày bắt đầu
+    const weekStart = startOfWeek(today, { weekStartsOn: 1 });
     const weekArray: Day[] = [];
-
+    console.log(disabledSlots); // Kiểm tra giá trị của disabledSlots
     for (let i = 0; i < 7; i++) {
       const date = addDays(weekStart, i);
       const isPastDay = isBefore(date, today) && !isSameDay(date, today);
@@ -44,10 +49,24 @@ const Scheduler: React.FC = () => {
       let slots: TimeSlot[] = [];
 
       if (!isPastDay) {
-        slots = Array.from({ length: 14 }, (_, idx) => ({
-          hour: 9 + idx,
-          selected: false,
-        }));
+        slots = Array.from({ length: 14 }, (_, idx) => {
+          const hour = 9 + idx;
+
+          const isDisabled = disabledSlots.some(
+            (slot) =>
+              slot.dayOfWeek === format(date, "eeee") && // Kiểm tra ngày trong disabledSlots
+              slot.startTime === `${hour.toString().padStart(2, "0")}:00:00` // Đảm bảo định dạng giờ khớp
+          );
+
+          return {
+            hour,
+            selected: selectedSlots.some(
+              (slot) =>
+                slot.date === format(date, "yyyy-MM-dd") && slot.hour === hour
+            ),
+            disabled: isDisabled, // Cập nhật trạng thái disabled cho slot
+          };
+        });
       }
 
       weekArray.push({
@@ -57,9 +76,8 @@ const Scheduler: React.FC = () => {
       });
     }
 
-    setWeek(weekArray);
-  };
-
+    setWeek(weekArray); // Cập nhật state week
+  }, [disabledSlots, selectedSlots]);
   // Hàm để tải dữ liệu từ localStorage
   const loadSelectedSlots = () => {
     const storedSlots = localStorage.getItem("selectedSlots");
@@ -131,6 +149,8 @@ const Scheduler: React.FC = () => {
 
       // Xóa dữ liệu trong localStorage
       localStorage.removeItem("selectedSlots");
+      await fetchSchedule();
+      generateCurrentWeek();
     } catch (error: any) {
       console.error("Error submitting schedule:", error);
       // Kiểm tra nếu error.response tồn tại
@@ -154,10 +174,49 @@ const Scheduler: React.FC = () => {
   const saveSelectedSlots = (slots: SelectedSlot[]) => {
     localStorage.setItem("selectedSlots", JSON.stringify(slots));
   };
+  const fetchSchedule = async () => {
+    const now = new Date();
+    const firstDayOfWeek = new Date(
+      now.setDate(now.getDate() - now.getDay() + 1)
+    ); // Thứ Hai
+    const lastDayOfWeek = new Date(
+      now.setDate(now.getDate() - now.getDay() + 7)
+    ); // Chủ Nhật
+
+    const startDate = firstDayOfWeek.toISOString();
+    const endDate = lastDayOfWeek.toISOString();
+
+    try {
+      const response = await api.get(
+        `ScheduleReader/byDateRangeAndAccount?startDate=${startDate}&endDate=${endDate}`
+      );
+      const scheduleData = response.data;
+
+      const disabled = scheduleData.map((item: any) => ({
+        dayOfWeek: format(new Date(item.dayOfWeek), "eeee"), // Đảm bảo định dạng đúng
+        startTime: item.startTime,
+      }));
+      setDisabledSlots(disabled);
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+    }
+  };
+
+  // Gọi hàm để lấy lịch
 
   useEffect(() => {
     generateCurrentWeek();
+  }, [disabledSlots, selectedSlots]); // Đảm bảo đã thêm disabledSlots vào đây
+
+  useEffect(() => {
+    fetchSchedule();
   }, []);
+
+  useEffect(() => {
+    if (disabledSlots.length > 0) {
+      generateCurrentWeek();
+    }
+  }, [disabledSlots]);
 
   useEffect(() => {
     loadSelectedSlots();
@@ -253,8 +312,10 @@ const Scheduler: React.FC = () => {
                 day.slots.map((slot, slotIdx) => (
                   <div
                     key={slotIdx}
-                    className={`slot ${slot.selected ? "selected" : ""}`}
-                    onClick={() => toggleSlot(dayIdx, slotIdx)}
+                    className={`slot ${slot.selected ? "selected" : ""} ${slot.disabled ? "disabled" : ""}`} // Thêm lớp disabled
+                    onClick={() =>
+                      !slot.disabled && toggleSlot(dayIdx, slotIdx)
+                    } // Chỉ cho phép chọn nếu không disabled
                   >
                     {slot.hour}:00 {slot.selected && <span>✔️</span>}
                   </div>
@@ -264,6 +325,7 @@ const Scheduler: React.FC = () => {
           </div>
         ))}
       </div>
+
       <div className="selected-slots">
         <h3>Các Khung Giờ Đã Chọn:</h3>
         {selectedSlots.length === 0 ? (
