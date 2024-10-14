@@ -41,7 +41,7 @@ const Scheduler: React.FC = () => {
     const today = startOfToday();
     const weekStart = startOfWeek(today, { weekStartsOn: 1 });
     const weekArray: Day[] = [];
-    console.log(disabledSlots); // Kiểm tra giá trị của disabledSlots
+    // console.log(disabledSlots); // Kiểm tra giá trị của disabledSlots
     for (let i = 0; i < 7; i++) {
       const date = addDays(weekStart, i);
       const isPastDay = isBefore(date, today) && !isSameDay(date, today);
