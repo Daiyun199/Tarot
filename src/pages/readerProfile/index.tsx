@@ -1,5 +1,6 @@
 import "./index.scss";
 import { useNavigate } from "react-router-dom";
+//
 interface ReadingPackage {
   title: string;
   price: string;
@@ -82,7 +83,7 @@ function ReaderProfile({
                     <h3 className="package-title">{pkg.title}</h3>
                     <p className="package-price">{pkg.price}</p>
                     <p className="package-description">{pkg.description}</p>
-                    <button className="book-button" onClick={handleBooking}>ĐẶT LỊCH NGAY</button>
+                    <button className="book-button" onClick={handleBooking}>ĐẶT LỊCH NGAY</button> 
                   </div>
                 </div>
               </div>
