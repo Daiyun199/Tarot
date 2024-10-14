@@ -1,14 +1,17 @@
 import axios from "axios";
 
-// const api = axios.create({
-//   baseURL: "https://meowgic.azurewebsites.net/api/",
-// });
 const api = axios.create({
-  baseURL: "https://localhost:7043/api/",
+  baseURL: "https://meowgic.azurewebsites.net/api/",
   headers: {
     "Content-Type": "application/json", // Thiết lập Content-Type là application/json
   },
 });
+// const api = axios.create({
+//   baseURL: "https://localhost:7043/api/",
+//   headers: {
+//     "Content-Type": "application/json", // Thiết lập Content-Type là application/json
+//   },
+// });
 api.interceptors.request.use(
   function (config) {
     // Do something before request is sent

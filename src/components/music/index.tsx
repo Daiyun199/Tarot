@@ -13,7 +13,7 @@ const AudioPlayer: React.FC<{ isLoginPage?: boolean }> = ({ isLoginPage }) => {
     bottom: "20px",
     right: isLoginPage ? "auto" : "100px",
     left: isLoginPage ? "20px" : "auto",
-    backgroundColor: "black",
+    backgroundColor: "grey", // Màu thay đổi dựa trên trạng thái mute
     color: "white",
     border: "none",
     borderRadius: "50%",
@@ -25,18 +25,27 @@ const AudioPlayer: React.FC<{ isLoginPage?: boolean }> = ({ isLoginPage }) => {
     alignItems: "center",
     justifyContent: "center",
     zIndex: 1000,
+    transition: "background-color 0.3s, transform 0.3s",
+  };
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.1)";
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
   };
 
   return (
-    <>
-      <button
-        style={muteButtonStyle}
-        onClick={toggleMute}
-        aria-label={isMuted ? "Bật âm thanh" : "Tắt âm thanh"}
-      >
-        {isMuted ? <FaVolumeMute size={24} /> : <FaVolumeUp size={24} />}
-      </button>
-    </>
+    <button
+      style={muteButtonStyle}
+      onClick={toggleMute}
+      aria-label={isMuted ? "Bật âm thanh" : "Tắt âm thanh"}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {isMuted ? <FaVolumeMute size={24} /> : <FaVolumeUp size={24} />}
+    </button>
   );
 };
 

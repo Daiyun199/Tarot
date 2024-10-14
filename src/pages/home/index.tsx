@@ -1,10 +1,18 @@
 import "./index.scss";
 import ChatPopup from "../chat/chatPopup";
 import AudioPlayer from "../../components/music";
+import { useState } from "react";
+import WelcomeScreen from "../../components/welcome_screen";
 
 function Home() {
+  const [showWelcome, setShowWelcome] = useState<boolean>(true);
+
+  const handleContinue = () => {
+    setShowWelcome(false);
+  };
   return (
     <div className="home">
+      {showWelcome && <WelcomeScreen onContinue={handleContinue} />}
       <AudioPlayer isLoginPage={true} />
       <div className="home__section1">
         <div className="home__section1__top">
@@ -131,7 +139,6 @@ function Home() {
         </div>
         <div className="home__section4__bottom">About us</div>
       </div>
-
       <ChatPopup />
     </div>
   );
