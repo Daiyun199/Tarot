@@ -6,7 +6,7 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import OhMyMy from "../asset/musicwithoutlyrics.mp3";
+import OhMyMy from "../asset/musicwithoutlyrics.mp3"; // Đảm bảo đường dẫn đúng tới file âm thanh
 
 interface AudioContextProps {
   audioRef: React.RefObject<HTMLAudioElement>;
@@ -14,6 +14,8 @@ interface AudioContextProps {
   togglePlay: () => void;
   toggleMute: () => void;
   isMuted: boolean;
+  playAudio: () => void;
+  pauseAudio: () => void;
 }
 
 const AudioContext = createContext<AudioContextProps | undefined>(undefined);
@@ -21,42 +23,66 @@ const AudioContext = createContext<AudioContextProps | undefined>(undefined);
 export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const audioRef = useRef<HTMLAudioElement | null>(new Audio(OhMyMy));
+  const audioRef = useRef<HTMLAudioElement | null>(null); // Khởi tạo với null
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [isMuted, setIsMuted] = useState<boolean>(true); // Âm thanh mặc định là tắt
 
   useEffect(() => {
-    const audio = audioRef.current;
-
-    if (audio) {
-      audio.loop = true; // Âm thanh lặp lại
-      audio.muted = isMuted; // Cập nhật trạng thái tắt tiếng
-
-      // Tự động phát âm thanh
-      const playAudio = async () => {
-        try {
-          await audio.play();
-          setIsPlaying(true); // Cập nhật trạng thái phát âm thanh
-        } catch (error) {
-          console.error("Lỗi phát âm thanh:", error);
-        }
-      };
-
-      playAudio(); // Gọi hàm phát âm thanh
-
-      // Xử lý dừng âm thanh
-      return () => {
-        audio.pause();
-      };
+    if (!audioRef.current) {
+      audioRef.current = new Audio(OhMyMy);
+      audioRef.current.loop = true;
+      audioRef.current.muted = isMuted;
     }
-  }, [isMuted]); // Chỉ cần cập nhật isMuted khi thay đổi
 
-  const togglePlay = () => {
-    setIsPlaying((prev) => !prev);
-  };
+    // Dừng âm thanh khi component unmount
+    return () => {
+      audioRef.current?.pause();
+    };
+  }, []); // Chạy một lần khi component mount
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
 
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted;
+    }
+  };
+
+  const playAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.muted = false; // Bật âm thanh
+    setIsMuted(false); // Cập nhật trạng thái
+    audio
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+      })
+      .catch((error) => {
+        console.error("Lỗi phát âm thanh:", error);
+      });
+  };
+
+  const pauseAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.pause();
+    setIsPlaying(false);
+  };
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      pauseAudio();
+    } else {
+      playAudio();
+    }
   };
 
   return (
@@ -67,6 +93,8 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
         togglePlay,
         toggleMute,
         isMuted,
+        playAudio,
+        pauseAudio,
       }}
     >
       {children}
@@ -77,7 +105,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
 export const useAudio = () => {
   const context = useContext(AudioContext);
   if (context === undefined) {
-    throw new Error("useAudio must be used within an AudioProvider");
+    throw new Error("useAudio phải được sử dụng trong AudioProvider");
   }
   return context;
 };
