@@ -38,14 +38,12 @@ function ZodiacList() {
   const fetchZodiacs = async () => {
     try {
       const zodiaclist = await api.get("Zodiac");
-      console.log(zodiaclist.data);
       const processedData = zodiaclist.data.map((item: any) => ({
         id: item["id"],
         name: item["name"],
         imglink: item["imgLink"],
         description: item["description"],
       }));
-      // console.log(processedData);
       setZodiacs(processedData);
     } catch (err: any) {
       toast.error(err.response?.data || "An error occurred");

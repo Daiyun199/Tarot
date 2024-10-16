@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./index.scss";
 function Footer() {
   return (
@@ -10,13 +11,15 @@ function Footer() {
         </div>
         <div className="footer__top__section">
           <span className="title">TÀI KHOẢN</span>
-          <span>Đăng nhập</span>
+          <Link to="login" style={{ textDecoration: "none", color: "inherit" }}>
+            <span>Đăng nhập</span>
+          </Link>
           <span>Đăng ký</span>
         </div>
         <div className="footer__top__section">
           <span className="title">LIÊN HỆ</span>
-          <span>Hotline:</span>
-          <span>Email:</span>
+          <span>Hotline: 0111111111</span>
+          <span>Email: meowgic@gmail.com</span>
         </div>
       </div>
       <div className="footer__bottom"></div>

@@ -59,7 +59,7 @@ function Login() {
       dispatch(login(response.data));
       navigate("/");
     } catch (error: any) {
-      toast.error(error);
+      toast.error(error.response.data.ErrorMessage);
     }
   };
 

@@ -1,0 +1,64 @@
+.image-upload-container {
+    position: relative;
+    width: 200px; /* Kích thước hình tròn */
+    height: 200px; /* Kích thước hình tròn */
+    margin: 0 auto; /* Canh giữa */
+  }
+  
+  .image-upload-input {
+    display: none; /* Ẩn input file mặc định */
+  }
+  
+  .upload-circle {
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0; /* Màu nền của ô tròn */
+    border-radius: 50%; /* Làm cho ô tròn thành hình tròn */
+    background-size: cover; /* Đảm bảo ảnh phủ đầy hình tròn */
+    background-position: center; /* Canh giữa ảnh */
+    cursor: pointer; /* Hiển thị con trỏ như tay khi di chuột */
+    display: flex; /* Tùy chọn: giúp căn giữa nội dung nếu cần */
+    justify-content: center; /* Tùy chọn: giúp căn giữa nội dung nếu cần */
+    align-items: center; /* Tùy chọn: giúp căn giữa nội dung nếu cần */
+  }
+  .save-button {
+    margin-top: 10px; /* Khoảng cách giữa nút và vòng tròn */
+    padding: 5px 20px;
+    background-color: #4caf50; /* Màu xanh lá cây */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 2;
+    display: block; /* Đảm bảo nút là block để có thể căn giữa */
+    margin-left: auto; /* Căn trái */
+    margin-right: auto; /* Căn phải */
+  }
+  
+  .save-button:hover {
+    background-color: grey; /* Màu xanh lá cây tối hơn khi di chuột */
+  }
+  .cropper-footer {
+    display: flex; /* Sử dụng flexbox */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    margin-top: 20px; /* Khoảng cách phía trên */
+    position: absolute; /* Để đảm bảo nó ở dưới cùng */
+    bottom: 10px; /* Khoảng cách từ đáy modal */
+    left: 50%; /* Đưa về giữa */
+    transform: translateX(-50%); /* Điều chỉnh để căn giữa chính xác */
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+}
+
+.confirm-button {
+    background: linear-gradient(90deg, rgba(255,210,250,1) 24%, rgba(182,225,241,1) 100%);
+    color: black; /* Màu chữ */
+    border: none; /* Bỏ viền */
+    padding: 10px 20px; /* Padding */
+    cursor: pointer; /* Con trỏ khi hover */
+    border-radius: 5px; /* Bo góc */
+    font-size: 20px;
+}
+
+.confirm-button:hover {
+  background: linear-gradient(90deg, rgba(182,225,241,1) 24%, rgba(255,210,250,1) 100%); /* Màu nền khi hover */
+}

@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 
 import Scheduler from "./pages/readerCalendar";
+import Profile from "./pages/profile";
+import { toast } from "react-toastify";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,7 +35,7 @@ function App() {
       } else {
         const timer = setTimeout(() => {
           dispatch(logout());
-          alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+          toast.info("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
         }, remainingTime);
 
         // Dọn dẹp timer khi component unmount
@@ -59,7 +61,7 @@ function App() {
           element: <ZodiacDetail />,
         },
         {
-          path: "/test",
+          path: "/reader-schedule",
           element: <Scheduler />,
         },
         {
@@ -73,6 +75,10 @@ function App() {
         {
           path: "/calendar",
           element: <BookingCalendar />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
       ],
     },
