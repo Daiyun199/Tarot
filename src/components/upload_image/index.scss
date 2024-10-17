@@ -21,7 +21,7 @@
     justify-content: center; /* Tùy chọn: giúp căn giữa nội dung nếu cần */
     align-items: center; /* Tùy chọn: giúp căn giữa nội dung nếu cần */
   }
-  .save-button {
+  .save-button,.cancel-button {
     margin-top: 10px; /* Khoảng cách giữa nút và vòng tròn */
     padding: 5px 20px;
     background-color: #4caf50; /* Màu xanh lá cây */
@@ -34,9 +34,19 @@
     margin-left: auto; /* Căn trái */
     margin-right: auto; /* Căn phải */
   }
+  .button-container {
+    display: flex; /* Sử dụng flexbox để căn chỉnh các nút */
+    justify-content: space-between; /* Đặt khoảng cách giữa các nút */
+    width: 100%; /* Chiếm toàn bộ chiều rộng của khối chứa */
+    max-width: 300px; /* Tùy chọn: đặt giới hạn chiều rộng */
+    margin: 0 auto; /* Canh giữa khối chứa nút */
+  }
   
-  .save-button:hover {
+  .save-button:hover,.cancel-button:hover {
     background-color: grey; /* Màu xanh lá cây tối hơn khi di chuột */
+  }
+  .cancel-button {
+    background-color: #f44336; /* Màu đỏ cho nút Hủy */
   }
   .cropper-footer {
     display: flex; /* Sử dụng flexbox */

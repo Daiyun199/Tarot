@@ -30,6 +30,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ imgUrl }) => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   // Thêm state để xác nhận vùng cắt
   const [isSaved, setIsSaved] = useState<boolean>(false);
+  const handleCancel = () => {
+    setCroppedImage(null); // Reset ảnh cắt
+    setImage(null); // Reset ảnh hiện tại
+    setFile(null); // Reset file
+    setIsCropping(false); // Đóng modal
+    setIsSaved(false); // Đánh dấu là ảnh chưa được lưu
+  };
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
@@ -53,7 +60,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ imgUrl }) => {
 
   const onCropComplete = useCallback(
     (
-      // croppedArea: unknown,
+      _croppedArea: unknown,
       croppedAreaPixels: { x: number; y: number; width: number; height: number }
     ) => {
       setCroppedAreaPixels(croppedAreaPixels);
@@ -177,7 +184,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ imgUrl }) => {
       </ReactModal>
 
       {croppedImage && !isSaved && (
-        <>
+        <div className="button-container">
           <button
             onClick={handleSave}
             className="save-button"
@@ -185,7 +192,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ imgUrl }) => {
           >
             {isUploading ? "Đang lưu..." : "Lưu"}
           </button>
-        </>
+          <button onClick={handleCancel} className="cancel-button">
+            Hủy
+          </button>
+        </div>
       )}
     </div>
   );

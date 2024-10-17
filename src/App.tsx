@@ -2,10 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
 import Home from "./pages/home";
 import Login from "./pages/login";
-
 import LayoutSpecial from "./components/layout_no_footer";
 import ZodiacHome from "./pages/zodiac";
-
 import TarotReader from "./pages/tarotReader/tarotReader";
 import ReaderProfile from "./pages/readerProfile";
 import ResetPasswordPage from "./pages/reset_password";
