@@ -13,10 +13,9 @@ import { logout } from "./redux/features/userSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
-
-import Scheduler from "./pages/readerCalendar";
 import Profile from "./pages/profile";
 import { toast } from "react-toastify";
+import ReaderManagement from "./pages/ReaderManagement/readerManagement";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,10 +58,6 @@ function App() {
           element: <ZodiacDetail />,
         },
         {
-          path: "/reader-schedule",
-          element: <Scheduler />,
-        },
-        {
           path: "/reader",
           element: <TarotReader />,
         },
@@ -93,6 +88,10 @@ function App() {
           element: <ResetPasswordPage />,
         },
       ],
+    },
+    {
+      path: "/reader-management",
+      element: <ReaderManagement />,
     },
   ]);
   return <RouterProvider router={router} />;

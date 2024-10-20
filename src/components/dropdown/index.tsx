@@ -90,9 +90,9 @@ function Dropdown() {
               <span className="item-text">Cài đặt</span>
             </a>
           ) : role === getRoleName(Roles.Reader.toString()) ? (
-            <a href="/reader-schedule" className="dropdown-item">
+            <a href="/reader-management" className="dropdown-item">
               <CalendarOutlined />
-              <span className="item-text">Lịch xem</span>
+              <span className="item-text">Quản lý lịch</span>
             </a>
           ) : null}
           {userData && (

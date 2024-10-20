@@ -9,7 +9,7 @@ import ReactModal from "react-modal";
 import "./index.scss";
 import { toast } from "react-toastify";
 
-ReactModal.setAppElement("#root"); // Đảm bảo rằng bạn đã có ID 'root' trong HTML
+ReactModal.setAppElement("#root"); 
 
 interface ImageUploadProps {
   imgUrl?: string | null; // Định nghĩa prop imgUrl

@@ -59,7 +59,12 @@ function Login() {
       dispatch(login(response.data));
       navigate("/");
     } catch (error: any) {
-      toast.error(error.response.data.ErrorMessage);
+      const errorMessage = error.response.data.match(/Wrong email or password/);
+      if (errorMessage) {
+        toast.error(errorMessage[0]);
+      } else {
+        toast.error("Không tìm thấy thông báo lỗi.");
+      }
     }
   };
 
