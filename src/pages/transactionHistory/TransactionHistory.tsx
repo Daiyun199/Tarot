@@ -10,9 +10,9 @@ interface Transaction {
   status: string;
 }
 
-const TransactionHistory: React.FC = () => {
+function TransactionHistory() {
   const [search, setSearch] = useState("");
-  const [transactions, setTransactions] = useState<Transaction[]>([
+  const transactions: Transaction[] = [
     {
       id: 1,
       code: "#1234",
@@ -37,7 +37,7 @@ const TransactionHistory: React.FC = () => {
       price: "100.000 VND",
       status: "Hủy",
     },
-  ]);
+  ];
 
   const filteredTransactions = transactions.filter((transaction) =>
     transaction.code.includes(search)
@@ -68,30 +68,29 @@ const TransactionHistory: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-  {filteredTransactions.map((transaction, index) => (
-    <tr key={transaction.id}>
-      <td>{index + 1}</td>
-      <td>{transaction.code}</td>
-      <td>{transaction.time}</td>
-      <td>{transaction.servicePackage}</td>
-      <td>{transaction.price}</td>
-      <td>
-        <div
-          className={`status ${
-            transaction.status === "Hoàn tất"
-              ? "status-success"
-              : transaction.status === "Hủy"
-              ? "status-cancelled"
-              : "status-pending"
-          }`}
-        >
-          {transaction.status}
-        </div>
-      </td>
-    </tr>
-  ))}
-</tbody>
-
+          {filteredTransactions.map((transaction, index) => (
+            <tr key={transaction.id}>
+              <td>{index + 1}</td>
+              <td>{transaction.code}</td>
+              <td>{transaction.time}</td>
+              <td>{transaction.servicePackage}</td>
+              <td>{transaction.price}</td>
+              <td>
+                <div
+                  className={`status ${
+                    transaction.status === "Hoàn tất"
+                      ? "status-success"
+                      : transaction.status === "Hủy"
+                      ? "status-cancelled"
+                      : "status-pending"
+                  }`}
+                >
+                  {transaction.status}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       <div className="order-button-container">
@@ -99,6 +98,6 @@ const TransactionHistory: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default TransactionHistory;
