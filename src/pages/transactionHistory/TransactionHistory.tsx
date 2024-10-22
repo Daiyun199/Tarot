@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./TransactionHistory.scss";
+import { useState } from "react";
+import "./transactionHistory.scss";
 
 interface Transaction {
   id: number;
