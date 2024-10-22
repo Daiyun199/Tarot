@@ -55,7 +55,6 @@ function TransactionHistory() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-
       <table className="transaction-table">
         <thead>
           <tr>
