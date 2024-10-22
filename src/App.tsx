@@ -17,6 +17,8 @@ import Profile from "./pages/profile";
 import { toast } from "react-toastify";
 import ReaderManagement from "./pages/ReaderManagement/readerManagement";
 import TransactionHistory from "./pages/transactionHistory/transactionHistory";
+import CheckoutPage from "./pages/checkout/checkout";
+import CheckoutCompletePage from "./pages/checkout/checkoutComplete";
 
 function App() {
   const dispatch = useDispatch();
@@ -77,6 +79,14 @@ function App() {
         {
           path: "/transactionHistory",
           element: <TransactionHistory />,
+        },
+        {
+          path: "/checkout",
+          element: <CheckoutPage />,
+        },
+        {
+          path: "/checkout-complete",
+          element: <CheckoutCompletePage />,
         },
       ],
     },

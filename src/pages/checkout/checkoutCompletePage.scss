@@ -1,0 +1,60 @@
+.checkout-complete-page {
+  background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px;
+
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+  }
+  h1{
+    font-family: "iCiel Pony", sans-serif;
+  }
+  h2 {
+    font-family: "iCiel Pony", sans-serif;
+    color: #FF0000;
+  }
+  .payment-info,
+  .order-summary {
+    width: 48%; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px solid black; 
+    border-radius: 5px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+
+    tr:nth-child(odd) {
+      background-color: #f2f2f2; 
+    }
+
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+
+      &:nth-child(1) {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .order-item {
+    display: flex;
+    img {
+      margin-right: 10px;
+      width: 100px; 
+    }
+  }
+}

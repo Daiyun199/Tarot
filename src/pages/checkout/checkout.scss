@@ -1,0 +1,80 @@
+.checkout-page {
+  background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+    padding: 100px;
+    background-color: #f9f9f9;
+    font-family: "Raleway", sans-serif;
+  
+    h1,h2 {
+      font-family: "iCiel Pony", sans-serif;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+  
+    .customer-info, .order-summary {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+  
+      input, select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    }
+  
+    .order-summary {
+      .order-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      
+        img {
+          width: 80px; 
+          height: auto;
+          margin-right: 15px; 
+        }
+        
+        div {
+          p {
+            margin: 5px 0; 
+            font-family: "Quicksand";
+          }
+        }
+      }
+      
+  
+      .total-section {
+        text-align: right;
+      }
+  
+      .order-button {
+        padding: 12px 20px;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #333;
+        }
+      }
+    }
+  }
+  
