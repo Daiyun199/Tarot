@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./transactionHistory.scss";
+import "./TransactionHistory.scss";
 
 interface Transaction {
   id: number;
@@ -46,7 +46,7 @@ function TransactionHistory() {
   return (
     <div className="transaction-history">
       <h1>Lịch Sử Giao Dịch</h1>
-      
+
       <div className="search-bar">
         <input
           type="text"
@@ -55,7 +55,7 @@ function TransactionHistory() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-      
+
       <table className="transaction-table">
         <thead>
           <tr>
@@ -81,8 +81,8 @@ function TransactionHistory() {
                     transaction.status === "Hoàn tất"
                       ? "status-success"
                       : transaction.status === "Hủy"
-                      ? "status-cancelled"
-                      : "status-pending"
+                        ? "status-cancelled"
+                        : "status-pending"
                   }`}
                 >
                   {transaction.status}
