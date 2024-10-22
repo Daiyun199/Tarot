@@ -16,7 +16,7 @@ import { RootState } from "./redux/store";
 import Profile from "./pages/profile";
 import { toast } from "react-toastify";
 import ReaderManagement from "./pages/ReaderManagement/readerManagement";
-import TransactionHistory from "./pages/transactionHistory/transactionHistory";
+import TransactionHistory from "./pages/transactionHistory/TransactionHistory";
 
 function App() {
   const dispatch = useDispatch();
