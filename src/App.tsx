@@ -66,7 +66,7 @@ function App() {
           element: <TarotReader />,
         },
         {
-          path: "/dichvu",
+          path: "/dichvu/:id",
           element: <ReaderProfile />,
         },
         {

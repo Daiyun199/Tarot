@@ -1,11 +1,13 @@
 import "./index.scss";
-import { useNavigate } from "react-router-dom";
-//
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../../config/axios";
+
 interface ReadingPackage {
-  title: string;
+  name: string;
   price: string;
   description: string;
-  image: string;
+  imgUrl: string;
 }
 
 interface ReaderProfileProps {
@@ -13,55 +15,104 @@ interface ReaderProfileProps {
   introduction: string;
   experience: string[];
   packages: ReadingPackage[];
-  image: string;
+  imgUrl: string;
   likes: number;
   ratings: number;
-  expertise: string[];
+  expertise?: string[];
 }
 
-function ReaderProfile({
-  name,
-  introduction,
-  experience,
-  packages,
-  image,
-  likes,
-  ratings,
-  expertise,
-}: ReaderProfileProps) {
+function ReaderProfile() {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [profile, setProfile] = useState<ReaderProfileProps | null>(null);
 
   const handleBooking = () => {
     navigate("/calendar");
   };
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const accountResponse = await api.get(`Account/detail-info/${id}`);
+        const tarotServiceResponse = await api.get(`TarotService/Reader/${id}`);
+        console.log(tarotServiceResponse);
+
+        const accountData = accountResponse.data;
+        const tarotPackages = tarotServiceResponse.data;
+
+        // Set different content for "Nonglin" and "Candy"
+        const name = accountData.name === "NONGLIN" ? "Nonglin" : "Candy";
+        const introduction =
+          accountData.name === "NONGLIN"
+            ? '"Với nhiều năm kinh nghiệm trong lĩnh vực tarot, Candy được biết đến như một tarot reader uy tín và tâm huyết. Uyn đã hỗ trợ hàng nhiều khách hàng tìm thấy sự hướng dẫn và cân bằng trong cuộc sống thông qua những là bài Tarot, mang đến sự bình an và hiểu biết sâu sắc về bản thân."'
+            : "Candy là một chuyên gia tarot với kiến thức sâu rộng và khả năng lắng nghe, giúp khách hàng tìm ra câu trả lời cho những vấn đề trong cuộc sống.";
+        const experience =
+          accountData.name === "NONGLIN"
+            ? [
+                "3 năm tổ chức Workshop chia sẻ kiến thức cơ bản về Tarot",
+                "Có lượng người theo dõi trên nền tảng mạng xã hội về Tarot",
+                "3 năm kinh nghiệm xem Tarot và Tealeaf",
+              ]
+            : [
+                "5 năm kinh nghiệm tư vấn tâm lý qua Tarot",
+                "Được chứng nhận về đọc bài Oracle",
+                "Tham gia nhiều hội thảo quốc tế về Tarot",
+              ];
+
+        setProfile({
+          name,
+          introduction,
+          experience,
+          packages: tarotPackages,
+          imgUrl: accountData.imgUrl,
+          likes: accountData.likes,
+          ratings: accountData.ratings,
+          expertise: accountData.expertise,
+        });
+      } catch (error) {
+        console.error("Error fetching profile data", error);
+      }
+    };
+
+    fetchProfileData();
+  }, [id]);
+
+  if (!profile) return <div>Loading...</div>;
+
   return (
     <div className="reader-profile">
       <header className="page-header">
         <h1>READER PROFILE</h1>
       </header>
       <div className="profile-details">
-        <img src={image} alt={`${name}'s profile`} className="profile-image" />
-        <h1 className="profile-name">{name}</h1>
-        <p className="profile-likes">Lượt yêu thích: {likes}</p>
+        <img
+          src={profile.imgUrl}
+          alt={`${profile.name}'s profile`}
+          className="profile-image"
+        />
+        <h1 className="profile-name">{profile.name}</h1>
+        <p className="profile-likes">Lượt yêu thích: {profile.likes}</p>
         <p className="profile-ratings">
           <span className="ratings-text">Lượt đánh giá:</span>
           {Array.from({ length: 5 }, (_, index) =>
-            index < ratings ? "★" : "☆"
+            index < profile.ratings ? "★" : "☆"
           ).join("")}
         </p>
-        <p className="profile-expertise">Chuyên môn: {expertise.join(", ")}</p>
+        <p className="profile-expertise">
+          Chuyên môn: {(profile.expertise || []).join(", ")}
+        </p>
       </div>
       <div className="profile-container">
         <div className="profile-main">
           <div className="profile-info">
             <section className="introduction">
               <h2 className="section-title">Giới thiệu</h2>
-              <p className="section-content">{introduction}</p>
+              <p className="section-content">{profile.introduction}</p>
             </section>
             <section className="experience">
               <h2 className="section-title">Kinh nghiệm</h2>
               <ul className="experience-list">
-                {experience.map((item, index) => (
+                {profile.experience.map((item, index) => (
                   <li key={index} className="experience-item">
                     {item}
                   </li>
@@ -71,23 +122,29 @@ function ReaderProfile({
           </div>
           <div className="packages">
             <h2 className="section-title">Các gói trải bài</h2>
-            {packages.map((pkg, index) => (
-              <div key={index} className="package">
-                <div className="package-content">
-                  <img
-                    src={pkg.image}
-                    alt={pkg.title}
-                    className="package-image"
-                  />
-                  <div className="package-info">
-                    <h3 className="package-title">{pkg.title}</h3>
-                    <p className="package-price">{pkg.price}</p>
-                    <p className="package-description">{pkg.description}</p>
-                    <button className="book-button" onClick={handleBooking}>ĐẶT LỊCH NGAY</button> 
+            {profile.packages && profile.packages.length > 0 ? (
+              profile.packages.map((pkg, index) => (
+                <div key={index} className="package">
+                  <div className="package-content">
+                    <img
+                      src={pkg.imgUrl}
+                      alt={pkg.name}
+                      className="package-image"
+                    />
+                    <div className="package-info">
+                      <h3 className="package-title">{pkg.name}</h3>
+                      <p className="package-price">{pkg.price} VND</p>
+                      <p className="package-description">{pkg.description}</p>
+                      <button className="book-button" onClick={handleBooking}>
+                        ĐẶT LỊCH NGAY
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p>Chưa có gói trải bài nào.</p>
+            )}
           </div>
         </div>
       </div>
@@ -95,54 +152,4 @@ function ReaderProfile({
   );
 }
 
-// Data
-const sampleData: ReaderProfileProps = {
-  name: "Nonglin",
-  introduction:
-    '"Với nhiều năm kinh nghiệm trong lĩnh vực tarot, Candy được biết đến như một tarot reader uy tín và tâm huyết. Uyn đã hỗ trợ hàng nhiều khách hàng tìm thấy sự hướng dẫn và cân bằng trong cuộc sống thông qua những là bài Tarot, mang đến sự bình an và hiểu biết sâu sắc về bản thân."',
-  experience: [
-    "3 năm tổ chức Workshop chia sẻ kiến thức cơ bản về Tarot",
-    "Có lượng người theo dõi trên nền tảng mạng xã hội về Tarot",
-    "3 năm kinh nghiệm xem Tarot và Tealeaf",
-  ],
-  packages: [
-    {
-      title: "Gói trải bài cho câu hỏi đơn",
-      price: "20.000 VND",
-      description:
-        "Reader sẽ nhận câu hỏi, đưa ra câu trả lời chi tiết và cụ thể về vấn đề mà bạn đang quan tâm. Số lượng câu trả lời tương ứng với số lượng câu hỏi lẻ mà bạn đăng kí. Gói trải bài sẽ giúp bạn giải quyết những thắc mắc mà bạn đang gặp phải và đưa ra lời khuyên nhanh nhất cho vấn đề đó.",
-      image: "https://i.imgur.com/U0LKj2Q.png",
-    },
-    {
-      title: "Gói trải bài 3 câu hỏi",
-      price: "50.000 VND",
-      description:
-        "Khác với câu hỏi đơn, gói trải bài theo chủ đề sẽ giúp bạn giải đáp theo chủ đề (tình cảm, sức khỏe, học tập,...). Gói bài này sẽ giúp người coi đi sâu vào 1 vấn đề cụ thể, Reader sẽ đưa ra những dự đoán, những gợi ý, những lời khuyên cho chủ đề mà bạn chọn. Từ đó, giúp bạn có hướng suy nghĩ và giải quyết chính xác hơn.",
-      image: "https://i.imgur.com/U0LKj2Q.png",
-    },
-    {
-      title: "Gói trải bài 6 câu hỏi",
-      price: "100.000 VND",
-      description:
-        "Gói bài sẽ cung cấp cái nhìn tổng quan, những thuận lợi và khó khăn cho tuần mới của bạn. Reader sẽ dự đoán và đưa ra lời khuyên cho những sự kiện có thể xảy ra với bạn, giúp bạn chuẩn bị trước các tình huống hay định hướng cho những cơ hội mới cho mà bản thân chưa nhận ra.",
-      image: "https://i.imgur.com/CoQv8Ta.png",
-    },
-    {
-      title: "Gói trải bài theo chủ đề",
-      price: "100.000 VND",
-      description:
-        "Gói bài sẽ cung cấp cái nhìn tổng quan, những thuận lợi và khó khăn cho tuần mới của bạn. Reader sẽ dự đoán và đưa ra lời khuyên cho những sự kiện có thể xảy ra với bạn, giúp bạn chuẩn bị trước các tình huống hay định hướng cho những cơ hội mới cho mà bản thân chưa nhận ra.",
-      image: "https://i.imgur.com/fIbRrRv.png",
-    },
-  ],
-  image: "https://i.imgur.com/fGigSto.png",
-  likes: 5,
-  ratings: 456,
-  expertise: ["Tarot", "Tealeaf", "Oracle"],
-};
-
-function App() {
-  return <ReaderProfile {...sampleData} />;
-}
-
-export default App;
+export default ReaderProfile;
