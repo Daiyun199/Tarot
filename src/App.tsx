@@ -19,6 +19,7 @@ import ReaderManagement from "./pages/ReaderManagement/readerManagement";
 import CheckoutPage from "./pages/checkout/checkout";
 import CheckoutCompletePage from "./pages/checkout/checkoutComplete";
 import TransactionHistory from "./pages/transactionHistory/TransactionHistory";
+import Register from "./pages/register/register";
 
 function App() {
   const dispatch = useDispatch();
@@ -101,6 +102,10 @@ function App() {
         {
           path: "/reset-password",
           element: <ResetPasswordPage />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },

@@ -117,6 +117,27 @@ function Login() {
             <p className="forgot-password">
               <Link to="/reset-password">Quên mật khẩu</Link>
             </p>
+            <p
+              style={{
+                margin: "0 auto",
+                marginBottom: "5px",
+              }}
+            >
+              I don't have any account.{" "}
+              <Link
+                to="/register"
+                style={{
+                  textDecoration: "none", // Xóa CSS mặc định của Link
+                  // background:
+                  //   "linear-gradient(90deg, rgba(246,200,241,1) 35%, rgba(148,210,233,1) 100%)",
+                  // WebkitBackgroundClip: "text", // Chỉ lấy màu từ background cho phần chữ
+                  // WebkitTextFillColor: "transparent", // Đặt màu chữ là trong suốt để lộ gradient
+                  color: "red",
+                }}
+              >
+                Sign Up
+              </Link>
+            </p>
             <Button
               type="primary"
               htmlType="submit"

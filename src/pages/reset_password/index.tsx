@@ -52,7 +52,7 @@ function ResetPasswordPage() {
         confirmPassword: values.confirmPassword,
         otpResetPassword: values.otp,
       };
-      const response = await api.post("/Account/resetPassword", payload);
+      const response = await api.post("Account/resetPassword", payload);
       if (response.status === 200) {
         message.success("Đặt lại mật khẩu thành công.");
         // Optionally, redirect to login page
