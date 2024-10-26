@@ -1,0 +1,35 @@
+.metrics-card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // Creates 4 equal columns
+    gap: 16px; // Space between cards
+  }
+  
+  .metrics-card {
+    padding: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  
+    &:hover {
+      transform: translateY(-5px); // Slight lift on hover
+    }
+  }
+  
+  .metrics-card-title {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+  }
+  
+  .metrics-card-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .metrics-card-percentage {
+    font-size: 1em;
+    color: #444;
+  }
+  

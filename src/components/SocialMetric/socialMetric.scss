@@ -1,0 +1,18 @@
+/* styles.css */
+.card-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Khoảng cách giữa các card */
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    flex: 1 1 23%; /* Chiếm khoảng 23% chiều rộng để có 4 card đều nhau */
+    min-width: 200px; /* Đảm bảo kích thước tối thiểu của card */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  

@@ -1,0 +1,12 @@
+// DashboardContent.scss
+
+.dashboard-content {
+    > div {
+      margin-top: 20px; // Thay đổi giá trị này để điều chỉnh khoảng cách
+    }
+  
+    .metrics-cards {
+      margin-bottom: 20px; // Khoảng cách giữa các thẻ metrics và các phần khác
+    }
+  }
+  

@@ -1,45 +1,25 @@
-import React from "react";
-import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
+import React, { useState } from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
+import DashboardContent from "../../components/dashboardContent/dashboard";
+import ChartContent from "../../components/chartContent/chart";
 
 const { Header, Content, Sider } = Layout;
 
-const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
-
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
+const items1 = [
+  { key: "dashboard", label: "Dashboard" },
+  { key: "chart", label: "Chart" },
+];
 
 const Dashboard: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const [selectedKey, setSelectedKey] = useState("dashboard");
+
+  const handleMenuClick = (e: any) => {
+    setSelectedKey(e.key);
+  };
 
   return (
     <Layout style={{ height: "100vh" }}>
@@ -48,8 +28,9 @@ const Dashboard: React.FC = () => {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["2"]}
+          defaultSelectedKeys={["dashboard"]}
           items={items1}
+          onClick={handleMenuClick}
           style={{ flex: 1, minWidth: 0 }}
         />
       </Header>
@@ -57,18 +38,17 @@ const Dashboard: React.FC = () => {
         <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
+            defaultSelectedKeys={["dashboard"]}
             style={{ height: "100%", borderRight: 0 }}
-            items={items2}
+            items={items1}
+            onClick={handleMenuClick}
           />
         </Sider>
         <Layout style={{ padding: "0 24px 24px", flex: 1 }}>
           <Breadcrumb
             items={[
               { title: "Home" },
-              { title: "List" },
-              { title: "Dashboard" },
+              { title: selectedKey === "dashboard" ? "Dashboard" : "Chart" },
             ]}
             style={{ margin: "16px 0" }}
           />
@@ -81,7 +61,11 @@ const Dashboard: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            Content
+            {selectedKey === "dashboard" ? (
+              <DashboardContent />
+            ) : (
+              <ChartContent />
+            )}
           </Content>
         </Layout>
       </Layout>
