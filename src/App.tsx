@@ -20,6 +20,7 @@ import CheckoutPage from "./pages/checkout/checkout";
 import CheckoutCompletePage from "./pages/checkout/checkoutComplete";
 import TransactionHistory from "./pages/transactionHistory/TransactionHistory";
 import Register from "./pages/register/register";
+import Dashboard from "./pages/dashboard/dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -112,6 +113,10 @@ function App() {
     {
       path: "/reader-management",
       element: <ReaderManagement />,
+    },
+    {
+      path: "/dashboard",
+      element: <Dashboard />,
     },
   ]);
   return <RouterProvider router={router} />;

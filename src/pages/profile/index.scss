@@ -1,60 +1,104 @@
-.profile{
-    &__title{
-        margin-top: 100px;
-        text-align: center;
-        font-size: 50px;
-        font-family:"iCiel Pony" ;
-        position: relative;
-    
-    
-    &::after {
-        content: "";
+.profile {
+  &__title {
+    margin-top: 100px;
+    text-align: center;
+    font-size: 50px;
+    font-family: "iCiel Pony";
+    position: relative;
 
-        display: block;
-        margin: 20px auto 0; /* Cách tiêu đề một khoảng và căn giữa */
-        width: 30%; /* Độ dài bằng với nội dung tiêu đề */
-        height: 0.5px; /* Độ dày của đường kẻ */
-        background-color: rgba(black,0.3); /* Màu sắc của đường kẻ */
+    &::after {
+      content: "";
+      display: block;
+      margin: 20px auto 0;
+      width: 30%;
+      height: 0.5px;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &__upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+
+    &__box {
+      width: 70%;
+      
+      &__title {
+        font-size: 30px;
+        margin-bottom: 10px;
       }
     }
-    &__upload{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    } 
-    &__info{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 30px;
-        &__box{
-            width: 70%;
-            &__title{
-                font-size: 30px;
-                margin-bottom: 10px;
-            }
-            
-        }
-    }
-}
-.profile__info__box__container {
-    border: 1px solid #ccc; /* Khung viền hình chữ nhật */
-    padding: 10px;
-    border-radius: 8px; /* Bo tròn các góc của hình chữ nhật */
-    background-color: white;
-    margin-bottom: 20px;
   }
-  
-  .profile__info__box__container p {
+}
+
+.profile__info__box__container {
+  padding: 10px;
+  background-color: white;
+  margin-bottom: 20px;
+
+  p,
+  input,
+  select {
     margin: 0;
     padding: 10px 0;
+    font-size: 25px;
+    border: none;
     border-bottom: 1px solid #ddd;
-    font-size: 25px; /* Đường kẻ giữa các cột */
     margin-left: 25px;
+    background-color: transparent;
+    width: calc(100% - 50px);
+
+    &:focus {
+      outline: none;
+    }
   }
-  
-  .profile__info__box__container p:last-child {
-    border-bottom: none; /* Không kẻ dưới dòng cuối cùng */
+
+  p:last-child,
+  input:last-child,
+  select:last-child {
+    border-bottom: none;
   }
-  
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ddd;
+  }
+}
+
+button.save-button {
+  background: linear-gradient(90deg, rgba(246,200,241,1) 35%, rgba(148,210,233,1) 100%);
+  color: black;
+}
+
+button.cancel-button {
+  background: linear-gradient(90deg, rgba(246,200,241,1) 35%, rgba(148,210,233,1) 100%);
+  color: black;
+}
+
+button.edit-button {
+  background: linear-gradient(90deg, rgba(246,200,241,1) 35%, rgba(148,210,233,1) 100%);
+  color: black;
+}
