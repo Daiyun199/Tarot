@@ -90,7 +90,7 @@ function Profile() {
               <>
                 <input
                   type="text"
-                  value={userData.name}
+                  value={userData.name || ""}
                   onChange={(e) =>
                     setUserData({ ...userData, name: e.target.value })
                   }
@@ -98,7 +98,7 @@ function Profile() {
                 />
                 <input
                   type="text"
-                  value={userData.nickname}
+                  value={userData.nickname || ""}
                   onChange={(e) =>
                     setUserData({ ...userData, nickname: e.target.value })
                   }
@@ -117,7 +117,7 @@ function Profile() {
                   placeholder="Ngày Sinh"
                 />
                 <select
-                  value={userData.gender}
+                  value={userData.gender || ""}
                   onChange={(e) =>
                     setUserData({ ...userData, gender: e.target.value })
                   }
@@ -128,7 +128,7 @@ function Profile() {
                 </select>
                 <input
                   type="text"
-                  value={userData.phone}
+                  value={userData.phone || ""}
                   onChange={(e) =>
                     setUserData({ ...userData, phone: e.target.value })
                   }
@@ -136,12 +136,13 @@ function Profile() {
                 />
                 <input
                   type="email"
-                  value={userData.email}
+                  value={userData.email || ""}
                   onChange={(e) =>
                     setUserData({ ...userData, email: e.target.value })
                   }
                   placeholder="Email"
                 />
+
                 <div className="button-group">
                   <button className="save-button" onClick={handleSave}>
                     Lưu
