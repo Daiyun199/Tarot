@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { useNavigate } from "react-router-dom";
 import DashboardContent from "../../components/dashboardContent/dashboard";
 import ChartContent from "../../components/chartContent/chart";
 import PaymentHistoryTable from "../../components/payment_statistics_table/paymentStatisticsTable";
@@ -7,6 +8,7 @@ import PaymentHistoryTable from "../../components/payment_statistics_table/payme
 const { Header, Content, Sider } = Layout;
 
 const items1 = [
+  { key: "home", label: "Home" },
   { key: "dashboard", label: "Dashboard" },
   { key: "chart", label: "Chart" },
   { key: "payment", label: "Payment Statistics" },
@@ -18,9 +20,14 @@ const Dashboard: React.FC = () => {
   } = theme.useToken();
 
   const [selectedKey, setSelectedKey] = useState("dashboard");
+  const navigate = useNavigate();
 
   const handleMenuClick = (e: any) => {
-    setSelectedKey(e.key);
+    if (e.key === "home") {
+      navigate("/"); // Navigate to the Home page
+    } else {
+      setSelectedKey(e.key);
+    }
   };
 
   return (
@@ -50,7 +57,14 @@ const Dashboard: React.FC = () => {
           <Breadcrumb
             items={[
               { title: "Home" },
-              { title: selectedKey === "dashboard" ? "Dashboard" : "Chart" },
+              {
+                title:
+                  selectedKey === "dashboard"
+                    ? "Dashboard"
+                    : selectedKey === "chart"
+                      ? "Chart"
+                      : "Payment Statistics",
+              },
             ]}
             style={{ margin: "16px 0" }}
           />
@@ -68,7 +82,7 @@ const Dashboard: React.FC = () => {
             ) : selectedKey === "chart" ? (
               <ChartContent />
             ) : (
-              <PaymentHistoryTable /> // Replace with the component for "Payment Statistics"
+              <PaymentHistoryTable />
             )}
           </Content>
         </Layout>

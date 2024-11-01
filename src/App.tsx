@@ -23,6 +23,7 @@ import Register from "./pages/register/register";
 import Dashboard from "./pages/dashboard/dashboard";
 import OrderSuccessPage from "./pages/checkout/orderSuccessPage";
 import TransactionFailurePage from "./pages/checkout/transactionFailure";
+import ProtectedRoute from "./components/protectRoute/protectRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -122,11 +123,19 @@ function App() {
     },
     {
       path: "/reader-management",
-      element: <ReaderManagement />,
+      element: (
+        <ProtectedRoute allowedRoles={["Reader"]}>
+          <ReaderManagement />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/dashboard",
-      element: <Dashboard />,
+      element: (
+        <ProtectedRoute allowedRoles={["Admin"]}>
+          <Dashboard />
+        </ProtectedRoute>
+      ),
     },
   ]);
   return <RouterProvider router={router} />;

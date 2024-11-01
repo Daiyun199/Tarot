@@ -16,7 +16,7 @@ interface User {
     month: number;
     day: number;
   };
-  role: number; // Thêm thuộc tính role
+  role: number;
 }
 
 const UserActivityTable: React.FC = () => {
@@ -28,17 +28,23 @@ const UserActivityTable: React.FC = () => {
     const fetchUserData = async () => {
       try {
         const response = await api.get("Account/active");
-        const data = response.data.map((user: any) => ({
-          id: user.id,
-          name: user.name,
-          imgUrl: user.imgUrl,
-          gender: user.gender,
-          phone: user.phone,
-          email: user.email,
-          dob: user.dob,
-          role: user.role, // Lấy thông tin role từ backend
-        }));
-        console.log(data);
+        const data = response.data.map((user: any) => {
+          const dobDate = new Date(user.dob);
+          return {
+            id: user.id,
+            name: user.name,
+            imgUrl: user.imgUrl,
+            gender: user.gender,
+            phone: user.phone,
+            email: user.email,
+            dob: {
+              year: dobDate.getFullYear(),
+              month: dobDate.getMonth() + 1, // Months are zero-indexed
+              day: dobDate.getDate(),
+            },
+            role: user.role,
+          };
+        });
         setUserData(data);
       } catch (err) {
         setError("Failed to fetch data");

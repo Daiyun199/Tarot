@@ -48,8 +48,6 @@ function Login() {
         toast.error("Đăng nhập bằng Facebook thất bại.");
       });
   };
-
-  // const form = useForm();
   const handleLogin = async (values: any) => {
     try {
       const response = await api.post("Auth/login", values);

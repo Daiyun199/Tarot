@@ -9,40 +9,36 @@ import {
   LoginOutlined,
   ShoppingCartOutlined,
   CalendarOutlined,
+  DashboardOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/features/userSlice";
-import { jwtDecode } from "jwt-decode";
-import { DecodedToken } from "../../model/Decoded";
-import { getRoleName, Roles } from "../../model/Role";
 import api from "../../config/axios";
-// Đảm bảo đường dẫn đúng
+import { getRoleName, Roles } from "../../model/Role";
+import decodeUserRole from "../decodeToken/decodeToken"; // Import hàm decodeUserRole
 
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [role, setRole] = useState<string | undefined>(undefined);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
   const userData = localStorage.getItem("userData");
   const user2 = userData ? JSON.parse(userData) : null;
-
   const token = user2?.accessToken;
+
+  // Giải mã vai trò người dùng từ token khi token thay đổi
   useEffect(() => {
     if (token) {
-      const decodedToken = jwtDecode<DecodedToken>(token);
-      const response =
-        decodedToken[
-          "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-        ];
-      setRole(response); // Cập nhật role trong useEffect
-    } else {
-      console.log("No token found");
+      const decodedRole = decodeUserRole(token);
+      setRole(decodedRole);
     }
-  }, [token]); // Theo dõi sự thay đổi của token
-  const navigate = useNavigate();
+  }, [token]);
 
   const handleAccountClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -54,17 +50,25 @@ function Dropdown() {
       navigate("/login");
     }
   };
-
+  const handleDashboardClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    navigate("/dashboard");
+  };
   const handleLogout = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     dispatch(logout());
-    navigate("/login"); // Điều hướng sau khi đăng xuất
+    navigate("/login");
   };
-  const handleCartClick = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+
+  const handleCartClick = async (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     e.preventDefault();
-    
+
     try {
-      const response = await api.get('Order/order-detail/get-cart');
+      const response = await api.get("Order/order-detail/get-cart");
       console.log("Cart data:", response.data);
       navigate("/checkout");
     } catch (error) {
@@ -75,7 +79,7 @@ function Dropdown() {
   return (
     <div className="dropdown">
       <button className="dropdown-button" onClick={toggleDropdown}>
-        <i className="icon menu-icon"></i> {/* Ba dấu gạch ngang */}
+        <i className="icon menu-icon"></i>
       </button>
       {isOpen && (
         <div className="dropdown-content">
@@ -87,10 +91,21 @@ function Dropdown() {
             <UserOutlined />
             <span className="item-text">Tài Khoản</span>
           </a>
-          <a href="#cart" className="dropdown-item" onClick={handleCartClick}>
-            <ShoppingCartOutlined />
-            <span className="item-text">Giỏ hàng</span>
-          </a>
+          {role === getRoleName(Roles.Admin.toString()) ? (
+            <a
+              href="#dashboard"
+              className="dropdown-item"
+              onClick={handleDashboardClick}
+            >
+              <DashboardOutlined />
+              <span className="item-text">Dashboard</span>
+            </a>
+          ) : (
+            <a href="#cart" className="dropdown-item" onClick={handleCartClick}>
+              <ShoppingCartOutlined />
+              <span className="item-text">Giỏ hàng</span>
+            </a>
+          )}
           <a href="#search" className="dropdown-item">
             <HeartOutlined />
             <span className="item-text">Yêu thích</span>
