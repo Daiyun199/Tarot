@@ -2,79 +2,102 @@
   background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
-    padding: 100px;
-    background-color: #f9f9f9;
-    font-family: "Raleway", sans-serif;
-  
-    h1,h2 {
-      font-family: "iCiel Pony", sans-serif;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-  
-    .customer-info, .order-summary {
+  background-color: #f9f9f9;
+  padding: 100px 20px; // Use responsive padding for better adaptation on different screen sizes
+  font-family: "Raleway", sans-serif;
+
+  h1, h2 {
+    font-family: "iCiel Pony", sans-serif;
+    text-align: center;
+    color: #333; // Text color for better contrast with background
+    margin-bottom: 30px;
+  }
+
+  .customer-order-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; // Adds consistent spacing between sections
+    max-width: 1000px;
+    margin: 0 auto;
+
+    .customer-info,
+    .order-summary {
+      flex: 1 1 48%; // Each section takes up 48% of width in row layout
       border: 1px solid #ccc;
       padding: 20px;
-      margin-bottom: 20px;
       border-radius: 8px;
       background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-  
-    .form-group {
-      margin-bottom: 15px;
-  
-      label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-  
-      input, select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
     }
-  
-    .order-summary {
-      .order-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-      
-        img {
-          width: 80px; 
-          height: auto;
-          margin-right: 15px; 
-        }
-        
-        div {
-          p {
-            margin: 5px 0; 
-            font-family: "Quicksand";
-          }
-        }
-      }
-      
-  
-      .total-section {
-        text-align: right;
-      }
-  
-      .order-button {
-        padding: 12px 20px;
-        background-color: black;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-  
-        &:hover {
-          background-color: #333;
-        }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      outline: none;
+
+      &:focus {
+        border-color: #333;
       }
     }
   }
-  
+
+  .order-summary {
+    .order-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      img {
+        width: 80px;
+        height: auto;
+        margin-right: 15px;
+        border-radius: 4px; // Slight rounding on images for a softer look
+      }
+
+      div {
+        p {
+          margin: 5px 0;
+          font-family: "Quicksand", sans-serif;
+          color: #444;
+        }
+      }
+    }
+
+    .total-section {
+      text-align: right;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .order-button {
+      width: 100%;
+      padding: 12px;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
+
+      &:hover {
+        background-color: #333;
+        transform: translateY(-2px); // Slight lift on hover for better interactivity
+      }
+    }
+  }
+}

@@ -21,6 +21,8 @@ import CheckoutCompletePage from "./pages/checkout/checkoutComplete";
 import TransactionHistory from "./pages/transactionHistory/TransactionHistory";
 import Register from "./pages/register/register";
 import Dashboard from "./pages/dashboard/dashboard";
+import OrderSuccessPage from "./pages/checkout/orderSuccessPage";
+import TransactionFailurePage from "./pages/checkout/transactionFailure";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,7 +73,7 @@ function App() {
           element: <ReaderProfile />,
         },
         {
-          path: "/calendar",
+          path: "/calendar/:id",
           element: <BookingCalendar />,
         },
         {
@@ -89,6 +91,14 @@ function App() {
         {
           path: "/checkout-complete",
           element: <CheckoutCompletePage />,
+        },
+        {
+          path: "/success",
+          element: <OrderSuccessPage />,
+        },
+        {
+          path: "/fail",
+          element: <TransactionFailurePage />,
         },
       ],
     },

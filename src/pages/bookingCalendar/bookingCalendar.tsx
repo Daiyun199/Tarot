@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "../../config/axios";
 import "./bookingCalendar.scss";
 
 interface Slot {
   day: string;
   hour: string;
+}
+
+interface ScheduleSlot {
+  dayOfWeek: string;  
+  startTime: string;  
+  endTime: string;   
+  isBooked: boolean;
 }
 
 const hours: string[] = [
@@ -37,16 +45,35 @@ const daysOfWeek: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function BookingCalendar(): JSX.Element {
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
-  const [bookedSlots, setBookedSlots] = useState<Slot[]>([
-    { day: "Mon", hour: "10:00" },
-    { day: "Tue", hour: "15:00" },
-  ]);
-  const [upcomingSlots] = useState<Slot[]>([{ day: "Wed", hour: "13:00" }]);
+  const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
+  const [upcomingSlots] = useState<Slot[]>([]);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
   const weekDates: string[] = getCurrentWeekDates(currentDate).map((date) =>
     date.toLocaleDateString()
   );
+
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      try {
+        const response = await api.get<ScheduleSlot[]>("ScheduleReader/schedule-not-booked-of-reader");
+        const slotsData = response.data;
+
+        const fetchedBookedSlots = slotsData
+          .filter((slot) => slot.isBooked)
+          .map((slot) => ({
+            day: slot.dayOfWeek,
+            hour: slot.startTime,
+          }));
+
+        setBookedSlots(fetchedBookedSlots);
+      } catch (error) {
+        console.error("Error fetching booked slots:", error);
+      }
+    };
+
+    fetchBookedSlots();
+  }, [currentDate]);
 
   const handleSlotClick = (day: string, hour: string): void => {
     setSelectedSlot({ day, hour });
@@ -73,11 +100,25 @@ function BookingCalendar(): JSX.Element {
     setCurrentDate(prevDate);
   };
 
-  const handleConfirmBooking = (): void => {
+  const handleConfirmBooking = async (): Promise<void> => {
     if (selectedSlot) {
-      alert(`Đặt lịch thành công cho ${selectedSlot.day} vào lúc ${selectedSlot.hour}`);
-      setBookedSlots([...bookedSlots, selectedSlot]);
-      setSelectedSlot(null); 
+      try {
+        const response = await api.post("Order/add-to-cart", {
+          day: selectedSlot.day,
+          hour: selectedSlot.hour,
+        });
+
+        if (response.status === 200) {
+          alert(`Đặt lịch thành công cho ${selectedSlot.day} vào lúc ${selectedSlot.hour}`);
+          setBookedSlots([...bookedSlots, selectedSlot]);
+          setSelectedSlot(null);
+        } else {
+          alert("Đặt lịch thất bại. Vui lòng thử lại.");
+        }
+      } catch (error) {
+        console.error("Error booking slot:", error);
+        alert("Đã xảy ra lỗi khi đặt lịch. Vui lòng thử lại sau.");
+      }
     }
   };
 
@@ -132,7 +173,6 @@ function BookingCalendar(): JSX.Element {
                       className={`time-slot ${getSlotClass(day, hour)}`}
                       onClick={() => handleSlotClick(day, hour)}
                     >
-                      {/* Optional: Add markers or icons for better visual cues */}
                     </td>
                   ))}
                 </tr>

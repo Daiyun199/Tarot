@@ -1,0 +1,96 @@
+.checkout-complete-page {
+  background-image: url("https://i.imgur.com/EWG9LmP.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px;
+
+  h1, h2 {
+    font-family: "iCiel Pony", sans-serif;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #333;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    color: #FF0000;
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+  }
+
+  .qr-code-section {
+    width: 48%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    h2 {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    canvas {
+      border: 2px solid #ddd;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #ffffff;
+    }
+  }
+
+  .payment-info, .order-summary {
+    width: 48%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+
+    tr:nth-child(odd) {
+      background-color: #f2f2f2;
+    }
+
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+
+      &:first-child {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .order-item {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: 10px;
+      width: 100px;
+    }
+    
+    p {
+      margin: 5px 0;
+    }
+  }
+}

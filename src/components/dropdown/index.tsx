@@ -16,6 +16,7 @@ import { logout } from "../../redux/features/userSlice";
 import { jwtDecode } from "jwt-decode";
 import { DecodedToken } from "../../model/Decoded";
 import { getRoleName, Roles } from "../../model/Role";
+import api from "../../config/axios";
 // Đảm bảo đường dẫn đúng
 
 function Dropdown() {
@@ -59,6 +60,17 @@ function Dropdown() {
     dispatch(logout());
     navigate("/login"); // Điều hướng sau khi đăng xuất
   };
+  const handleCartClick = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
+    
+    try {
+      const response = await api.get('Order/get-cart');
+      console.log("Cart data:", response.data);
+      navigate("/checkout");
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+    }
+  };
 
   return (
     <div className="dropdown">
@@ -75,7 +87,7 @@ function Dropdown() {
             <UserOutlined />
             <span className="item-text">Tài Khoản</span>
           </a>
-          <a href="#profile" className="dropdown-item">
+          <a href="#cart" className="dropdown-item" onClick={handleCartClick}>
             <ShoppingCartOutlined />
             <span className="item-text">Giỏ hàng</span>
           </a>
