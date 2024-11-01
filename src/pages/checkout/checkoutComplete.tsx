@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import api from "../../config/axios";
 import { QRCodeCanvas } from "qrcode.react";
 import "./checkoutComplete.scss";
@@ -10,6 +11,7 @@ interface OrderDetail {
 }
 
 function CheckoutCompletePage() {
+  const { orderId } = useParams<{ orderId: string }>();
   const [paymentLink, setPaymentLink] = useState<string>(""); 
   const [orderDetails, setOrderDetails] = useState<OrderDetail[]>([]); 
 
@@ -29,7 +31,7 @@ function CheckoutCompletePage() {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await api.get("Order/order-detail/get-all");
+        const response = await api.get(`Order/order-detail/${orderId}`); 
         setOrderDetails(response.data);
       } catch (error) {
         console.error("Failed to fetch order details:", error);
@@ -37,7 +39,7 @@ function CheckoutCompletePage() {
     };
 
     fetchOrderDetails(); 
-  }, []);
+  }, [orderId]);
 
   return (
     <div className="checkout-complete-page">
@@ -55,15 +57,19 @@ function CheckoutCompletePage() {
 
         <div className="order-summary">
           <h2>Đơn hàng của bạn</h2>
-          {orderDetails.map((item) => (
-            <div className="order-item" key={item.id}>
-              <div>
-                <p>Tên sản phẩm: {item.serviceName}</p>
-                <p>Giá: {item.subtotal.toLocaleString()} VND</p> 
-                <p><strong>Tổng: {item.subtotal.toLocaleString()} VND</strong></p>
+          {orderDetails.length === 0 ? (
+            <p>Đang tải đơn hàng...</p>
+          ) : (
+            orderDetails.map((item) => (
+              <div className="order-item" key={item.id}>
+                <div>
+                  <p>Tên sản phẩm: {item.serviceName}</p>
+                  <p>Giá: {item.subtotal.toLocaleString()} VND</p> 
+                  <p><strong>Tổng: {item.subtotal.toLocaleString()} VND</strong></p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

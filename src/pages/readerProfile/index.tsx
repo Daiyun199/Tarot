@@ -27,8 +27,8 @@ function ReaderProfile() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<ReaderProfileProps | null>(null);
 
-  const handleBooking = (id: string) => {
-    navigate(`/calendar/${id}`); 
+  const handleBooking = (packageId: string) => {
+    navigate(`/calendar/${id}/${packageId}`);
   };
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import api from "../../config/axios";
 import "./bookingCalendar.scss";
 
@@ -8,9 +9,9 @@ interface Slot {
 }
 
 interface ScheduleSlot {
-  dayOfWeek: string;  
-  startTime: string;  
-  endTime: string;   
+  dayOfWeek: string;
+  startTime: string;
+  endTime: string;
   isBooked: boolean;
 }
 
@@ -32,22 +33,28 @@ const hours: string[] = [
 ];
 
 const getCurrentWeekDates = (date: Date): Date[] => {
-  const startDate = new Date(date);
-  startDate.setDate(startDate.getDate() - startDate.getDay() + 1); 
-  return Array.from({ length: 7 }, (_, index) => {
-    const newDate = new Date(startDate);
-    newDate.setDate(startDate.getDate() + index);
-    return newDate;
+  const startOfWeek = new Date(date);
+  const day = startOfWeek.getDay();
+  const diff = day === 0 ? -6 : 1 - day; 
+  startOfWeek.setDate(startOfWeek.getDate() + diff);
+
+  const weekDates = Array.from({ length: 7 }, (_, index) => {
+    const nextDate = new Date(startOfWeek);
+    nextDate.setDate(startOfWeek.getDate() + index);
+    return nextDate;
   });
+
+  return weekDates;
 };
 
 const daysOfWeek: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function BookingCalendar(): JSX.Element {
+  const { id, packageId } = useParams<{ id: string; packageId: string }>();
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
-  const [upcomingSlots] = useState<Slot[]>([]);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [readerInfo, setReaderInfo] = useState<{ name: string; experience: string; imgUrl: string; likes: number; ratings: number } | null>(null);
 
   const weekDates: string[] = getCurrentWeekDates(currentDate).map((date) =>
     date.toLocaleDateString()
@@ -72,8 +79,19 @@ function BookingCalendar(): JSX.Element {
       }
     };
 
+    const fetchReaderInfo = async () => {
+      try {
+        const response = await api.get(`Account/detail-info/${id}`);
+        const { name, experience, imgUrl, likes, ratings } = response.data;
+        setReaderInfo({ name, experience, imgUrl, likes, ratings });
+      } catch (error) {
+        console.error("Error fetching reader info:", error);
+      }
+    };
+
     fetchBookedSlots();
-  }, [currentDate]);
+    fetchReaderInfo();
+  }, [currentDate, id]);
 
   const handleSlotClick = (day: string, hour: string): void => {
     setSelectedSlot({ day, hour });
@@ -82,8 +100,6 @@ function BookingCalendar(): JSX.Element {
   const getSlotClass = (day: string, hour: string): string => {
     if (bookedSlots.some((slot) => slot.day === day && slot.hour === hour)) {
       return "booked"; 
-    } else if (upcomingSlots.some((slot) => slot.day === day && slot.hour === hour)) {
-      return "upcoming"; 
     } else if (selectedSlot?.day === day && selectedSlot?.hour === hour) {
       return "selected"; 
     }
@@ -103,9 +119,11 @@ function BookingCalendar(): JSX.Element {
   const handleConfirmBooking = async (): Promise<void> => {
     if (selectedSlot) {
       try {
-        const response = await api.post("Order/add-to-cart", {
+        const response = await api.post("Order/order-detail/add-to-cart", {
           day: selectedSlot.day,
           hour: selectedSlot.hour,
+          packageId: packageId, 
+          scheduleReaderId: id, 
         });
 
         if (response.status === 200) {
@@ -124,15 +142,17 @@ function BookingCalendar(): JSX.Element {
 
   return (
     <div className="container">
-      <div className="profile-details">
-        <img src="https://i.imgur.com/fGigSto.png" className="profile-image" alt="Profile" />
-        <h1 className="profile-name">Weiian</h1>
-        <p className="profile-likes">Lượt yêu thích: </p>
-        <p className="profile-ratings">
-          <span className="ratings-text">Lượt đánh giá:</span>
-        </p>
-        <p className="profile-expertise">Chuyên môn:</p>
-      </div>
+      {readerInfo && (
+        <div className="profile-details">
+          <img src={readerInfo.imgUrl} className="profile-image" alt="Profile" />
+          <h1 className="profile-name">{readerInfo.name}</h1>
+          <p className="profile-likes">Lượt yêu thích: {readerInfo.likes}</p>
+          <p className="profile-ratings">
+            <span className="ratings-text">Lượt đánh giá: {readerInfo.ratings}</span>
+          </p>
+          <p className="profile-expertise">Chuyên môn: {readerInfo.experience}</p>
+        </div>
+      )}
 
       <div className="booking-calendar">
         <h1>Calendar</h1>
