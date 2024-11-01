@@ -7,7 +7,7 @@ import {
 import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import Scheduler from "../../components/readerCalendar";
-import DeleteSchedule from "../../components/delete-schedule/deleteSchedule";
+import DeleteSchedule from "../../components/delete_schedule/deleteSchedule";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Notifications = () => <div>Notifications Component</div>;

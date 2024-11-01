@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import DashboardContent from "../../components/dashboardContent/dashboard";
 import ChartContent from "../../components/chartContent/chart";
+import PaymentHistoryTable from "../../components/payment_statistics_table/paymentStatisticsTable";
 
 const { Header, Content, Sider } = Layout;
 
 const items1 = [
   { key: "dashboard", label: "Dashboard" },
   { key: "chart", label: "Chart" },
+  { key: "payment", label: "Payment Statistics" },
 ];
 
 const Dashboard: React.FC = () => {
@@ -63,8 +65,10 @@ const Dashboard: React.FC = () => {
           >
             {selectedKey === "dashboard" ? (
               <DashboardContent />
-            ) : (
+            ) : selectedKey === "chart" ? (
               <ChartContent />
+            ) : (
+              <PaymentHistoryTable /> // Replace with the component for "Payment Statistics"
             )}
           </Content>
         </Layout>
