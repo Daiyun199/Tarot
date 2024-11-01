@@ -23,7 +23,7 @@ function CheckoutPage() {
   useEffect(() => {
     const fetchOrderItems = async () => {
       try {
-        const response = await api.get<OrderItem[]>("Order/order-detail/get-all");
+        const response = await api.get<OrderItem[]>("Order/order-detail/get-cart");
         setOrderItems(response.data);
       } catch (error) {
         console.error("Error fetching order items:", error);
@@ -53,9 +53,10 @@ function CheckoutPage() {
         id: item.id,
       }));
 
-      await api.post("Order/booking-order", orderDetails);
+      const response = await api.post("Order/booking-order", orderDetails);
+      const orderId = response.data.orderId;
 
-      navigate("/checkout-complete");
+      navigate(`/checkout-complete/${orderId}`);
     } catch (error) {
       console.error("Error placing the order:", error);
     }
@@ -123,22 +124,34 @@ function CheckoutPage() {
 
         <div className="order-summary">
           <h2>Đơn hàng của bạn</h2>
-          {orderItems.map((item) => (
-            <div className="order-item" key={item.id}>
-              <img src="https://i.imgur.com/U0LKj2Q.png" alt="Product" />
-              <div>
-                <p>{item.serviceName}</p>
-                <p>Giá: {item.subtotal.toLocaleString()} VND</p>
+          {orderItems.length === 0 ? ( 
+            <p>Chưa có đơn hàng</p> 
+          ) : (
+            <>
+              {orderItems.map((item) => (
+                <div className="order-item" key={item.id}>
+                  <img src="https://i.imgur.com/U0LKj2Q.png" alt="Product" />
+                  <div>
+                    <p>{item.serviceName}</p>
+                    <p>Giá: {item.subtotal.toLocaleString()} VND</p>
+                  </div>
+                </div>
+              ))}
+              <div className="total-section">
+                <p>
+                  Ước tính: {orderItems.reduce((total, item) => total + item.subtotal, 0).toLocaleString()} VND
+                </p>
+                <p>
+                  <strong>
+                    Tổng: {orderItems.reduce((total, item) => total + item.subtotal, 0).toLocaleString()} VND
+                  </strong>
+                </p>
               </div>
-            </div>
-          ))}
-          <div className="total-section">
-            <p>Ước tính: {orderItems.reduce((total, item) => total + item.subtotal, 0).toLocaleString()} VND</p>
-            <p><strong>Tổng: {orderItems.reduce((total, item) => total + item.subtotal, 0).toLocaleString()} VND</strong></p>
-          </div>
-          <button className="order-button" onClick={handleSubmit}>
-            Đặt hàng
-          </button>
+              <button className="order-button" onClick={handleSubmit}>
+                Đặt hàng
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

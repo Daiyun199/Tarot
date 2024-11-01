@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import api from "../../config/axios";
 import "./bookingCalendar.scss";
-import { useParams } from "react-router-dom";
 
 interface Slot {
   day: string;
@@ -44,12 +44,21 @@ const getCurrentWeekDates = (date: Date): Date[] => {
 const daysOfWeek: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function BookingCalendar(): JSX.Element {
+  const { id, packageId } = useParams<{ id: string; packageId: string }>();
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [availableSlots, setAvailableSlots] = useState<Slot[]>([]);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const { readerId } = useParams<{ readerId: string }>();
+  // const [readerInfo, setReaderInfo] = useState<{
+  //   name: string;
+  //   experience: string;
+  //   imgUrl: string;
+  //   likes: number;
+  //   ratings: number;
+  // } | null>(null);
+
   const weekDates: string[] = getCurrentWeekDates(currentDate).map((date) =>
     date.toLocaleDateString()
   );
@@ -92,6 +101,16 @@ function BookingCalendar(): JSX.Element {
       }
     };
 
+    // const fetchReaderInfo = async () => {
+    //   try {
+    //     const response = await api.get(`Account/detail-info/${id}`);
+    //     const { name, experience, imgUrl, likes, ratings } = response.data;
+    //     setReaderInfo({ name, experience, imgUrl, likes, ratings });
+    //   } catch (error) {
+    //     console.error("Error fetching reader info:", error);
+    //   }
+    // };
+
     fetchAvailableSlots();
   }, [currentDate, readerId]);
 
@@ -127,9 +146,11 @@ function BookingCalendar(): JSX.Element {
   const handleConfirmBooking = async (): Promise<void> => {
     if (selectedSlot) {
       try {
-        const response = await api.post("Order/add-to-cart", {
+        const response = await api.post("Order/order-detail/add-to-cart", {
           day: selectedSlot.day,
           hour: selectedSlot.hour,
+          packageId: packageId,
+          scheduleReaderId: id,
         });
 
         if (response.status === 200) {

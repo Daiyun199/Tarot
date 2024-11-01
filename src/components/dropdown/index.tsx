@@ -64,7 +64,7 @@ function Dropdown() {
     e.preventDefault();
     
     try {
-      const response = await api.get('Order/get-cart');
+      const response = await api.get('Order/order-detail/get-cart');
       console.log("Cart data:", response.data);
       navigate("/checkout");
     } catch (error) {
