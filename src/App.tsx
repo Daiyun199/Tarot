@@ -73,7 +73,7 @@ function App() {
           element: <ReaderProfile />,
         },
         {
-          path: "/calendar/:id",
+          path: "/calendar/:readerId/:serviceId",
           element: <BookingCalendar />,
         },
         {

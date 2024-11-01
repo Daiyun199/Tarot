@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../config/axios";
 import "./bookingCalendar.scss";
+import { useParams } from "react-router-dom";
 
 interface Slot {
   day: string;
@@ -8,10 +9,9 @@ interface Slot {
 }
 
 interface ScheduleSlot {
-  dayOfWeek: string;  
-  startTime: string;  
-  endTime: string;   
-  isBooked: boolean;
+  dayOfWeek: string;
+  startTime: string;
+  endTime: string;
 }
 
 const hours: string[] = [
@@ -33,7 +33,7 @@ const hours: string[] = [
 
 const getCurrentWeekDates = (date: Date): Date[] => {
   const startDate = new Date(date);
-  startDate.setDate(startDate.getDate() - startDate.getDay() + 1); 
+  startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
   return Array.from({ length: 7 }, (_, index) => {
     const newDate = new Date(startDate);
     newDate.setDate(startDate.getDate() + index);
@@ -45,58 +45,82 @@ const daysOfWeek: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function BookingCalendar(): JSX.Element {
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
-  const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
-  const [upcomingSlots] = useState<Slot[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<Slot[]>([]);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const { readerId } = useParams<{ readerId: string }>();
   const weekDates: string[] = getCurrentWeekDates(currentDate).map((date) =>
     date.toLocaleDateString()
   );
 
   useEffect(() => {
-    const fetchBookedSlots = async () => {
+    const fetchAvailableSlots = async () => {
+      setLoading(true);
+      setError(null); // Reset error state
+      const startDate = new Date(currentDate);
+      startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
+      startDate.setHours(8, 0, 0, 0);
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 6);
+      endDate.setHours(23, 0, 0, 0);
+
       try {
-        const response = await api.get<ScheduleSlot[]>("ScheduleReader/schedule-not-booked-of-reader");
+        const response = await api.get<ScheduleSlot[]>(
+          `ScheduleReader/schedule-not-booked-of-reader`,
+          {
+            params: {
+              startDate: startDate.toISOString(),
+              endDate: endDate.toISOString(),
+              readerId,
+            },
+          }
+        );
+
         const slotsData = response.data;
-
-        const fetchedBookedSlots = slotsData
-          .filter((slot) => slot.isBooked)
-          .map((slot) => ({
-            day: slot.dayOfWeek,
-            hour: slot.startTime,
-          }));
-
-        setBookedSlots(fetchedBookedSlots);
+        const fetchedAvailableSlots = slotsData.map((slot) => ({
+          day: new Date(slot.dayOfWeek).toLocaleDateString("en-US", {
+            weekday: "short",
+          }),
+          hour: slot.startTime.slice(0, 5),
+        }));
+        setAvailableSlots(fetchedAvailableSlots);
       } catch (error) {
-        console.error("Error fetching booked slots:", error);
+        setError("Unable to fetch available slots. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchBookedSlots();
-  }, [currentDate]);
+    fetchAvailableSlots();
+  }, [currentDate, readerId]);
 
   const handleSlotClick = (day: string, hour: string): void => {
-    setSelectedSlot({ day, hour });
+    if (availableSlots.some((slot) => slot.day === day && slot.hour === hour)) {
+      setSelectedSlot({ day, hour });
+    }
   };
 
   const getSlotClass = (day: string, hour: string): string => {
-    if (bookedSlots.some((slot) => slot.day === day && slot.hour === hour)) {
-      return "booked"; 
-    } else if (upcomingSlots.some((slot) => slot.day === day && slot.hour === hour)) {
-      return "upcoming"; 
-    } else if (selectedSlot?.day === day && selectedSlot?.hour === hour) {
-      return "selected"; 
+    if (selectedSlot?.day === day && selectedSlot?.hour === hour) {
+      return "selected";
+    } else if (
+      availableSlots.some((slot) => slot.day === day && slot.hour === hour)
+    ) {
+      return "available";
     }
-    return "";
+    return "unavailable";
   };
 
-  const handleNextMonth = (): void => {
-    const nextDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+  const handleNextWeek = (): void => {
+    const nextDate = new Date(currentDate);
+    nextDate.setDate(currentDate.getDate() + 7);
     setCurrentDate(nextDate);
   };
 
-  const handlePreviousMonth = (): void => {
-    const prevDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+  const handlePreviousWeek = (): void => {
+    const prevDate = new Date(currentDate);
+    prevDate.setDate(currentDate.getDate() - 7);
     setCurrentDate(prevDate);
   };
 
@@ -109,15 +133,16 @@ function BookingCalendar(): JSX.Element {
         });
 
         if (response.status === 200) {
-          alert(`Đặt lịch thành công cho ${selectedSlot.day} vào lúc ${selectedSlot.hour}`);
-          setBookedSlots([...bookedSlots, selectedSlot]);
+          alert(
+            `Booking confirmed for ${selectedSlot.day} at ${selectedSlot.hour}`
+          );
+          setAvailableSlots((prev) => [...prev, selectedSlot]);
           setSelectedSlot(null);
         } else {
-          alert("Đặt lịch thất bại. Vui lòng thử lại.");
+          alert("Booking failed. Please try again.");
         }
       } catch (error) {
-        console.error("Error booking slot:", error);
-        alert("Đã xảy ra lỗi khi đặt lịch. Vui lòng thử lại sau.");
+        alert("An error occurred while booking. Please try again later.");
       }
     }
   };
@@ -125,7 +150,11 @@ function BookingCalendar(): JSX.Element {
   return (
     <div className="container">
       <div className="profile-details">
-        <img src="https://i.imgur.com/fGigSto.png" className="profile-image" alt="Profile" />
+        <img
+          src="https://i.imgur.com/fGigSto.png"
+          className="profile-image"
+          alt="Profile"
+        />
         <h1 className="profile-name">Weiian</h1>
         <p className="profile-likes">Lượt yêu thích: </p>
         <p className="profile-ratings">
@@ -139,16 +168,23 @@ function BookingCalendar(): JSX.Element {
 
         <div className="date-selector">
           <span className="calendar-title">Lịch</span>
-          <button onClick={handlePreviousMonth} className="nav-button">
+          <button onClick={handlePreviousWeek} className="nav-button">
             &lt;
           </button>
           <span className="calendar-title">
-            {currentDate.toLocaleString("default", { month: "long", year: "numeric" })}
+            Tuần của{" "}
+            {currentDate.toLocaleDateString("default", {
+              month: "long",
+              year: "numeric",
+            })}
           </span>
-          <button onClick={handleNextMonth} className="nav-button">
+          <button onClick={handleNextWeek} className="nav-button">
             &gt;
           </button>
         </div>
+
+        {loading && <p>Loading available slots...</p>}
+        {error && <p className="error-message">{error}</p>}
 
         <div className="calendar-wrapper" key={currentDate.toISOString()}>
           <table className="calendar-table">
@@ -158,7 +194,7 @@ function BookingCalendar(): JSX.Element {
                 {daysOfWeek.map((day, index) => (
                   <th key={day}>
                     {day} <br />
-                    {weekDates[index]} 
+                    {weekDates[index]}
                   </th>
                 ))}
               </tr>
@@ -167,47 +203,33 @@ function BookingCalendar(): JSX.Element {
               {hours.map((hour) => (
                 <tr key={hour}>
                   <td className="hour-cell">{hour}</td>
-                  {daysOfWeek.map((day) => (
-                    <td
-                      key={`${day}-${hour}`}
-                      className={`time-slot ${getSlotClass(day, hour)}`}
-                      onClick={() => handleSlotClick(day, hour)}
-                    >
-                    </td>
-                  ))}
+                  {daysOfWeek.map((day) => {
+                    const slotClass = getSlotClass(day, hour);
+                    const isSlotAvailable = slotClass === "available";
+
+                    return (
+                      <td
+                        key={`${day}-${hour}`}
+                        className={`time-slot ${slotClass}`}
+                        onClick={
+                          isSlotAvailable
+                            ? () => handleSlotClick(day, hour)
+                            : undefined
+                        }
+                      >
+                        {isSlotAvailable && hour}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <div className="color-legend-and-booking">
-          <div className="color-legend">
-            <p>
-              <span className="booked-legend"></span> Đã được lên lịch 
-            </p>
-            <p>
-              <span className="upcoming-legend"></span> Sự kiện sắp diễn 
-            </p>
-            <p>
-              <span className="selected-legend"></span> Bạn đang chọn 
-            </p>
-          </div>
-
-          {selectedSlot && (
-            <div className="selection-info">
-              <div className="booking-details">
-                <p>
-                  Đặt lịch của bạn: {selectedSlot.hour} <br /> 
-                  Ngày: {selectedSlot.day}, {currentDate.toLocaleDateString()}
-                </p>
-              </div>
-              <button className="confirm-button" onClick={handleConfirmBooking}>
-                Xác nhận đặt lịch
-              </button>
-            </div>
-          )}
-        </div>
+        <button onClick={handleConfirmBooking} className="confirm-button">
+          Đặt lịch
+        </button>
       </div>
     </div>
   );

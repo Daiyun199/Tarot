@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import api from "../../config/axios";
 
 interface ReadingPackage {
-  id: string; 
+  id: string;
   name: string;
   price: string;
   description: string;
@@ -27,8 +27,8 @@ function ReaderProfile() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<ReaderProfileProps | null>(null);
 
-  const handleBooking = (id: string) => {
-    navigate(`/calendar/${id}`); 
+  const handleBooking = (serviceId: string) => {
+    navigate(`/calendar/${id}/${serviceId}`);
   };
 
   useEffect(() => {
@@ -40,8 +40,6 @@ function ReaderProfile() {
 
         const accountData = accountResponse.data;
         const tarotPackages = tarotServiceResponse.data;
-
-        // Set different content for "Nonglin" and "Candy"
         const name = accountData.name === "NONGLIN" ? "Nonglin" : "Candy";
         const introduction =
           accountData.name === "NONGLIN"
@@ -125,7 +123,7 @@ function ReaderProfile() {
             <h2 className="section-title">Các gói trải bài</h2>
             {profile.packages && profile.packages.length > 0 ? (
               profile.packages.map((pkg) => (
-                <div key={pkg.id} className="package"> 
+                <div key={pkg.id} className="package">
                   <div className="package-content">
                     <img
                       src={pkg.imgUrl}
@@ -136,7 +134,10 @@ function ReaderProfile() {
                       <h3 className="package-title">{pkg.name}</h3>
                       <p className="package-price">{pkg.price} VND</p>
                       <p className="package-description">{pkg.description}</p>
-                      <button className="book-button" onClick={() => handleBooking(pkg.id)}>
+                      <button
+                        className="book-button"
+                        onClick={() => handleBooking(pkg.id)}
+                      >
                         ĐẶT LỊCH NGAY
                       </button>
                     </div>

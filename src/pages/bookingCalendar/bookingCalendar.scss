@@ -141,8 +141,10 @@ body {
         cursor: pointer;
         transition: background-color 0.3s, transform 0.2s;
 
-        &.booked {
-          background-color: #b80000;
+        &.unavailable {
+          background-color: gray; 
+          cursor: not-allowed; 
+          pointer-events: none; 
         }
 
         &.upcoming {
@@ -150,7 +152,12 @@ body {
         }
 
         &.selected {
-          background-color: #e9d0d9;
+          background: linear-gradient(90deg, rgba(246,200,241,1) 35%, rgba(148,210,233,1) 100%);
+          color:white;
+        }
+  
+        &.available {
+          background-color: white; 
         }
         &:hover {
           background-color: #e9d0d9;
@@ -367,3 +374,4 @@ body {
     }
   }
 }
+

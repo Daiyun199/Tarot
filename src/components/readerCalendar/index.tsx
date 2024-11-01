@@ -9,7 +9,7 @@ import {
   isSameDay,
 } from "date-fns";
 import "./index.scss";
-import { toast } from "react-toastify"; // Chỉ import toast
+import { toast } from "react-toastify";
 import api from "../../config/axios";
 
 interface TimeSlot {
@@ -29,8 +29,8 @@ interface SelectedSlot {
   hour: number;
 }
 interface DisabledSlot {
-  dayOfWeek: string; // Định dạng ngày (ví dụ: "Monday", "Tuesday", ...)
-  startTime: string; // Thời gian bắt đầu (ví dụ: "9:00")
+  dayOfWeek: string;
+  startTime: string;
 }
 
 const Scheduler: React.FC = () => {
