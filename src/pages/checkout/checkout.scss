@@ -3,31 +3,36 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #f9f9f9;
-  padding: 100px 20px; // Use responsive padding for better adaptation on different screen sizes
+  padding: 100px 20px; 
   font-family: "Raleway", sans-serif;
 
   h1, h2 {
     font-family: "iCiel Pony", sans-serif;
     text-align: center;
-    color: #333; // Text color for better contrast with background
+    color: #333; 
     margin-bottom: 30px;
   }
 
   .customer-order-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; // Adds consistent spacing between sections
+    gap: 20px; 
     max-width: 1000px;
     margin: 0 auto;
 
     .customer-info,
     .order-summary {
-      flex: 1 1 48%; // Each section takes up 48% of width in row layout
+      flex: 1 1 48%; 
       border: 1px solid #ccc;
       padding: 20px;
       border-radius: 8px;
       background-color: #fff;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
     }
   }
 
@@ -60,25 +65,33 @@
     .order-item {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px; 
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
 
-      img {
-        width: 80px;
-        height: auto;
-        margin-right: 15px;
-        border-radius: 4px; // Slight rounding on images for a softer look
+      &:hover {
+        background-color: #eaeaea;
       }
 
       div {
-        p {
-          margin: 5px 0;
-          font-family: "Quicksand", sans-serif;
+        flex: 1;
+
+        label {
+          display: block;
           color: #444;
+          font-weight: 500;
         }
       }
     }
 
     .total-section {
+      padding: 15px;
+      background-color: #f1f1f1; 
+      border-top: 2px solid #ccc;
       text-align: right;
       font-weight: bold;
       color: #333;
@@ -96,8 +109,24 @@
 
       &:hover {
         background-color: #333;
-        transform: translateY(-2px); // Slight lift on hover for better interactivity
+        transform: translateY(-2px);
       }
+    }
+  }
+
+  .delete-button {
+    background-color: #ff4d4d; 
+    color: white;
+    border: none;
+    border-radius: 5px; 
+    padding: 8px 12px; 
+    margin-left: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+
+    &:hover {
+      background-color: #cc0000; 
+      transform: scale(1.05); 
     }
   }
 }

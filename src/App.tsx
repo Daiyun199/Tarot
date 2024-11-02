@@ -90,7 +90,7 @@ function App() {
           element: <CheckoutPage />,
         },
         {
-          path: "/checkout-complete",
+          path: "/checkout-complete/:orderId",
           element: <CheckoutCompletePage />,
         },
         {

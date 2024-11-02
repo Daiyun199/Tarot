@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../config/axios";
 import "./bookingCalendar.scss";
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Slot {
+  id: string;
   day: string;
   hour: string;
 }
 
 interface ScheduleSlot {
+  id: string;
   dayOfWeek: string;
   startTime: string;
   endTime: string;
@@ -44,20 +48,19 @@ const getCurrentWeekDates = (date: Date): Date[] => {
 const daysOfWeek: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function BookingCalendar(): JSX.Element {
-  const { id, packageId } = useParams<{ id: string; packageId: string }>();
+  const { id, serviceId, readerId } = useParams<{ id: string; serviceId: string; readerId: string }>();
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [availableSlots, setAvailableSlots] = useState<Slot[]>([]);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { readerId } = useParams<{ readerId: string }>();
-  // const [readerInfo, setReaderInfo] = useState<{
-  //   name: string;
-  //   experience: string;
-  //   imgUrl: string;
-  //   likes: number;
-  //   ratings: number;
-  // } | null>(null);
+  const [readerInfo, setReaderInfo] = useState<{
+    name: string;
+    experience: string;
+    imgUrl: string;
+    likes: number;
+    ratings: number;
+  } | null>(null);
 
   const weekDates: string[] = getCurrentWeekDates(currentDate).map((date) =>
     date.toLocaleDateString()
@@ -66,7 +69,7 @@ function BookingCalendar(): JSX.Element {
   useEffect(() => {
     const fetchAvailableSlots = async () => {
       setLoading(true);
-      setError(null); // Reset error state
+      setError(null);
       const startDate = new Date(currentDate);
       startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
       startDate.setHours(8, 0, 0, 0);
@@ -87,7 +90,11 @@ function BookingCalendar(): JSX.Element {
         );
 
         const slotsData = response.data;
+
+        console.log("Fetched slots data:", slotsData);
+
         const fetchedAvailableSlots = slotsData.map((slot) => ({
+          id: slot.id, 
           day: new Date(slot.dayOfWeek).toLocaleDateString("en-US", {
             weekday: "short",
           }),
@@ -101,22 +108,24 @@ function BookingCalendar(): JSX.Element {
       }
     };
 
-    // const fetchReaderInfo = async () => {
-    //   try {
-    //     const response = await api.get(`Account/detail-info/${id}`);
-    //     const { name, experience, imgUrl, likes, ratings } = response.data;
-    //     setReaderInfo({ name, experience, imgUrl, likes, ratings });
-    //   } catch (error) {
-    //     console.error("Error fetching reader info:", error);
-    //   }
-    // };
+    const fetchReaderInfo = async () => {
+      try {
+        const response = await api.get(`Account/detail-info/${id}`);
+        const { name, experience, imgUrl, likes, ratings } = response.data;
+        setReaderInfo({ name, experience, imgUrl, likes, ratings });
+      } catch (error) {
+        console.error("Error fetching reader info:", error);
+      }
+    };
 
     fetchAvailableSlots();
-  }, [currentDate, readerId]);
+    fetchReaderInfo();
+  }, [currentDate, readerId, id]);
 
   const handleSlotClick = (day: string, hour: string): void => {
-    if (availableSlots.some((slot) => slot.day === day && slot.hour === hour)) {
-      setSelectedSlot({ day, hour });
+    const slot = availableSlots.find((slot) => slot.day === day && slot.hour === hour);
+    if (slot) {
+      setSelectedSlot(slot);
     }
   };
 
@@ -145,44 +154,56 @@ function BookingCalendar(): JSX.Element {
 
   const handleConfirmBooking = async (): Promise<void> => {
     if (selectedSlot) {
+      console.log("Booking payload:", {
+        day: selectedSlot.day,
+        hour: selectedSlot.hour,
+        serviceId: serviceId,
+        scheduleReaderId: selectedSlot.id,
+      });
       try {
         const response = await api.post("Order/order-detail/add-to-cart", {
-          day: selectedSlot.day,
-          hour: selectedSlot.hour,
-          packageId: packageId,
-          scheduleReaderId: id,
+          // day: selectedSlot.day,
+          // hour: selectedSlot.hour,
+          serviceId: serviceId,
+          scheduleReaderId: selectedSlot.id,
         });
 
         if (response.status === 200) {
-          alert(
-            `Booking confirmed for ${selectedSlot.day} at ${selectedSlot.hour}`
-          );
-          setAvailableSlots((prev) => [...prev, selectedSlot]);
+          toast.success(`Booking confirmed for ${selectedSlot.day} at ${selectedSlot.hour}`);
+          setAvailableSlots((prev) => prev.filter(slot => !(slot.day === selectedSlot.day && slot.hour === selectedSlot.hour))); 
           setSelectedSlot(null);
         } else {
-          alert("Booking failed. Please try again.");
+          toast.error("Booking failed. Please try again.");
         }
       } catch (error) {
-        alert("An error occurred while booking. Please try again later.");
+        console.error("Error during booking:", error);
+        toast.error("An error occurred while booking. Please try again later.");
       }
     }
   };
 
   return (
     <div className="container">
-      <div className="profile-details">
-        <img
-          src="https://i.imgur.com/fGigSto.png"
-          className="profile-image"
-          alt="Profile"
-        />
-        <h1 className="profile-name">Weiian</h1>
-        <p className="profile-likes">Lượt yêu thích: </p>
-        <p className="profile-ratings">
-          <span className="ratings-text">Lượt đánh giá:</span>
-        </p>
-        <p className="profile-expertise">Chuyên môn:</p>
-      </div>
+      <ToastContainer />
+      {readerInfo && (
+        <div className="profile-details">
+          <img
+            src={readerInfo.imgUrl}
+            className="profile-image"
+            alt="Profile"
+          />
+          <h1 className="profile-name">{readerInfo.name}</h1>
+          <p className="profile-likes">Lượt yêu thích: {readerInfo.likes}</p>
+          <p className="profile-ratings">
+            <span className="ratings-text">
+              Lượt đánh giá: {readerInfo.ratings}
+            </span>
+          </p>
+          <p className="profile-expertise">
+            Chuyên môn: {readerInfo.experience}
+          </p>
+        </div>
+      )}
 
       <div className="booking-calendar">
         <h1>Calendar</h1>
