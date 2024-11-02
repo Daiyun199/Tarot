@@ -102,6 +102,7 @@ function BookingCalendar(): JSX.Element {
         }));
         setAvailableSlots(fetchedAvailableSlots);
       } catch (error) {
+        console.error("Error fetching available slots:", error);
         setError("Unable to fetch available slots. Please try again later.");
       } finally {
         setLoading(false);
@@ -162,8 +163,6 @@ function BookingCalendar(): JSX.Element {
       });
       try {
         const response = await api.post("Order/order-detail/add-to-cart", {
-          // day: selectedSlot.day,
-          // hour: selectedSlot.hour,
           serviceId: serviceId,
           scheduleReaderId: selectedSlot.id,
         });
