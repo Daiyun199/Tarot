@@ -9,7 +9,6 @@ const api = axios.create({
 
 api.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
     const userData = localStorage.getItem("userData");
     const user = userData ? JSON.parse(userData) : null;
     const token = user?.accessToken;

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../config/axios";
 import "./bookingCalendar.scss";
-import { ToastContainer, toast } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Slot {
   id: string;
@@ -48,7 +48,11 @@ const getCurrentWeekDates = (date: Date): Date[] => {
 const daysOfWeek: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function BookingCalendar(): JSX.Element {
-  const { id, serviceId, readerId } = useParams<{ id: string; serviceId: string; readerId: string }>();
+  const { id, serviceId, readerId } = useParams<{
+    id: string;
+    serviceId: string;
+    readerId: string;
+  }>();
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [availableSlots, setAvailableSlots] = useState<Slot[]>([]);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -90,11 +94,8 @@ function BookingCalendar(): JSX.Element {
         );
 
         const slotsData = response.data;
-
-        console.log("Fetched slots data:", slotsData);
-
         const fetchedAvailableSlots = slotsData.map((slot) => ({
-          id: slot.id, 
+          id: slot.id,
           day: new Date(slot.dayOfWeek).toLocaleDateString("en-US", {
             weekday: "short",
           }),
@@ -111,7 +112,7 @@ function BookingCalendar(): JSX.Element {
 
     const fetchReaderInfo = async () => {
       try {
-        const response = await api.get(`Account/detail-info/${id}`);
+        const response = await api.get(`Account/detail-info/${readerId}`);
         const { name, experience, imgUrl, likes, ratings } = response.data;
         setReaderInfo({ name, experience, imgUrl, likes, ratings });
       } catch (error) {
@@ -124,7 +125,9 @@ function BookingCalendar(): JSX.Element {
   }, [currentDate, readerId, id]);
 
   const handleSlotClick = (day: string, hour: string): void => {
-    const slot = availableSlots.find((slot) => slot.day === day && slot.hour === hour);
+    const slot = availableSlots.find(
+      (slot) => slot.day === day && slot.hour === hour
+    );
     if (slot) {
       setSelectedSlot(slot);
     }
@@ -155,12 +158,6 @@ function BookingCalendar(): JSX.Element {
 
   const handleConfirmBooking = async (): Promise<void> => {
     if (selectedSlot) {
-      console.log("Booking payload:", {
-        day: selectedSlot.day,
-        hour: selectedSlot.hour,
-        serviceId: serviceId,
-        scheduleReaderId: selectedSlot.id,
-      });
       try {
         const response = await api.post("Order/order-detail/add-to-cart", {
           serviceId: serviceId,
@@ -168,8 +165,18 @@ function BookingCalendar(): JSX.Element {
         });
 
         if (response.status === 200) {
-          toast.success(`Booking confirmed for ${selectedSlot.day} at ${selectedSlot.hour}`);
-          setAvailableSlots((prev) => prev.filter(slot => !(slot.day === selectedSlot.day && slot.hour === selectedSlot.hour))); 
+          toast.success(
+            `Booking confirmed for ${selectedSlot.day} at ${selectedSlot.hour}`
+          );
+          setAvailableSlots((prev) =>
+            prev.filter(
+              (slot) =>
+                !(
+                  slot.day === selectedSlot.day &&
+                  slot.hour === selectedSlot.hour
+                )
+            )
+          );
           setSelectedSlot(null);
         } else {
           toast.error("Booking failed. Please try again.");
