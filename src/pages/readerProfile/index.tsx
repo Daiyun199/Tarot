@@ -74,7 +74,7 @@ function ReaderProfile() {
     fetchProfileData();
   }, [id]);
 
-  if (!profile) return <div>Loading...</div>;
+  if (!profile) return <div className="loading">Loading</div>;
 
   return (
     <div className="reader-profile">

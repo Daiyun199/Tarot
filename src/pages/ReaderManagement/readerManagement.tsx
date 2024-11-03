@@ -17,15 +17,14 @@ const { Header, Content, Sider } = Layout;
 const items1: MenuProps["items"] = [
   {
     key: "1",
-    label: "Schedule", // Thay đổi tiêu đề thành Schedule
+    label: "Schedule",
   },
   {
     key: "2",
-    label: "Home", // Thay đổi tiêu đề thành Home
+    label: "Home",
   },
 ];
 
-// Các mục điều hướng trong Sidebar
 const items2: MenuProps["items"] = [
   {
     key: "1",
@@ -45,25 +44,22 @@ const items2: MenuProps["items"] = [
 ];
 
 const ReaderManagement: React.FC = () => {
-  const [selectedContent, setSelectedContent] = useState<string>("1"); // Mặc định chọn Schedule (key: "1")
+  const [selectedContent, setSelectedContent] = useState<string>("1");
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const navigate = useNavigate(); // Sử dụng useNavigate để điều hướng
+  const navigate = useNavigate();
 
-  // Hàm để thay đổi component khi chọn menu trong Sidebar
   const handleMenuClick = (e: { key: string }) => {
-    setSelectedContent(e.key); // Cập nhật option được chọn
+    setSelectedContent(e.key);
   };
 
-  // Hàm để điều hướng khi click vào menu trên Header
   const handleNavClick = (e: { key: string }) => {
     if (e.key === "2") {
-      navigate("/"); // Điều hướng đến trang "/"
+      navigate("/");
     }
   };
 
-  // Hàm render component dựa trên option được chọn
   const renderContent = () => {
     switch (selectedContent) {
       case "1":
@@ -84,10 +80,10 @@ const ReaderManagement: React.FC = () => {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["1"]} // Đặt mặc định là "Schedule"
-          selectedKeys={["1"]} // Luôn chọn mục Schedule khi vào trang
+          defaultSelectedKeys={["1"]}
+          selectedKeys={["1"]}
           items={items1}
-          onClick={handleNavClick} // Gọi khi chọn mục từ Header
+          onClick={handleNavClick}
           style={{ flex: 1, minWidth: 0 }}
         />
       </Header>
@@ -95,10 +91,10 @@ const ReaderManagement: React.FC = () => {
         <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={["1"]} // Mặc định chọn mục đầu tiên ở Sidebar
+            defaultSelectedKeys={["1"]}
             style={{ height: "100%", borderRight: 0 }}
             items={items2}
-            onClick={handleMenuClick} // Gọi khi chọn item
+            onClick={handleMenuClick}
           />
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
@@ -119,7 +115,6 @@ const ReaderManagement: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            {/* Render component dựa trên mục được chọn */}
             {renderContent()}
           </Content>
         </Layout>

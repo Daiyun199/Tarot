@@ -33,7 +33,7 @@ function App() {
     if (user && loginTime) {
       const currentTime = Date.now();
       const elapsed = currentTime - loginTime;
-      const remainingTime = 3600000 - elapsed; // 1 tiếng = 3600000 ms
+      const remainingTime = 3600000 - elapsed;
 
       if (remainingTime <= 0) {
         dispatch(logout());
@@ -42,8 +42,6 @@ function App() {
           dispatch(logout());
           toast.info("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
         }, remainingTime);
-
-        // Dọn dẹp timer khi component unmount
         return () => clearTimeout(timer);
       }
     }

@@ -5,6 +5,15 @@ body {
   margin: 0;
   padding: 0;
 }
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
 
 .reader-profile {
   flex-direction: column;

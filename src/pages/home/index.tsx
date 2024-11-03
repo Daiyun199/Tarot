@@ -1,12 +1,17 @@
 import "./index.scss";
 import ChatPopup from "../chat/chatPopup";
 import AudioPlayer from "../../components/music";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WelcomeScreen from "../../components/welcome_screen";
 
 function Home() {
   const [showWelcome, setShowWelcome] = useState<boolean>(true);
-
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("userData");
+    if (isLoggedIn) {
+      setShowWelcome(false);
+    }
+  }, []);
   const handleContinue = () => {
     setShowWelcome(false);
   };

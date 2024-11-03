@@ -14,6 +14,7 @@ function ZodiacList() {
     width: number;
     height: number;
   } | null>(null);
+  const [loading, setLoading] = useState(true);
   const imgRefs = useRef<HTMLImageElement[]>([]);
 
   const handleImageClick = (imgSrc: string, index: number, id: string) => {
@@ -47,11 +48,16 @@ function ZodiacList() {
       setZodiacs(processedData);
     } catch (err: any) {
       toast.error(err.response?.data || "An error occurred");
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     fetchZodiacs();
   }, []);
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
   return (
     <div className="zodiac-list">
       {Array.isArray(zodiacs) &&
