@@ -61,15 +61,24 @@ function CheckoutCompletePage() {
 
   const handlePayment = async () => {
     try {
-      const response = await api.post('/PayOS/create', {orderId});
-      if (response.data && response.data.isSuccess) {
-        console.log("Payment created successfully:", response.data);
+      console.log("Sending payment request with data:", { orderId });
+      const response = await api.post(`/PayOS/create?orderId=${orderId}`);
+      
+      if (response.data.data) {
+          console.log("Payment created successfully:", response.data.data);
+
+          const checkoutUrl = response.data.data.checkoutUrl;
+          if (checkoutUrl) {
+              window.location.href = checkoutUrl;
+          } else {
+              console.error("checkoutUrl not found in response:", response.data);
+          }
       } else {
-        console.error("Failed to create payment:", response.data);
+          console.error("Failed to create payment:", response.data);
       }
-    } catch (error) {
+  } catch (error) {
       console.error("Payment request failed:", error);
-    }
+  }
   };
 
   return (
@@ -105,7 +114,6 @@ function CheckoutCompletePage() {
       </div>
     </div>
   );
-
 }
 
 export default CheckoutCompletePage;
