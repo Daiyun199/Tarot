@@ -6,12 +6,7 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
-// const api = axios.create({
-//   baseURL: "https://localhost:7043/api/",
-//   headers: {
-//     "Content-Type": "application/json", // Thiết lập Content-Type là application/json
-//   },
-// });
+
 api.interceptors.request.use(
   function (config) {
     // Do something before request is sent
