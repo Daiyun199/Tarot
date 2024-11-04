@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 import { signInWithPopup } from "firebase/auth";
-import { auth, facebookProvider, googleProvider } from "../../config/firebase";
+import { auth, googleProvider } from "../../config/firebase";
 import api from "../../config/axios";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/features/userSlice";
@@ -15,38 +15,56 @@ import AudioPlayer from "../../components/music";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
-        console.log(user);
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      const payload = {
+        email: user.email,
+        name: user.displayName,
+        phone: "0001112223",
+        gender: "Female",
+        dob: "2000-01-01T00:00:00.618Z",
+        roles: 0,
+      };
+
+      const response = await api.post(
+        "Auth/register-without-password",
+        payload
+      );
+
+      if (response.status === 200) {
         toast.success("Đăng nhập bằng Google thành công!");
-        navigate("/"); // Điều hướng về trang chủ sau khi đăng nhập thành công
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Đăng nhập bằng Google thất bại.");
-      });
+        const { token } = response.data;
+        localStorage.setItem("token", token);
+        dispatch(login(response.data));
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Lỗi đăng nhập:", error);
+      toast.error("Đăng nhập bằng Google thất bại.");
+    }
   };
 
   const handleFaceBookLogin = () => {
-    signInWithPopup(auth, facebookProvider)
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        // const credential = FacebookAuthProvider.credentialFromResult(result);
-        // const accessToken = credential.accessToken;
-        toast.success("Đăng nhập bằng Facebook thành công");
-        console.log(user);
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Đăng nhập bằng Facebook thất bại.");
-      });
+    // signInWithPopup(auth, facebookProvider)
+    //   .then((result) => {
+    //     // The signed-in user info.
+    //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //     // const user = result.user;
+    //     // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    //     // const credential = FacebookAuthProvider.credentialFromResult(result);
+    //     // const accessToken = credential.accessToken;
+    //     toast.success("Đăng nhập bằng Facebook thành công");
+    //     // console.log(user);
+    //     // IdP data available using getAdditionalUserInfo(result)
+    //     // ...
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     toast.error("Đăng nhập bằng Facebook thất bại.");
+    //   });
   };
   const handleLogin = async (values: any) => {
     try {

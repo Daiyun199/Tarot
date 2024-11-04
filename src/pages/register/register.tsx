@@ -13,7 +13,6 @@ function Register() {
 
   // Handler to reset password
   const handleSubmit = async (values: any) => {
-    // Chỉ xử lý submit nếu checkbox được chọn
     if (!values.terms) {
       message.error("Bạn phải đồng ý với điều khoản và điều kiện.");
       return;
