@@ -64,34 +64,17 @@ function Home() {
             <div className="home__section2__bottom__box__title">
               Tarot <br /> Hằng ngày
             </div>
-            <div className="home__section2__bottom__box__info">
-              "Hãy bắt đầu ngày mới với dịch vụ bói Tarot hằng ngày của chúng
-              tôi! Nhận những gợi ý tinh tế và lời khuyên hữu ích để hướng dẫn
-              bạn qua mọi thăng trầm trong cuộc sống."
-            </div>
           </div>
           <div className="home__section2__bottom__box">
             <div className="home__section2__bottom__box__img"></div>
             <div className="home__section2__bottom__box__title">
               Tarot <br /> 12 cung hoàng đạo
             </div>
-            <div className="home__section2__bottom__box__info">
-              "Đắm chìm trong thế giới của 12 cung hoàng đạo với dịch vụ bói
-              Tarot của chúng tôi! Khám phá những thông điệp cá nhân hóa từ các
-              lá bài để nhận định rõ hơn về tương lai và định hướng cuộc sống
-              của bạn."
-            </div>
           </div>
           <div className="home__section2__bottom__box">
             <div className="home__section2__bottom__box__img"></div>
             <div className="home__section2__bottom__box__title">
               Tarot <br /> Trải bài chuyên sâu
-            </div>
-            <div className="home__section2__bottom__box__info">
-              "Khám phá những bí ẩn của cuộc sống với dịch vụ trải bài Tarot
-              chuyên sâu của chúng tôi, bao gồm Tarot, Oracle và tealeaf. Nhận
-              những dự đoán rõ ràng và gợi ý thực tế để giúp bạn đưa ra những
-              quyết định quan trọng trong cuộc sống."
             </div>
           </div>
         </div>

@@ -11,21 +11,16 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Handler to reset password
   const handleSubmit = async (values: any) => {
     if (!values.terms) {
       message.error("Bạn phải đồng ý với điều khoản và điều kiện.");
       return;
     }
-
-    // Tiếp tục với xử lý submit như trước
     setLoading(true);
     try {
       const year = parseInt(values.year, 10);
-      const month = parseInt(values.month, 10) - 1; // Month is 0-indexed
+      const month = parseInt(values.month, 10) - 1;
       const day = parseInt(values.day, 10);
-
-      // Kiểm tra ngày hợp lệ
       if (
         isNaN(year) ||
         isNaN(month) ||

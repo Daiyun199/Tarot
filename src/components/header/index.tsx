@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./index.scss";
 import Dropdown from "../dropdown";
-import { Link, useLocation, NavLink } from "react-router-dom";
+import { Link, useLocation, NavLink, useNavigate } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
@@ -11,21 +11,23 @@ function Header() {
     (route) =>
       location.pathname === route || location.pathname.startsWith(`${route}/`)
   );
+  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
   const isZodiacPage =
     location.pathname === "/zodiacs" ||
     location.pathname.startsWith("/zodiacs/");
   const headerRef = useRef<HTMLDivElement | null>(null);
 
-  // State to manage header visibility
   const [isHeaderHidden, setIsHeaderHidden] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isLogoClicked, setIsLogoClicked] = useState<boolean>(false);
 
-  // Ref to track the last scroll position
   const lastScrollPosition = useRef<number>(0);
   const isHeaderHiddenRef = useRef<boolean>(false);
   const mobileMenuRef = useRef<HTMLUListElement | null>(null);
+  const userData = localStorage.getItem("userData");
+  const isAccountPage =
+    location.pathname === "/profile" || location.pathname === "/login";
 
   useEffect(() => {
     const header = headerRef.current;
@@ -80,12 +82,6 @@ function Header() {
     };
   }, []);
 
-  // Toggle mobile menu visibility
-  // const toggleMobileMenu = () => {
-  //   setIsMobileMenuOpen((prev) => !prev);
-  // };
-
-  // Close mobile menu when navigating to a new route
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
@@ -113,10 +109,9 @@ function Header() {
   }, [isMobileMenuOpen]);
 
   const handleLogoClick = () => {
-    // Toggle the visibility of the mobile menu on logo click
     if (window.innerWidth < 768) {
       setIsLogoClicked((prev) => !prev);
-      setIsMobileMenuOpen(false); // Ensure mobile menu is closed
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -145,7 +140,6 @@ function Header() {
         </div>
       </div>
       <div className="header__right">
-        {/* Desktop Navigation */}
         <ul className="header__right__navigation">
           <li>
             <Link to="/" className={isHomePage ? "active-link" : ""}>
@@ -174,17 +168,23 @@ function Header() {
               Zodiac
             </Link>
           </li>
-          <li>Tài Khoản</li>
+          <Link
+            style={{
+              textDecoration: "none",
+              listStyle: "none",
+              color: "inherit",
+            }}
+            to={userData ? "/profile" : "/login"}
+          >
+            <li className={isAccountPage ? "active-link" : ""}>Tài Khoản</li>
+          </Link>
         </ul>
 
-        {/* Dropdown - Desktop */}
         {!isLoginPage && (
           <div className="header__right__dropdown">
             <Dropdown />
           </div>
         )}
-
-        {/* Mobile Navigation Dropdown */}
         {isLogoClicked && window.innerWidth < 768 && (
           <ul className="header__right__navigation-mobile" ref={mobileMenuRef}>
             <li>
@@ -214,7 +214,12 @@ function Header() {
                 Zodiac
               </Link>
             </li>
-            <li>Tài Khoản</li>
+            <li
+              className={isAccountPage ? "active-link" : ""}
+              onClick={handleAccountClick}
+            >
+              Tài Khoản
+            </li>
           </ul>
         )}
 

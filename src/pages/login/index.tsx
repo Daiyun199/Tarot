@@ -143,11 +143,7 @@ function Login() {
               <Link
                 to="/register"
                 style={{
-                  textDecoration: "none", // Xóa CSS mặc định của Link
-                  // background:
-                  //   "linear-gradient(90deg, rgba(246,200,241,1) 35%, rgba(148,210,233,1) 100%)",
-                  // WebkitBackgroundClip: "text", // Chỉ lấy màu từ background cho phần chữ
-                  // WebkitTextFillColor: "transparent", // Đặt màu chữ là trong suốt để lộ gradient
+                  textDecoration: "none",
                   color: "red",
                 }}
               >

@@ -14,12 +14,17 @@ function Footer() {
           <Link to="login" style={{ textDecoration: "none", color: "inherit" }}>
             <span>Đăng nhập</span>
           </Link>
-          <span>Đăng ký</span>
+          <Link
+            to="register"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <span>Đăng ký</span>
+          </Link>
         </div>
         <div className="footer__top__section">
           <span className="title">LIÊN HỆ</span>
-          <span>Hotline: 0111111111</span>
-          <span>Email: meowgic@gmail.com</span>
+          <span>Hotline: 0583660660</span>
+          <span>Email: thanhhuyvu.3939@gmail.com</span>
         </div>
       </div>
       <div className="footer__bottom"></div>

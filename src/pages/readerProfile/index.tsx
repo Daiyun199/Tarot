@@ -9,6 +9,7 @@ interface ReadingPackage {
   price: string;
   description: string;
   imgUrl: string;
+  isSpecial: boolean;
 }
 
 interface ReaderProfileProps {
@@ -26,11 +27,16 @@ function ReaderProfile() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<ReaderProfileProps | null>(null);
-
+  const [filter, setFilter] = useState<"Tarot" | "Special">("Tarot");
+  const [isSpecial, setIsSpecial] = useState(false);
   const handleBooking = (serviceId: string) => {
     navigate(`/calendar/${id}/${serviceId}`);
   };
 
+  const handleFilterClick = (special: boolean) => {
+    setIsSpecial(special);
+    setFilter(special ? "Special" : "Tarot");
+  };
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -75,7 +81,9 @@ function ReaderProfile() {
   }, [id]);
 
   if (!profile) return <div className="loading">Loading</div>;
-
+  const filteredPackages = profile.packages.filter((pkg) =>
+    filter === "Tarot" ? !pkg.isSpecial : pkg.isSpecial
+  );
   return (
     <div className="reader-profile">
       <header className="page-header">
@@ -119,8 +127,23 @@ function ReaderProfile() {
           </div>
           <div className="packages">
             <h2 className="section-title">Các gói trải bài</h2>
-            {profile.packages && profile.packages.length > 0 ? (
-              profile.packages.map((pkg) => (
+            <div className="filter-buttons">
+              <button
+                className={!isSpecial ? "selected" : ""}
+                onClick={() => handleFilterClick(false)}
+              >
+                Tarot
+              </button>
+              <button
+                className={isSpecial ? "selected" : ""}
+                onClick={() => handleFilterClick(true)}
+              >
+                Special
+              </button>
+            </div>
+
+            {filteredPackages && filteredPackages.length > 0 ? (
+              filteredPackages.map((pkg) => (
                 <div key={pkg.id} className="package">
                   <div className="package-content">
                     <img
@@ -130,7 +153,9 @@ function ReaderProfile() {
                     />
                     <div className="package-info">
                       <h3 className="package-title">{pkg.name}</h3>
-                      <p className="package-price">{pkg.price} VND</p>
+                      <p className="package-price">
+                        {pkg.price.toLocaleString()} VND
+                      </p>
                       <p className="package-description">{pkg.description}</p>
                       <button
                         className="book-button"

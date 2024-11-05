@@ -10,12 +10,12 @@
             width:100%;
             height: 10vh;
             font-size: 40px;
-            font-weight: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'iCiel Pony';
             padding: 160px;
+            
         }
         &__middle{
             display: flex;
@@ -96,8 +96,8 @@
                     display: flex; 
                     flex-direction: column;
                     text-align: center; 
-                    font-family: 'iCiel Pony';
                     font-size: 30px;
+                    margin-bottom: 50px;
                 }
                 &__info{
                     width: 100%;
