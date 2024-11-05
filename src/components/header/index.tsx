@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./index.scss";
 import Dropdown from "../dropdown";
-import { Link, useLocation, NavLink, useNavigate } from "react-router-dom";
+import { Link, useLocation, NavLink } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
@@ -11,7 +11,6 @@ function Header() {
     (route) =>
       location.pathname === route || location.pathname.startsWith(`${route}/`)
   );
-  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
   const isZodiacPage =
     location.pathname === "/zodiacs" ||
@@ -214,12 +213,16 @@ function Header() {
                 Zodiac
               </Link>
             </li>
-            <li
-              className={isAccountPage ? "active-link" : ""}
-              onClick={handleAccountClick}
+            <Link
+              style={{
+                textDecoration: "none",
+                listStyle: "none",
+                color: "inherit",
+              }}
+              to={userData ? "/profile" : "/login"}
             >
-              Tài Khoản
-            </li>
+              <li className={isAccountPage ? "active-link" : ""}>Tài Khoản</li>
+            </Link>
           </ul>
         )}
 
