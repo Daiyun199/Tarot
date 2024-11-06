@@ -31,23 +31,32 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Header style={{ display: "flex", alignItems: "center" }}>
         <div className="demo-logo" />
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["dashboard"]}
+          selectedKeys={[selectedKey]} // Đồng bộ với selectedKey
           items={items1}
           onClick={handleMenuClick}
           style={{ flex: 1, minWidth: 0 }}
         />
       </Header>
       <Layout style={{ flex: 1 }}>
-        <Sider width={200} style={{ background: colorBgContainer }}>
+        <Sider
+          width={200}
+          style={{
+            background: colorBgContainer,
+            position: "sticky", // Giữ menu cố định khi cuộn
+            top: 0, // Đảm bảo Sider giữ nguyên vị trí khi cuộn trang
+            height: "100vh", // Đảm bảo chiều cao của Sider bằng chiều cao của trang
+            overflow: "auto", // Cho phép cuộn nội dung nếu cần
+          }}
+        >
           <Menu
             mode="inline"
-            defaultSelectedKeys={["dashboard"]}
+            selectedKeys={[selectedKey]} // Đồng bộ với selectedKey
             style={{ height: "100%", borderRight: 0 }}
             items={items1}
             onClick={handleMenuClick}

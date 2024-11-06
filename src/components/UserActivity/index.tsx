@@ -69,7 +69,7 @@ const UserActivityTable: React.FC = () => {
           <th>Phone</th>
           <th>Email</th>
           <th>DOB</th>
-          <th>Role</th> {/* Thêm cột Role */}
+          <th>Role</th>
         </tr>
       </thead>
       <tbody>
@@ -78,7 +78,10 @@ const UserActivityTable: React.FC = () => {
             <td>{user.name}</td>
             <td>
               <img
-                src={user.imgUrl}
+                src={
+                  user.imgUrl ||
+                  "https://s3.ap-southeast-1.amazonaws.com/cdn.vntre.vn/default/avatar-meo-10-1724730902.jpg"
+                }
                 alt={user.name}
                 style={{ width: 50, height: 50, borderRadius: "50%" }}
               />

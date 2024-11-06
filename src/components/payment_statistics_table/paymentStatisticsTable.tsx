@@ -1,69 +1,126 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./PaymentHistoryTable.scss";
+import { paymentDataProps } from "../../model/paymentData";
+import api from "../../config/axios";
 
-const paymentData = [
-  {
-    id: "#123412451",
-    date: "June 1, 2020, 08:22 AM",
-    recipient: "XYZ Store ID",
-    email: "xyzstore@mail.com",
-    serviceType: "Server Maintenance",
-    status: "Completed",
-    profileImage: "path/to/image1.jpg",
-  },
-  {
-    id: "#123412451",
-    date: "June 1, 2020, 08:22 AM",
-    recipient: "David Oconner",
-    email: "davidocon@mail.com",
-    serviceType: "Clean Up",
-    status: "Pending",
-    profileImage: "path/to/image2.jpg",
-  },
-  // Add more entries as needed
-];
+type ApiResponse<T> = {
+  data: T;
+  isSuccess: boolean;
+};
 
-const PaymentHistoryTable: React.FC = () => (
-  <div className="payment-history-container">
-    <h2>Payment History</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur</p>
-    <table className="payment-history-table">
-      <thead>
-        <tr>
-          <th>STT</th>
-          <th>ID Invoice</th>
-          <th>Date</th>
-          <th>Recipient</th>
-          <th>Email</th>
-          <th>Service Type</th>
-          <th>Status</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {paymentData.map((payment, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td> {/* Auto-incrementing serial number */}
-            <td>{payment.id}</td>
-            <td>{payment.date}</td>
-            <td className="recipient">
-              <img src={payment.profileImage} alt={payment.recipient} />
-              <div>
-                <span className="name">{payment.recipient}</span>
-                <span className="subtext">Online Shop</span>
-              </div>
-            </td>
-            <td>{payment.email}</td>
-            <td>{payment.serviceType}</td>
-            <td className={`status ${payment.status.toLowerCase()}`}>
-              {payment.status}
-            </td>
-            <td className="options">⋮</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
+type AccountDetail = {
+  email: string;
+  imgUrl: string;
+};
+
+const PaymentHistoryTable: React.FC = () => {
+  const [detailedPaymentData, setDetailedPaymentData] = useState<
+    (paymentDataProps & AccountDetail)[]
+  >([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 5;
+  useEffect(() => {
+    const fetchPaymentData = async () => {
+      try {
+        const response = await api.get<ApiResponse<paymentDataProps[]>>(
+          "Order/order-detail/get-all"
+        );
+        const paymentData = response.data.data;
+
+        const accountDetails = await Promise.all(
+          paymentData.map(async (payment) => {
+            const accountResponse = await api.get<ApiResponse<AccountDetail>>(
+              `Account/detail-info/${payment.createBy}`
+            );
+
+            const { email, imgUrl } = accountResponse.data.data;
+
+            return {
+              ...payment,
+              email,
+              imgUrl,
+            };
+          })
+        );
+
+        setDetailedPaymentData(accountDetails);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchPaymentData();
+  }, []);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = detailedPaymentData.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  // Hàm chuyển trang
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  return (
+    <div className="payment-history-container">
+      <h2>Payment History</h2>
+
+      <div className="payment-history-table-wrapper">
+        <table className="payment-history-table">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>ID Invoice</th>
+              <th>Date</th>
+              <th>Avatar</th>
+              <th>Email</th>
+              <th>Service Type</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody className="payment-history-body">
+            {currentItems.map((payment, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{payment.id}</td>
+                <td>{payment.date}</td>
+                <td className="recipient">
+                  <img
+                    src={
+                      payment.imgUrl ||
+                      "https://s3.ap-southeast-1.amazonaws.com/cdn.vntre.vn/default/avatar-meo-10-1724730902.jpg"
+                    }
+                    alt={payment.createBy}
+                  />
+                </td>
+                <td>{payment.email}</td>
+                <td>{payment.serviceName}</td>
+                <td>{payment.status}</td>
+                <td className="options">⋮</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="pagination">
+        <button
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>Page {currentPage}</span>
+        <button
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage * itemsPerPage >= detailedPaymentData.length}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default PaymentHistoryTable;
