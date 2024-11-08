@@ -1,7 +1,6 @@
 // DashboardContent.tsx
 import React, { useEffect, useState } from "react";
 import MetricsCard from "../metricCard/metricCard";
-import SocialMetrics from "../SocialMetric";
 import TrafficSalesAnalysis from "../traficSaleAnalytic";
 import UserActivityTable from "../UserActivity";
 import "./dashboard.scss";
