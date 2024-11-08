@@ -113,7 +113,7 @@ function BookingCalendar(): JSX.Element {
     const fetchReaderInfo = async () => {
       try {
         const response = await api.get(`Account/detail-info/${readerId}`);
-        const { name, experience, imgUrl, likes, ratings } = response.data;
+        const { name, experience, imgUrl, likes, ratings } = response.data.data;
         setReaderInfo({ name, experience, imgUrl, likes, ratings });
       } catch (error) {
         console.error("Error fetching reader info:", error);

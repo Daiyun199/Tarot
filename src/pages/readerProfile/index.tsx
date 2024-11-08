@@ -42,7 +42,7 @@ function ReaderProfile() {
       try {
         const accountResponse = await api.get(`Account/detail-info/${id}`);
         const tarotServiceResponse = await api.get(`TarotService/Reader/${id}`);
-        const accountData = accountResponse.data;
+        const accountData = accountResponse.data.data;
         const tarotPackages = tarotServiceResponse.data;
         const name = accountData.name === "NONGLIN" ? "Nonglin" : "Candy";
         const introduction =

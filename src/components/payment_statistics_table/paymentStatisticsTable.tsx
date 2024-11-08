@@ -19,6 +19,7 @@ const PaymentHistoryTable: React.FC = () => {
   >([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 5;
+
   useEffect(() => {
     const fetchPaymentData = async () => {
       try {
@@ -51,12 +52,16 @@ const PaymentHistoryTable: React.FC = () => {
 
     fetchPaymentData();
   }, []);
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = detailedPaymentData.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
+
+  // Tính tổng số trang
+  const totalPages = Math.ceil(detailedPaymentData.length / itemsPerPage);
 
   // Hàm chuyển trang
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -110,7 +115,9 @@ const PaymentHistoryTable: React.FC = () => {
         >
           Previous
         </button>
-        <span>Page {currentPage}</span>
+        <span>
+          Page {currentPage} / {totalPages}
+        </span>
         <button
           onClick={() => paginate(currentPage + 1)}
           disabled={currentPage * itemsPerPage >= detailedPaymentData.length}

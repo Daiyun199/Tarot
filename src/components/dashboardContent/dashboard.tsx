@@ -79,7 +79,6 @@ const DashboardContent: React.FC = () => {
           />
         </div>
       </div>
-      <SocialMetrics />
       <TrafficSalesAnalysis />
       <UserActivityTable />
     </div>
