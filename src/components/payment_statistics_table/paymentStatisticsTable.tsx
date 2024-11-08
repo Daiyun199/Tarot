@@ -26,7 +26,7 @@ const PaymentHistoryTable: React.FC = () => {
           "Order/order-detail/get-all"
         );
         const paymentData = response.data.data;
-
+        console.log(paymentData);
         const accountDetails = await Promise.all(
           paymentData.map(async (payment) => {
             const accountResponse = await api.get<ApiResponse<AccountDetail>>(
@@ -70,11 +70,11 @@ const PaymentHistoryTable: React.FC = () => {
           <thead>
             <tr>
               <th>STT</th>
-              <th>ID Invoice</th>
               <th>Date</th>
               <th>Avatar</th>
               <th>Email</th>
               <th>Service Type</th>
+              <th>Total Price</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -83,7 +83,6 @@ const PaymentHistoryTable: React.FC = () => {
             {currentItems.map((payment, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{payment.id}</td>
                 <td>{payment.date}</td>
                 <td className="recipient">
                   <img
@@ -96,8 +95,8 @@ const PaymentHistoryTable: React.FC = () => {
                 </td>
                 <td>{payment.email}</td>
                 <td>{payment.serviceName}</td>
+                <td>{payment.subtotal}</td>
                 <td>{payment.status}</td>
-                <td className="options">⋮</td>
               </tr>
             ))}
           </tbody>

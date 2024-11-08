@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import { FacebookOutlined, GoogleOutlined } from "@ant-design/icons";
+import { GoogleOutlined } from "@ant-design/icons";
 
 import "./index.scss";
 import { toast } from "react-toastify";
@@ -47,25 +47,6 @@ function Login() {
     }
   };
 
-  const handleFaceBookLogin = () => {
-    // signInWithPopup(auth, facebookProvider)
-    //   .then((result) => {
-    //     // The signed-in user info.
-    //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //     // const user = result.user;
-    //     // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    //     // const credential = FacebookAuthProvider.credentialFromResult(result);
-    //     // const accessToken = credential.accessToken;
-    //     toast.success("Đăng nhập bằng Facebook thành công");
-    //     // console.log(user);
-    //     // IdP data available using getAdditionalUserInfo(result)
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     toast.error("Đăng nhập bằng Facebook thất bại.");
-    //   });
-  };
   const handleLogin = async (values: any) => {
     try {
       const response = await api.post("Auth/login", values);
@@ -167,16 +148,6 @@ function Login() {
             </Button>
           </Form>
           <p className="space">Or</p>
-          <button
-            className="login-container__box__right__form__facebook-button"
-            onClick={handleFaceBookLogin}
-          >
-            <FacebookOutlined className="login-container__box__right__form__facebook-button__icon" />
-
-            <span className="login-container__box__right__form__facebook-button__text">
-              Sign in with Facebook
-            </span>
-          </button>
           <button
             className="login-container__box__right__form__google-button"
             onClick={handleGoogleLogin}
