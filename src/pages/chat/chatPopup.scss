@@ -12,7 +12,7 @@
   overflow: hidden;
 
   &__header {
-    background-color: #E8C7D2;
+    background-color: #e8c7d2;
     color: #333;
     padding: 10px;
     cursor: pointer;
@@ -33,24 +33,32 @@
     overflow-y: auto;
     background-color: #f9f9f9;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   &__message {
     padding: 5px 10px;
     border-radius: 10px;
-    margin-bottom: 10px;
-    max-width: 90%;
+    max-width: 80%;
+    word-wrap: break-word;
+    line-height: 1.4;
 
     &--user {
-      background-color: #E9D0D9;
+      background-color: #e9d0d9;
       align-self: flex-end;
       text-align: right;
+      margin-left: auto;
+      margin-bottom: 15px;
     }
 
     &--reader {
       background-color: #a5e2e7fd;
       align-self: flex-start;
       text-align: left;
+      margin-right: auto;
+      white-space: pre-wrap;
+      margin-bottom: 15px;
     }
   }
 
@@ -67,15 +75,27 @@
       border-radius: 5px;
       margin-right: 5px;
       font-size: 14px;
+      outline: none;
+      transition: border 0.3s;
+
+      &:focus {
+        border-color: #a5e2e7fd;
+      }
     }
 
     button {
-      padding: 8px 12px;
-      background-color: #E9D0D9;
+      padding: 5px 15px;
+      background-color: #e9d0d9;
       color: #333;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #d9b9c1;
+      }
     }
   }
 
@@ -91,21 +111,39 @@
   }
 
   @keyframes loading {
-    0% {
-      content: '.';
-    }
-    33% {
-      content: '..';
-    }
-    66% {
-      content: '...';
-    }
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
   }
 
   @media (max-width: 768px) {
-    .chat-popup {
-      width: 90%;
-      max-width: 400px;
+    width: 90%;
+    max-width: 400px;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  @media (max-width: 480px) {
+    width: 95%;
+    bottom: 5px;
+    right: 5px;
+
+    &__header {
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    &__input {
+      padding: 8px;
+
+      input {
+        font-size: 13px;
+      }
+
+      button {
+        padding: 8px 10px;
+        font-size: 13px;
+      }
     }
   }
 }
