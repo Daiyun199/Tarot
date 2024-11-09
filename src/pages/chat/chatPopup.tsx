@@ -95,7 +95,7 @@ function ChatPopup() {
           { sender: "reader", content: responseContent },
         ]);
         setIsLoading(false);
-      }, 1500); // Simulating a 1.5-second delay
+      }, 1500);
     }
   };
 
