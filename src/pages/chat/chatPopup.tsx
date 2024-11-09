@@ -8,7 +8,7 @@ interface Message {
 
 const keywords: Record<string, string> = {
   "The Fool": `
-<strong>Ý nghĩa của lá bài The Fool</strong>
+<strong> Ý nghĩa của lá bài The Fool</strong>
 
 <strong>Tình Yêu</strong>  
 - <strong>Xuôi</strong>: Khi <strong>The Fool</strong> xuất hiện xuôi trong các vấn đề tình cảm, nó báo hiệu một mối quan hệ mới đầy lãng mạn và đam mê. Đây là thời điểm thích hợp để mở lòng và tận hưởng những cảm xúc tươi mới.
@@ -23,7 +23,7 @@ const keywords: Record<string, string> = {
 - <strong>Ngược</strong>: <strong>The Fool</strong> ngược cảnh báo về sự thiếu chú ý đến sức khỏe, dễ gặp tai nạn hoặc chấn thương do hành động bốc đồng. Cần thận trọng và lắng nghe cơ thể để tránh những rủi ro không đáng có.
   `,
   "The Magician": `
-<strong>Ý nghĩa của lá bài The Magician</strong>
+<strong> Ý nghĩa của lá bài The Magician</strong>
 
 <strong>Tình Yêu</strong>  
 - <strong>Xuôi</strong>: <strong>The Magician</strong> xuôi cho thấy bạn đang có sức hấp dẫn mạnh mẽ và dễ dàng thu hút sự chú ý của người khác giới. Hãy tự tin thể hiện bản thân, tạo dựng các mối quan hệ mới và mở lòng với tình yêu.
@@ -38,7 +38,7 @@ const keywords: Record<string, string> = {
 - Cần duy trì lối sống lành mạnh: Lá bài này cũng nhắc nhở tầm quan trọng của việc duy trì một lối sống lành mạnh để bảo vệ sức khỏe. Hãy chú ý đến chế độ ăn uống, tập thể dục đều đặn, ngủ đủ giấc và quản lý stress hiệu quả.
   `,
   "The High Priestess": `
-<strong>Ý nghĩa của lá bài The High Priestess</strong>
+<strong> Ý nghĩa của lá bài The High Priestess</strong>
 
 <strong>Tình Yêu:</strong>  
   Khi <strong>The High Priestess</strong> xuất hiện trong các vấn đề tình cảm, nó thường báo hiệu một mối liên kết tâm hồn sâu sắc. Đây là thời điểm để lắng nghe trực giác và tìm hiểu sâu hơn về bản thân cũng như đối phương. Lá bài này cũng có thể cho thấy một giai đoạn tạm lắng để suy ngẫm và cân nhắc về mối quan hệ.
